@@ -37,7 +37,7 @@ test('a real scene exposes selectable numbered destinations and collection-based
   view.updateProgress(new Map(Array.from({length:7},(_, i)=>[i, {}])), 7);
   assert.deepEqual(view.markers.map(marker => marker.userData.state), [...Array(7).fill('collected'), 'active']);
   let meshCount = 0;
-  view.group.traverse(node => { if (node.isMesh) { meshCount++; assert.ok(node.geometry); } });
+  view.group.traverse(node => { if (node.isMesh) { meshCount += node.isInstancedMesh ? node.count : 1; assert.ok(node.geometry); } });
   assert.ok(meshCount > 40, 'the preview contains actual architecture and landscape geometry');
 });
 
