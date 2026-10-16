@@ -28,6 +28,8 @@ Chỉ hiện đã nhận sau khi Google xác nhận đúng mã gửi. Gửi lạ
 
 ## Campus thu nhỏ
 
+Ngay màn chào, mỗi người có thể tự phối nhân vật 3D: 4 kiểu tóc, 5 màu tóc, 3 trang phục, 6 màu trang phục, 5 tông da và 5 lựa chọn phụ kiện (**9.000 cách phối**). Phòng thử đồ cho xem trước, xoay trái/phải và phối ngẫu nhiên. Bấm nút tên/nhân vật trên thanh công cụ để đổi lại giữa hành trình; lưu mới áp dụng, nút hủy hoặc Escape giữ diện mạo cũ. Nhân vật đã chọn xuất hiện trong cả campus và đảo trên mây, được giữ khi tải lại trong cùng phiên. Hành trình cũ dùng diện mạo mặc định và giữ nguyên kỷ vật.
+
 Không gian mặc định là **VNG Campus** (`?world=campus`). Dùng nút **Đảo trên mây** (`?world=cloud`) để xem cảnh cũ; cả hai dùng chung tiến trình trong cùng tab.
 
 Campus là mô hình minh họa lấy cảm hứng từ [ảnh ngoại thất VNG công khai](https://vng.com.vn/news/enterprise/van-phong-vng-3969.html): hai cánh nhà trắng thấp tầng, dải kính, mái pin mặt trời, bậc cây xanh và sân trong. Đây là bố cục cách điệu cho sự kiện, không phải bản sao mặt bằng hay mô hình kiến trúc chính xác.
@@ -46,7 +48,7 @@ Tám điểm dừng kết nối thành lối đi quanh sân; quay lại trạm c
 - Có 4 mẫu social với thumbnail lớn, bố cục 2×2, dấu chọn rõ ràng và nút tải luôn hiện ở cuối màn thiệp: **Mây hoa**, **Bìa tạp chí**, **Sổ tay vui** và **Đêm sao**. Mỗi mẫu có bố cục dành cho cả khổ bài đăng/story, có hoặc không có ảnh. Đổi mẫu giữ nguyên tên, ảnh và dữ liệu hành trình; lựa chọn mẫu được nhớ trong cùng phiên trình duyệt. Tên file PNG phân biệt từng mẫu.
 - Có thể chọn thêm ảnh check-in cho khung Polaroid hoặc dùng thiệp hoa không có ảnh. Ảnh check-in bổ sung chỉ nằm trong bộ nhớ của trang, mất khi tải lại; không thay album IndexedDB và không tải lên máy chủ. Bản kỷ niệm đầy đủ vẫn dùng ảnh của hành trình.
 - Nút “Chép caption” chuẩn bị nội dung để bạn tự đăng. Ứng dụng không tự đăng lên mạng xã hội.
-- Tiến trình và tên lưu trong `sessionStorage`, dùng lại khi tải lại trang trong cùng tab. Đóng tab có thể kết thúc phiên. Ảnh lưu riêng trong IndexedDB và không tự mất cùng phiên hành trình.
+- Tiến trình, tên và diện mạo nhân vật lưu trong `sessionStorage`, dùng lại khi tải lại trang trong cùng tab. Đóng tab có thể kết thúc phiên. Ảnh lưu riêng trong IndexedDB và không tự mất cùng phiên hành trình.
 
 ## Ảnh nằm ở đâu khi deploy từ Git?
 
@@ -81,7 +83,7 @@ Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run chec
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 58 kiểm thử, 25 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 65 kiểm thử, 29 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 
@@ -98,6 +100,7 @@ Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #
 - `dist/assets/social-bloom.png`: minh họa hoa và mây, lưu ngay trong repo để deploy cùng website.
 - `dist/experience.js`, `dist/fortune-animation.js`, `dist/station-polish.css`: trò chơi tại trạm, animation quẻ và nhạc nền.
 - `dist/lucky-numbers.js`: bốc số ngẫu nhiên, kiểm tra và định dạng bộ số vui 6/45.
+- `dist/avatar-profile.js`, `dist/avatar-rig.js`, `dist/avatar-studio.js`, `dist/avatar-studio.css`: danh mục diện mạo, nhân vật 3D dùng chung và phòng thử đồ.
 - `dist/memory-album.js`, `dist/assets/memories/album.json`: album dùng chung do host chuẩn bị.
 - `scripts/prepare-album.mjs`: nhập thư mục ảnh của host, tạo tên file và danh sách cho album.
 - `dist/drink-counter.js`, `dist/drink-counter.css`: quầy KOI và giao diện đăng ký.
