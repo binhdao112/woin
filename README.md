@@ -51,20 +51,23 @@ Deploy hoặc push Git không đưa các ảnh đã chọn trong trình duyệt 
 
 Để có một album chung, phương án đơn giản là đặt ảnh đã tối ưu trong `dist/assets/memories/` và thêm danh sách ảnh cùng bộ nạp cho ứng dụng. **Bản hiện tại chưa tự đọc thư mục này**; không chỉ chép ảnh vào thư mục là chúng sẽ xuất hiện. Khi muốn cho đồng nghiệp tải ảnh lên và mọi người cùng thấy, cần bổ sung dịch vụ lưu trữ/API như object storage hoặc một backend phù hợp.
 
-## Deploy
+## Deploy trên GitHub Pages
 
-Xuất bản toàn bộ nội dung thư mục `dist/` trên hosting tĩnh. Giữ nguyên các file modules và tên file; không cần `npm install` hay `npm run build`. Các đường dẫn tài nguyên là tương đối, phù hợp cả khi website nằm dưới `/woin/`.
+Repo xuất bản từ **`gh-pages` → `/`**, giữ nguyên cấu hình Pages và environment đang có. Nội dung của `dist/` phải nằm ngay ở gốc nhánh `gh-pages` (`index.html`, `app.js`, `assets/`...). Không merge nguyên nhánh mã nguồn vào `gh-pages`, vì như vậy file HTML mới vẫn nằm trong `dist/`, còn HTML ở gốc có thể vẫn là bản cũ.
 
-Có hai workflow GitHub Actions:
+- Website: <https://binhdao112.github.io/woin/>
+- Bản xem riêng: <https://binhdao112.github.io/woin/previews/campus/>
+- Nhánh nguồn giữ code, tests và docs để review. Nhánh `gh-pages` giữ artifact tĩnh để xuất bản.
 
-- **Checks** chạy trên PR vào `main` và khi push `main`/`codex/**`: kiểm tra cú pháp, chạy kiểm thử, kiểm tra 13 tài nguyên dưới đường dẫn `/woin/` và lưu artifact `website-dist` cho reviewer tải về.
-- **Deploy GitHub Pages** chạy sau khi merge vào `main`, hoặc chạy thủ công trên `main`. Workflow kiểm thử trước, đóng gói đúng `dist/`, rồi dùng các action Pages chính thức để deploy. Nhánh review không tự ghi đè website đang chạy.
+Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run check:pages`. Sao chép toàn bộ nội dung `dist/` vào gốc nhánh deploy trong một checkout riêng, giữ `.git/` và các snapshot `previews/` hiện có, commit rồi push `gh-pages`. Push bằng tài khoản Git có quyền ghi sẽ tự kích hoạt workflow **pages build and deployment** của GitHub. Chờ cả build và deploy thành công trước khi kiểm tra URL.
 
-Repo đã có nhánh `gh-pages` cho website cũ. Khi áp dụng workflow mới sau review, quản trị viên chọn **Settings → Pages → Build and deployment → Source → GitHub Actions** một lần. Sau đó merge PR vào `main` hoặc chạy workflow **Deploy GitHub Pages** trên `main`. Kiểm tra job **Publish website** thành công và mở URL được trả trong deployment. Không chọn thư mục gốc của nhánh source làm nội dung website, vì `index.html` nằm trong `dist/`.
+Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-`npm run check:pages` phục vụ artifact thật ở `/woin/`, kiểm tra HTTP/content type của HTML, JavaScript modules, CSS và nền hoa; đồng thời phát hiện đường dẫn tuyệt đối sai hoặc sai chữ hoa/thường. Thư mục `dist/` tự đủ để deploy, không phụ thuộc file trong `output/`. [Tài liệu workflow GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 22 kiểm thử, 13 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
-`.openai/hosting.json` là cấu hình hosting Sites hiện có và được giữ nguyên.
+Workflow deploy trực tiếp từ `main` đã được ngừng và được gỡ trong thay đổi này: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
+
+`.openai/hosting.json` là cấu hình hosting Sites hiện có, độc lập với GitHub Pages và được giữ nguyên.
 
 ## Các file chính
 
