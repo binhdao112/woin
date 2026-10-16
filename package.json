@@ -1,0 +1,10 @@
+{
+  "name": "van-phong-tren-may",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "test:coverage": "node --experimental-test-coverage --test",
+    "check:pages": "node scripts/check-pages.mjs"
+  }
+}

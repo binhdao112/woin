@@ -1,0 +1,37 @@
+name: Checks
+
+on:
+  push:
+    branches: [main, 'codex/**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Test and verify Pages artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: find dist scripts -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n 1 node --check
+      - name: Run tests
+        run: npm test
+      - name: Verify project subpath and static resources
+        run: npm run check:pages
+      - name: Upload reviewable website
+        uses: actions/upload-artifact@v6
+        with:
+          name: website-dist
+          path: dist/
+          include-hidden-files: true
+          retention-days: 7
