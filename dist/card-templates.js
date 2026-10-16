@@ -80,7 +80,7 @@ function scrapbook(ctx,model,{story,photo,copy,height}){
   ctx.textAlign='center';ctx.fillStyle=ink;font(ctx,18,{bold:true});ctx.fillText('A LITTLE HAPPINESS CLUB  ·  20/10',540,86);
   font(ctx,story?85:73,{bold:true});ctx.fillText('Một ngày',540,story?217:190);
   rounded(ctx,135,story?255:225,810,story?105:92,20,'#efd78b');
-  font(ctx,story?92:85,{bold:true});ctx.fillText('siêu đáng yêu!',540,story?338:299);
+  ctx.fillStyle=ink;font(ctx,story?92:85,{bold:true});ctx.fillText('siêu đáng yêu!',540,story?338:299);
   tapedPaper(ctx,story?120:140,story?438:375,story?840:800,story?178:150,-.028,()=>{
     ctx.textAlign='center';ctx.fillStyle='#bd5c78';name(ctx,model.recipient,0,story?-18:-14,story?750:710,story?80:68,{serif:false});
   });
