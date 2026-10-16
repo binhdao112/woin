@@ -1,6 +1,6 @@
-# Văn phòng trên mây · 20/10
+# VNG Campus · Một vòng cùng team · 20/10
 
-Website tĩnh dùng Three.js, với hai không gian VNG Campus và đảo trên mây: đi qua 8 trạm, nhận 7 kỷ vật và tải thiệp PNG cá nhân hóa. Không cần backend hoặc bước build.
+Website tĩnh dùng Three.js, với không gian VNG Campus: đi qua 8 trạm, nhận 7 kỷ vật và tải thiệp PNG cá nhân hóa. Không cần backend hoặc bước build.
 
 ## Chạy và kiểm tra
 
@@ -28,13 +28,17 @@ Chỉ hiện đã nhận sau khi Google xác nhận đúng mã gửi. Gửi lạ
 
 ## Campus thu nhỏ
 
-Ngay màn chào, mỗi người có thể tự phối nhân vật 3D: 4 kiểu tóc, 5 màu tóc, 3 trang phục, 6 màu trang phục, 5 tông da và 5 lựa chọn phụ kiện (**9.000 cách phối**). Phòng thử đồ cho xem trước, xoay trái/phải và phối ngẫu nhiên. Bấm nút tên/nhân vật trên thanh công cụ để đổi lại giữa hành trình; lưu mới áp dụng, nút hủy hoặc Escape giữ diện mạo cũ. Nhân vật đã chọn xuất hiện trong cả campus và đảo trên mây, được giữ khi tải lại trong cùng phiên. Hành trình cũ dùng diện mạo mặc định và giữ nguyên kỷ vật.
+Ngay màn chào, mỗi người có thể tự phối nhân vật 3D: 4 kiểu tóc, 5 màu tóc, 3 trang phục, 6 màu trang phục, 5 tông da và 5 lựa chọn phụ kiện (**9.000 cách phối**). Phòng thử đồ cho xem trước, xoay trái/phải và phối ngẫu nhiên. Bấm nút tên/nhân vật trên thanh công cụ để đổi lại giữa hành trình; lưu mới áp dụng, nút hủy hoặc Escape giữ diện mạo cũ. Nhân vật đã chọn xuất hiện trong campus, được giữ khi tải lại trong cùng phiên. Hành trình cũ dùng diện mạo mặc định và giữ nguyên kỷ vật.
 
-Không gian mặc định là **VNG Campus** (`?world=campus`). Dùng nút **Đảo trên mây** (`?world=cloud`) để xem cảnh cũ; cả hai dùng chung tiến trình trong cùng tab.
+Ứng dụng chỉ dùng **VNG Campus**. Link cũ có `?world=cloud` tự đổi thành `?world=campus`, giữ nguyên đường dẫn preview, tham số khác và hash. Cảnh mây, nút đổi không gian và tên cũ trên các mẫu thiệp đã được gỡ bỏ.
 
 Campus là mô hình minh họa lấy cảm hứng từ [ảnh ngoại thất VNG công khai](https://vng.com.vn/news/enterprise/van-phong-vng-3969.html): hai cánh nhà trắng thấp tầng, dải kính, mái pin mặt trời, bậc cây xanh và sân trong. Đây là bố cục cách điệu cho sự kiện, không phải bản sao mặt bằng hay mô hình kiến trúc chính xác.
 
-Tám điểm dừng kết nối thành lối đi quanh sân; quay lại trạm cũ cũng đi theo tuyến thay vì băng qua nhà. Màu điểm dừng phản ánh cùng bộ sưu tập 7 kỷ vật. Các khối lặp dùng `InstancedMesh`; không cần tải mô hình 3D hoặc thư viện mới. Camera toàn cảnh co theo tỷ lệ màn hình; trên điện thoại danh sách trạm cuộn ngang đến trạm hiện tại.
+Giữ **WASD** hoặc **phím mũi tên** để tự đi bộ theo góc camera; kéo cảnh để xoay, cuộn để thu phóng. Điện thoại có bốn nút chạm để giữ và di chuyển. Bấm **E · Tương tác** khi đứng gần trạm đã mở. Đi bộ tự do không mở khóa trạm hoặc nhận quà thay bạn. Va chạm chặn các khối nhà, bậc thềm, hồ và mép đất. Bấm tên trạm/nút đi đến để tự tìm đường an toàn từ vị trí hiện tại; có thể ngắt bằng phím đi bộ. Tải lại trang trở về trạm đang lưu.
+
+Nút **♡ Biểu cảm** mở góc camera cận với sáu động tác: thả tim, vẫy tay, nhún nhảy, ôm một cái, tạo dáng và **67!** (hai bàn tay nâng hạ luân phiên). Chọn động tác mới để thay ngay; **Đứng yên**, Escape, di chuyển hoặc mở cửa sổ khác đều dừng và trả về tư thế bình thường. Chế độ giảm chuyển động dùng tư thế tĩnh và hiệu ứng đứng yên. Không cần âm thanh hoặc tài nguyên tải ngoài.
+
+Tám điểm dừng có thể tự tìm đường từ vị trí hiện tại, đi vòng các khối nhà. Màu điểm dừng phản ánh cùng bộ sưu tập 7 kỷ vật. Các khối lặp dùng `InstancedMesh`; không cần tải mô hình 3D hoặc thư viện mới. Camera toàn cảnh co theo tỷ lệ màn hình; trên điện thoại danh sách trạm cuộn ngang đến trạm hiện tại.
 
 ## Hành trình và thiệp
 
@@ -60,7 +64,7 @@ Tám điểm dừng kết nối thành lối đi quanh sân; quay lại trạm c
 
 Deploy hoặc push Git không đưa ảnh riêng đã chọn trong trình duyệt lên repo. Ảnh riêng không được tải lên máy chủ, không đồng bộ giữa thiết bị. Xóa dữ liệu website hoặc dùng trình duyệt khác có thể khiến album cá nhân không còn. Album của team được giữ riêng, luôn ưu tiên hiển thị và không bị thao tác “Gỡ ảnh riêng” thay đổi.
 
-Host chuẩn bị tối đa 12 ảnh JPG, PNG hoặc WebP trong một thư mục rồi chạy:
+Host chuẩn bị tối đa 24 ảnh JPG, PNG hoặc WebP trong một thư mục rồi chạy:
 
 ```sh
 npm run album -- "/đường/dẫn/thư-mục-ảnh" "Khoảnh khắc cùng team"
@@ -68,7 +72,16 @@ npm test
 npm run check:pages
 ```
 
-Lệnh chép ảnh và tạo danh sách `dist/assets/memories/album.json`; commit toàn bộ thư mục này rồi xuất bản lại `dist/`. Mọi người mở trạm 7 sẽ thấy album chung, không cần chọn ảnh trên máy. Album mặc định hiện chưa có ảnh thật của team. [Hướng dẫn thêm ảnh và deploy album](docs/host-album.md).
+Lệnh chép ảnh và tạo danh sách `dist/assets/memories/album.json`; commit toàn bộ thư mục này rồi xuất bản lại `dist/`. Mọi người mở trạm 7 sẽ thấy album chung, không cần chọn ảnh trên máy. Album hiện có **19 ảnh của team**, được đồng bộ từ thư mục host cung cấp. Thêm ảnh vào thư mục đó rồi chạy lại lệnh để nhập đợt mới; mã ảnh cũ được giữ theo nội dung. [Hướng dẫn thêm ảnh và deploy album](docs/host-album.md).
+
+## Check-in cuối hành trình
+
+Sau khi giữ đủ bảy kỷ vật, bấm **Check-in cùng nhân vật** tại trạm 8. Sân khấu tổng hợp tên, nhân vật đã custom, ảnh kỷ niệm đã chọn, bảy kỷ vật và bộ số vui đã bốc. Chọn Story 9:16 hoặc bài đăng 4:5, hai mood Vườn hồng / Đêm sao và một trong sáu biểu cảm.
+
+- **Quay / chụp toàn màn hình** ẩn điều khiển; chạm để hiện nút trở lại hoặc nhấn Esc.
+- **Tải PNG** xuất ảnh 1080 × 1920 hoặc 1080 × 1350.
+- **Lưu clip 8 giây** xuất chuyển động không âm thanh bằng định dạng trình duyệt hỗ trợ (ưu tiên MP4/H264). Có thể thêm nhạc trong ứng dụng social. Trình duyệt thiếu chức năng ghi vẫn có PNG và quay màn hình.
+- **Xem 4 mẫu thiệp** mở lại bộ thiệp hiện có. Check-in xử lý trên thiết bị, không gửi ảnh cá nhân lên máy chủ.
 
 ## Deploy trên GitHub Pages
 
@@ -83,7 +96,7 @@ Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run chec
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 65 kiểm thử, 29 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 89 kiểm thử, 58 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 

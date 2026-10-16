@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
+import * as T from '../dist/three.module.js';
 
 const source = await readFile(new URL('../dist/app.js', import.meta.url), 'utf8');
 import * as policy from '../dist/journey.js';
@@ -10,6 +11,7 @@ test('the main button opens the uncollected gift instead of leaving the first st
   const calls = [];
   const context = {
     index: 0, arrival: true, moving: false, keepsakeCollection: new Map(),
+    T,player:{position:new T.Vector3(0,0,.7)},stops:[new T.Vector3(0,0,0)],
     getPrimaryAction: policy.getPrimaryAction,
     go: station => calls.push(['move', station]),
     openKeepsake: station => calls.push(['collect', station]),
@@ -23,6 +25,9 @@ test('the main button opens the uncollected gift instead of leaving the first st
   const handler = source.match(/\$\('#next'\)\.onclick=([\s\S]*?);document\.querySelectorAll/)[1];
   vm.runInNewContext(`${advance}\n(${handler})()`, context);
   assert.deepEqual(calls, [['collect', 0]]);
+  calls.length=0;context.player.position.set(8,0,8);
+  vm.runInNewContext(`(${handler})()`, context);
+  assert.deepEqual(calls,[['move',0]],'walking away from a station first returns there before collecting');
 });
 
 test('progress counts actual souvenirs and finds holes in an older saved journey', () => {
