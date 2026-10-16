@@ -21,6 +21,21 @@ test('the campus has eight reachable outdoor destinations and a connected walkin
     assert.equal(route.length, Math.max(1, Math.abs(to - from)));
     for (const point of route) assert.ok(CAMPUS_STOPS.some(stop => stop.every((v, i) => v === point[i])));
   }
+
+  // Walk the entire tour in both directions; its center line stays off the
+  // two office footprints and the raised terrace in front of the east wing.
+  const footprints = [[-13.7,-6.3,-10,2],[-5.8,10.8,-11.5,-5.7],[1.6,10,-5.56,-2.04]];
+  for (const [from,to] of [[0,7],[7,0]]) {
+    let previous = CAMPUS_STOPS[from];
+    for (const next of getCampusRoute(from,to)) {
+      for (let step=0;step<=20;step++) {
+        const x=previous[0]+(next[0]-previous[0])*step/20;
+        const z=previous[2]+(next[2]-previous[2])*step/20;
+        assert.ok(!footprints.some(([left,right,back,front])=>x>left&&x<right&&z>back&&z<front), 'the walking route must stay outside buildings and raised terraces');
+      }
+      previous=next;
+    }
+  }
   for (const invalid of [-1, 8, 1.2, NaN, '2']) assert.deepEqual(getCampusRoute(invalid, 1), []);
 });
 
