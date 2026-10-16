@@ -56,11 +56,23 @@ test('a real scene exposes selectable numbered destinations and collection-based
   assert.ok(meshCount > 40, 'the preview contains actual architecture and landscape geometry');
 });
 
-test('campus navigation is the default and the existing cloud world stays selectable', async () => {
+test('campus is the only available world and old cloud branding is absent', async () => {
   const app = await readFile(new URL('../dist/app.js', import.meta.url), 'utf8');
   const html = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
   assert.match(app, /from ['"]\.\/campus\.js['"]/);
   assert.match(app, /walkWorld\.findPath\(player.position/, 'automatic walking routes from the actual player position with collision checks');
-  assert.match(html, /href="\?world=campus"/);
-  assert.match(html, /href="\?world=cloud"/);
+  assert.doesNotMatch(html,/world-cloud|world-switch|văn phòng trên mây|đảo trên mây/i);
+  assert.match(html,/<title>VNG Campus/);
+  assert.doesNotMatch(app,/isCampus/,'legacy scene selection is removed');
+  for(const name of ['wish-card.js','card-templates.js'])assert.doesNotMatch(await readFile(new URL('../dist/'+name,import.meta.url),'utf8'),/văn phòng trên mây/i);
+
+});
+
+test('old cloud links resolve to campus while preserving preview path, other parameters and hash',async()=>{
+ const {canonicalCampusURL}=await import('../dist/campus-url.js');
+ for(const query of ['', '?world=cloud','?world=unknown','?world=campus']){
+  const url=new URL(canonicalCampusURL('https://binhdao112.github.io/woin/previews/koi/'+query));
+  assert.equal(url.searchParams.get('world'),'campus');assert.equal(url.pathname,'/woin/previews/koi/');
+ }
+ assert.equal(canonicalCampusURL('https://example.org/woin/?world=cloud&team=hello#play'),'https://example.org/woin/?world=campus&team=hello#play');
 });
