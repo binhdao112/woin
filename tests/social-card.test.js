@@ -1,0 +1,62 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+const social = await import('../dist/social-card.js').catch(() => ({}));
+const model = {
+  recipient: 'Đặng Mỹ Linh', wishNumber: '042', message: 'Một lời chúc dài của hành trình.',
+  keepsakes: [{title:'Lá bài cảm hứng',detail:'The Sun · Mặt trời'},{title:'Bùa số may mắn',detail:'Số 07'}],
+};
+
+function canvasFixture() {
+  const texts = [], images = [];
+  const ctx = new Proxy({
+    font: '20px sans-serif',
+    measureText(text) { return { width: Array.from(text).length * (parseFloat(this.font.match(/\d+(?:\.\d+)?px/)?.[0]) || 20) * .52 }; },
+    fillText(text,x,y) { texts.push({text,x,y,font:this.font}); },
+    drawImage(...args) { images.push(args); },
+    createLinearGradient: () => ({addColorStop(){}}),
+  }, {get:(target,key)=>key in target?target[key]:()=>{}});
+  return {canvas:{getContext:()=>ctx},texts,images};
+}
+
+test('the social card exports a fixed 4:5 post and 9:16 story instead of an expanding report', () => {
+  assert.equal(typeof social.renderSocialCard,'function','a designed social card renderer is required');
+  for (const [format,height] of [['post',1350],['story',1920]]) {
+    const {canvas,texts}=canvasFixture();
+    social.renderSocialCard(canvas,model,{format});
+    assert.equal(canvas.width,1080);assert.equal(canvas.height,height);
+    assert.ok(texts.some(item=>item.text.includes('Đặng Mỹ Linh')));
+    assert.ok(!texts.some(item=>item.text==='Vé khởi hành'));
+    assert.ok(texts.every(item=>item.y>0&&item.y<height));
+  }
+});
+
+test('long Vietnamese names stay inside the typography area in both formats', () => {
+  assert.equal(typeof social.renderSocialCard,'function');
+  for (const format of ['post','story']) {
+    const {canvas,texts}=canvasFixture();
+    social.renderSocialCard(canvas,{...model,recipient:'Nguyễn '.repeat(5)+'Linh'},{format});
+    const nameText=texts.filter(item=>item.font.includes('Lora')&&item.text.includes('Nguyễn'));
+    assert.ok(nameText.length>0);
+    assert.ok(nameText.every(item=>parseFloat(item.font.match(/\d+(?:\.\d+)?px/)[0])>=30));
+    assert.ok(texts.every(item=>item.y<canvas.height));
+  }
+});
+
+test('the selected photo and illustrated background are composed into the same exported canvas', () => {
+  assert.equal(typeof social.renderSocialCard,'function');
+  const {canvas,images}=canvasFixture(),photo={width:800,height:1200},artwork={width:1080,height:1350};
+  social.renderSocialCard(canvas,model,{format:'post',photo,artwork});
+  assert.equal(images.length,2);
+  assert.equal(images[0][0],artwork);assert.equal(images[1][0],photo);
+  assert.equal(images[1].length,9,'photo must use an explicit cover crop');
+  assert.throws(()=>social.renderSocialCard({getContext:()=>null},model),/canvas/i);
+});
+
+test('social downloads have distinct Vietnamese-safe filenames and stable celebratory copy', () => {
+  assert.equal(typeof social.socialCardFilename,'function');
+  assert.equal(social.socialCardFilename('Đặng Mỹ Linh','post'),'thiep-20-10-dang-my-linh-bai-dang.png');
+  assert.equal(social.socialCardFilename('Đặng Mỹ Linh','story'),'thiep-20-10-dang-my-linh-story.png');
+  assert.deepEqual(social.getSocialCopy(model),social.getSocialCopy(model));
+  assert.ok(social.getSocialCopy(model).message.length<150);
+});
