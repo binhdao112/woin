@@ -8,11 +8,9 @@ export function stepMovement(position,direction,dt,canStand,speed=3.6){
 }
 const campusRects=[[-13.7,-6.3,-10,2],[-5.8,10.8,-11.5,-5.7],[1.6,10,-5.56,-2.04],[-5.95,-3.05,-.2,.8],[10.5,13.5,-.25,2.25],[5.57,6.43,6.62,7.18],[-2.05,2.05,10.1,10.3],[-3,-1,3.75,4.25],[3,5,3.75,4.25],[7,9,.75,1.25],[-2.75,-1.25,4.52,5.08],[3.25,4.75,4.52,5.08],[7.25,8.75,1.52,2.08]];
 const campusCircles=[[-.1,-4.5,1.1],[-1.3,-4.5,.25],[1.1,-4.5,.25],[-2.5,-3.3,.3],[1.3,-1,.3],[-1.7,-.6,.25],[13.2,3.6,.35],[9.4,5.7,.3],[12.2,6,.8],[-13.3,3.9,.09],[-6.7,3.9,.09],[-6.3,9.6,.09],[-3.7,9.6,.09]];
-function segmentDistance(p,a,b){const dx=b.x-a.x,dz=b.z-a.z,q=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.z-a.z)*dz)/(dx*dx+dz*dz)));return Math.hypot(p.x-a.x-q*dx,p.z-a.z-q*dz);}
-export function createWalkableWorld(kind,stops){
- const radius=.22,points=stops.map(([x,,z])=>({x,z}));
+export function createWalkableWorld(stops){
+ const radius=.22;
  function canStand(p){if(!Number.isFinite(p?.x)||!Number.isFinite(p?.z))return false;
-  if(kind==='cloud')return points.some(a=>Math.hypot(p.x-a.x,p.z-a.z)<=2.35)||points.some((a,i)=>i>0&&segmentDistance(p,points[i-1],a)<=.25);
   if(p.x< -16.45||p.x>16.45||p.z< -13.3||p.z>11.45)return false;
   if(campusRects.some(([l,r,b,f])=>p.x>l-radius&&p.x<r+radius&&p.z>b-radius&&p.z<f+radius))return false;
   return !campusCircles.some(([x,z,r])=>Math.hypot(p.x-x,p.z-z)<r+radius);

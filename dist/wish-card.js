@@ -136,7 +136,7 @@ export function renderWishCard(canvas, model, photo) {
   font(23, 600);
   ctx.fillText('Từ những người đồng đội luôn trân trọng bạn.', 600, canvas.height - 106);
   font(19);
-  ctx.fillText('VĂN PHÒNG TRÊN MÂY · THIỆP ' + model.wishNumber + ' / 200', 600, canvas.height - 69);
+  ctx.fillText('VNG CAMPUS · THIỆP ' + model.wishNumber + ' / 200', 600, canvas.height - 69);
   return canvas;
 }
 
