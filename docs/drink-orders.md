@@ -2,7 +2,7 @@
 
 Trạm cà phê dùng menu **KOI Thé · Trung Hòa** do host đưa sẵn vào repo. Người xem chọn món, cỡ ly, tên nhận nước, đường/đá và ghi chú. Google Sheets giữ danh sách và tổng hợp để host tự đặt nước trên Grab.
 
-**Hiện tại là bản thử:** URL `/exec` của host đã được điền trong `dist/assets/drinks/order-config.json`, giữ `enabled: false` trong lúc chờ khởi tạo. Kiểm tra ngày 16/10/2026: endpoint và JSONP receipt truy cập được không cần đăng nhập, nhưng mã đợt `team-2010-2026` chưa được nhận; bảng Order 20/10 chưa có hai tab Đăng ký/Tổng hợp. Host cần chạy `setupKoiOrders` và cấp quyền bằng tài khoản Google của mình (bước 3). Chỉ bật gửi thật sau khi kiểm tra lại; giao diện hiện vẫn ghi rõ lựa chọn chỉ dùng trong hành trình.
+**Đã bật nhận đăng ký:** host chạy `setupKoiOrders` ngày 16/10/2026; bảng Order 20/10 có hai tab Đăng ký/Tổng hợp, endpoint nhận đúng mã đợt `team-2010-2026`. URL `/exec` đã được điền trong `dist/assets/drinks/order-config.json` với `enabled: true`. Nút **Gửi lựa chọn cho host** hiện ở bản xem KOI; khi sửa một ly đã được nhận, nút đổi thành **Cập nhật lựa chọn**.
 
 ## Kết nối một lần bằng tài khoản Google của host
 
@@ -64,4 +64,4 @@ Google Sheets chứa tên nhận nước và lựa chọn; web không có API đ
 
 Apps Script trả receipt bằng [Content Service / JSONP](https://developers.google.com/apps-script/guides/content) để đọc được xác nhận từ web GitHub Pages. Receipt không chứa dữ liệu cá nhân; không dùng JSONP cho danh sách đăng ký.
 
-Kiểm thử backend dùng bản mô phỏng API SpreadsheetApp chạy chính file `Code.gs`, cùng E2E hai trình duyệt lưu riêng. **Chưa kiểm tra end-to-end trên một Google Sheet thật** cho tới khi host triển khai và gửi URL `/exec`.
+Kiểm thử backend dùng bản mô phỏng API SpreadsheetApp chạy chính file `Code.gs`, cùng E2E hai trình duyệt lưu riêng. Kiểm tra dịch vụ Google thật xác nhận endpoint công khai, mã đợt và đường POST/JSONP bằng yêu cầu sai phiên bản menu có chủ đích; yêu cầu bị từ chối trước bước ghi, không tạo ly thử trong bảng. Lần đăng ký món thật đầu tiên cần đối chiếu thông báo **Đã ghi nhận 1 ly** với dòng trong tab **Đăng ký** và số ly trong **Tổng hợp**.

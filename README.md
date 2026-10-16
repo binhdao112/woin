@@ -22,7 +22,7 @@ npm run check:pages
 
 Quầy cà phê có menu KOI Thé · Trung Hòa, tìm món không dấu, chọn cỡ, đường/đá, tên nhận nước và ghi chú. Nút **Ly nước của tôi** cho quay lại sửa lựa chọn. Google Sheets có danh sách từng đăng ký và bảng gom số ly theo cấu hình để host tự đặt nước.
 
-**Bản hiện tại chưa bật nhận đăng ký thật**: đã nhận và điền URL Apps Script `/exec` của host vào cấu hình, nhưng còn chờ chạy `setupKoiOrders` trên tài khoản Google của host. Quầy vẫn ghi rõ chế độ xem thử, chỉ giữ ly trong hành trình. Sau khi hai tab Đăng ký/Tổng hợp được tạo và kết nối được xác nhận, bật `enabled` rồi xuất bản lại. [Hướng dẫn kết nối và chốt danh sách](docs/drink-orders.md).
+**Đã bật kết nối Google Sheets** trên bản xem KOI sau khi host chạy `setupKoiOrders`, tạo hai tab Đăng ký/Tổng hợp và endpoint nhận đúng mã đợt. Chọn ly rồi bấm **Gửi lựa chọn cho host**; chỉ thông báo **Đã ghi nhận 1 ly** khi Google trả đúng xác nhận. [Hướng dẫn kết nối và chốt danh sách](docs/drink-orders.md).
 
 Chỉ hiện đã nhận sau khi Google xác nhận đúng mã gửi. Gửi lại sau lỗi mạng không thêm ly; đổi món cập nhật dòng cũ của cùng trình duyệt. Giá là tham khảo, host kiểm tra lại khi đặt.
 
