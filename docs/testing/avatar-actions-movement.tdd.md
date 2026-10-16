@@ -46,3 +46,9 @@ Tested the actual static app over HTTP in the Codex in-app browser at desktop wi
 - Reduced motion uses a still pose and still effects. No licensed audio or new dependency is required.
 - Reloading returns to the saved station; arbitrary walking coordinates are intentionally not persisted.
 - Work is isolated in the attached `avatar-actions` worktree because the original checkout has a user placeholder edit. That edit was not staged or modified.
+
+## Scope update: retire the cloud world
+
+The user subsequently asked to remove “Văn phòng trên mây”. The final app has one campus scene. Commit `db82747` records two intended RED tests: old menu/branding still present and the canonical-URL helper missing. Commit `9b34e83` records GREEN: old cloud URLs normalize to campus while preserving the preview path, extra query parameters and hash; the cloud scene/selector and card branding are removed. Historical cloud route tests above describe the earlier milestone; that retired behavior is no longer shipped or required. The final movement suite has four campus/input tests and campus tests include the legacy-link regression.
+
+Rechecked locally in browser by reloading the old cloud URL: it became `?world=campus`, title was `VNG Campus · Một vòng cùng team · 20/10`, and no world-switch element remained. Final static smoke count is 35 linked resources. Final full suite remains 78 passing tests.
