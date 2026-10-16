@@ -40,8 +40,8 @@ function renderFortune(area){
    out.classList.add('fortune-revealed');stationReady(fortune[0]+' · '+fortune[1]);celebrate();draw.textContent='Đã nhận thông điệp ✦';
    if(!stationContext){draw.disabled=false;drawing=false;draw.textContent='Rút một lời nhắn khác ↻';}
   }});
-  activeFortuneCancel=()=>motion.cancel();
-  motion.finished.then(()=>{tube.classList.remove('is-drawing');out.setAttribute('aria-busy','false');activeFortuneCancel=null;});
+  const cancel=()=>motion.cancel();activeFortuneCancel=cancel;
+  motion.finished.then(()=>{tube.classList.remove('is-drawing');out.setAttribute('aria-busy','false');if(activeFortuneCancel===cancel)activeFortuneCancel=null;});
  });area.append(draw);
 }
 

@@ -169,20 +169,60 @@ function tickEffects(dt){effectTime+=dt;for(let i=animations.length-1;i>=0;i--){
 
 
 let memoryOpen=false, memoryIndex=0, memoryAuto=true, memoryLast=0, memoryPhotos=[], memoryFrames=[], gallerySavedZoom=34;
+let sharedPhotos=[],personalPhotos=[],memorySource='shared',memoryAlbumTitle='Album của team',albumIssues=[],photosLoading=true,photoSelectionVersion=0;
+function allMemoryPhotos(){return [...sharedPhotos,...personalPhotos];}
 const gallery=new T.Group();scene.add(gallery);gallery.visible=false;
 function placeholder(i){const c=document.createElement('canvas');c.width=1000;c.height=750;const x=c.getContext('2d');x.fillStyle=['#f5d6ca','#d8e8ce','#d2e5ef'][i%3];x.fillRect(0,0,1000,750);x.fillStyle='#fff8eb';x.fillRect(110,90,780,470);x.fillStyle='#789d98';x.font='100px sans-serif';x.textAlign='center';x.fillText('＋',500,300);x.font='38px sans-serif';x.fillText('Ảnh kỷ niệm của team',500,400);x.font='28px sans-serif';x.fillStyle='#967966';x.fillText(['Một chuyến đi cùng nhau','Một ngày vui ở văn phòng','Một dấu mốc đáng nhớ'][i%3],500,650);return new T.CanvasTexture(c);}
 function buildGallery(){memoryFrames.forEach(f=>{gallery.remove(f);f.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){if(o.material.map)o.material.map.dispose();o.material.dispose();}});});memoryFrames=[];const photos=memoryPhotos.length?memoryPhotos:[null,null,null];photos.forEach((photo,i)=>{const card=new T.Group();gallery.add(card);const back=box(3.35,2.75,.08,mat(0xfffbf2),[0,0,0],card);let tex;if(photo){tex=new T.CanvasTexture(photo.canvas);}else tex=placeholder(i);tex.colorSpace=T.SRGBColorSpace;mesh(new T.PlaneGeometry(3.05,2.29),new T.MeshBasicMaterial({map:tex,side:T.DoubleSide}),[0,.10,.055],card);const title=textSprite(photo?photo.name:'CHỌN ẢNH ĐỂ BẮT ĐẦU',.22);title.position.set(0,-1.1,.07);card.add(title);card.scale.setScalar(.01);memoryFrames.push(card);});memoryIndex=Math.min(memoryIndex,memoryFrames.length-1);updateMemoryCaption();}
 function updateMemoryCaption(){$('#memory-caption').textContent=memoryPhotos.length?memoryPhotos[memoryIndex].name:'Chưa có ảnh của team · Hãy chọn ảnh từ máy';$('#memory-position').textContent=(memoryIndex+1)+' / '+memoryFrames.length;$('#memory-play').textContent=memoryAuto?'Ⅱ Tạm dừng':'▶ Tự chạy';}
-function openMemories(){if(moving)return;closeKeepsake();if(!memoryOpen)gallerySavedZoom=zoom;memoryOpen=true;selected[6]='Album 3D';gallery.visible=true;$('#memory-controls').hidden=false;$('#effect-toast').hidden=true;$('#memory-status').textContent=personalMessage(memoryPhotos.length?'Ảnh chỉ lưu trong trình duyệt này. Chọn khung ảnh bạn muốn mang về.':'Bạn có thể giữ khung ảnh minh họa hoặc chọn tối đa 12 ảnh JPG, PNG, WebP từ máy.');$('#memory-keep').textContent=isCampus?(keepsakeCollection.has(6)?'Đến Vườn check-in 20/10 →':'Giữ khung ảnh & đến vườn check-in →'):(keepsakeCollection.has(6)?'Lên sân thượng 20/10 →':'Giữ khung ảnh & lên sân thượng →');closeupUntil=0;zoom=innerWidth<700?19:14;targetFocus.copy(stops[6]).add(new T.Vector3(0,1.8,0));memoryLast=effectTime;if(!memoryFrames.length)buildGallery();}
+function openMemories(){if(moving)return;closeKeepsake();if(!memoryOpen)gallerySavedZoom=zoom;memoryOpen=true;selected[6]='Album 3D';gallery.visible=true;$('#memory-controls').hidden=false;$('#effect-toast').hidden=true;updateMemorySourceUI();$('#memory-keep').textContent=isCampus?(keepsakeCollection.has(6)?'Đến Vườn check-in 20/10 →':'Giữ khung ảnh & đến vườn check-in →'):(keepsakeCollection.has(6)?'Lên sân thượng 20/10 →':'Giữ khung ảnh & lên sân thượng →');closeupUntil=0;zoom=innerWidth<700?19:14;targetFocus.copy(stops[6]).add(new T.Vector3(0,1.8,0));memoryLast=effectTime;if(!memoryFrames.length)buildGallery();}
 function closeMemories(){if(!memoryOpen)return;memoryOpen=false;gallery.visible=false;$('#memory-controls').hidden=true;zoom=gallerySavedZoom;}
 function moveMemory(d){memoryIndex=(memoryIndex+d+memoryFrames.length)%memoryFrames.length;memoryLast=effectTime;updateMemoryCaption();}
-$('#memory-prev').onclick=()=>moveMemory(-1);$('#memory-next').onclick=()=>moveMemory(1);$('#memory-play').onclick=()=>{memoryAuto=!memoryAuto;memoryLast=effectTime;updateMemoryCaption();};$('#memory-close').onclick=closeMemories;$('#memory-open').onclick=()=>{if(index===6)openMemories();else if(canVisitStation(6,keepsakeCollection)&&!moving)go(6);else{$('#memory-status-global').textContent='Trạm kỷ niệm nằm sau Bưu điện lời cảm ơn. Bạn có thể chuẩn bị ảnh trước.';$('#memory-prepare').showModal();}};$('#prepare-close').onclick=()=>$('#memory-prepare').close();
+$('#memory-prev').onclick=()=>moveMemory(-1);$('#memory-next').onclick=()=>moveMemory(1);$('#memory-play').onclick=()=>{memoryAuto=!memoryAuto;memoryLast=effectTime;updateMemoryCaption();};$('#memory-close').onclick=closeMemories;$('#memory-open').onclick=()=>{if(index===6)openMemories();else if(canVisitStation(6,keepsakeCollection)&&!moving)go(6);else{$('#memory-status-global').textContent=(sharedPhotos.length?'Host đã chuẩn bị '+sharedPhotos.length+' ảnh của team. ':'')+'Trạm kỷ niệm nằm sau Bưu điện lời cảm ơn. Bạn cũng có thể chuẩn bị ảnh riêng trước.';$('#memory-prepare').showModal();}};$('#prepare-close').onclick=()=>$('#memory-prepare').close();
 async function imageCanvas(file){if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Chỉ hỗ trợ JPG, PNG và WebP.');if(file.size>20*1024*1024)throw Error('Mỗi ảnh cần nhỏ hơn 20 MB.');const bitmap=await createImageBitmap(file,{imageOrientation:'from-image'});const c=document.createElement('canvas');c.width=1200;c.height=900;const x=c.getContext('2d');x.fillStyle='#fff8ee';x.fillRect(0,0,1200,900);const scale=Math.min(1200/bitmap.width,900/bitmap.height);x.drawImage(bitmap,(1200-bitmap.width*scale)/2,(900-bitmap.height*scale)/2,bitmap.width*scale,bitmap.height*scale);bitmap.close();return c;}
 function memoryDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open('team-memory-photos',1);r.onupgradeneeded=()=>r.result.createObjectStore('album');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
-async function savePhotos(){const data=await Promise.all(memoryPhotos.map(async p=>({name:p.name,blob:await new Promise(resolve=>p.canvas.toBlob(resolve,'image/jpeg',.85))})));const db=await memoryDB();await new Promise((resolve,reject)=>{const tx=db.transaction('album','readwrite');tx.objectStore('album').put(data,'photos');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});db.close();}
-async function loadPhotos(){try{const db=await memoryDB();const data=await new Promise((resolve,reject)=>{const r=db.transaction('album').objectStore('album').get('photos');r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error);});db.close();memoryPhotos=await Promise.all(data.map(async p=>({name:p.name,canvas:await imageCanvas(p.blob)})));if(memoryPhotos.length){buildGallery();refreshMemoryGift();}}catch{$('#memory-status').textContent='Không đọc được ảnh đã lưu. Bạn vẫn có thể chọn ảnh để xem.';}}
-async function selectPhotos(e){const files=Array.from(e.target.files||[]);if(!files.length)return;const status=memoryOpen?$('#memory-status'):$('#memory-status-global');status.textContent='Đang chuẩn bị khung ảnh…';try{const accepted=files.slice(0,12);const result=await Promise.all(accepted.map(async f=>({name:f.name.replace(/\.[^.]+$/,''),canvas:await imageCanvas(f)})));memoryPhotos=result;memoryIndex=0;buildGallery();refreshMemoryGift();try{await savePhotos();status.textContent='Đã lưu '+result.length+' ảnh trong trình duyệt này. Không tải ảnh lên máy chủ.';}catch{status.textContent='Đã mở ảnh. Trình duyệt không cho lưu lâu dài; ảnh sẽ mất khi tải lại.';}memoryLast=effectTime;}catch(err){status.textContent=err.message||'Không đọc được ảnh. Hãy thử ảnh JPG hoặc PNG.';}e.target.value='';}
-$('#memory-files').onchange=selectPhotos;$('#prepare-files').onchange=selectPhotos;$('#memory-clear').onclick=async()=>{memoryPhotos=[];memoryIndex=0;buildGallery();refreshMemoryGift();try{await savePhotos();}catch{}$('#memory-status').textContent='Đã gỡ ảnh khỏi trình duyệt này.';};const photosReady=loadPhotos();
+function updateMemorySourceUI(){
+ $('#memory-shared').disabled=!sharedPhotos.length;$('#memory-personal').disabled=!personalPhotos.length;
+ $('#memory-shared').setAttribute('aria-pressed',String(memorySource==='shared'));$('#memory-personal').setAttribute('aria-pressed',String(memorySource==='personal'));
+ $('#memory-clear').hidden=memorySource!=='personal'||!personalPhotos.length;
+ $('#memory-album-title').textContent=memorySource==='shared'?memoryAlbumTitle:'Ảnh riêng của bạn';
+ $('#memory-status').textContent=photosLoading?'Đang tải album của team…':memorySource==='shared'&&sharedPhotos.length?'Ảnh được host chuẩn bị sẵn cho mọi người. Chọn một khung hình để mang theo.'+(albumIssues.length?' Có ảnh chưa tải được; các ảnh còn lại vẫn xem được.':''):personalPhotos.length?'Ảnh riêng chỉ lưu trong trình duyệt này; album của team vẫn được giữ nguyên.':'Host chưa thêm ảnh vào album. Bạn có thể giữ khung minh họa hoặc chọn ảnh riêng.';
+}
+function setMemorySource(source){
+ memorySource=source;memoryPhotos=source==='shared'?sharedPhotos:personalPhotos;memoryIndex=0;memoryLast=effectTime;
+ buildGallery();refreshMemoryGift();updateMemorySourceUI();
+}
+async function savePhotos(){
+ const data=await Promise.all(personalPhotos.map(async p=>({id:p.id,name:p.name,blob:await new Promise(resolve=>p.canvas.toBlob(resolve,'image/jpeg',.85))})));
+ const db=await memoryDB();await new Promise((resolve,reject)=>{const tx=db.transaction('album','readwrite');tx.objectStore('album').put(data,'photos');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});db.close();
+}
+async function loadPersonalPhotos(){
+ try{
+  const db=await memoryDB();const data=await new Promise((resolve,reject)=>{const r=db.transaction('album').objectStore('album').get('photos');r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error);});db.close();
+  return await Promise.all(data.slice(0,12).map(async(p,i)=>({id:p.id||'personal-'+i+'-'+p.name,name:p.name,canvas:await imageCanvas(p.blob),source:'personal'})));
+ }catch{return [];}
+}
+async function loadPhotos(){
+ const version=photoSelectionVersion;
+ const [shared,local]=await Promise.all([loadSharedAlbum({decode:imageCanvas}),loadPersonalPhotos()]);
+ sharedPhotos=shared.photos;memoryAlbumTitle=shared.title;albumIssues=shared.issues;photosLoading=false;
+ if(version===photoSelectionVersion){personalPhotos=local;memorySource=sharedPhotos.length?'shared':personalPhotos.length?'personal':'shared';}
+ setMemorySource(memorySource);
+}
+async function selectPhotos(e){
+ const files=Array.from(e.target.files||[]);if(!files.length)return;
+ const version=++photoSelectionVersion,status=memoryOpen?$('#memory-status'):$('#memory-status-global');status.textContent='Đang chuẩn bị khung ảnh…';
+ try{
+  const result=await Promise.all(files.slice(0,12).map(async f=>({id:'personal-'+crypto.randomUUID(),name:f.name.replace(/\.[^.]+$/,''),canvas:await imageCanvas(f),source:'personal'})));
+  if(version!==photoSelectionVersion)return;personalPhotos=result;setMemorySource('personal');
+  try{await savePhotos();status.textContent='Đã lưu '+result.length+' ảnh riêng trên trình duyệt này. Album của team vẫn giữ nguyên.';}catch{status.textContent='Đã mở ảnh riêng; trình duyệt chưa cho lưu lâu dài.';}
+ }catch(err){status.textContent=err.message||'Không đọc được ảnh. Hãy thử ảnh JPG hoặc PNG.';}finally{e.target.value='';}
+}
+$('#memory-files').onchange=selectPhotos;$('#prepare-files').onchange=selectPhotos;
+$('#memory-shared').onclick=()=>setMemorySource('shared');$('#memory-personal').onclick=()=>setMemorySource('personal');
+$('#memory-clear').onclick=async()=>{photoSelectionVersion++;personalPhotos=[];setMemorySource('shared');try{await savePhotos();}catch{}$('#memory-status').textContent=sharedPhotos.length?'Đã gỡ ảnh riêng. Album của team vẫn ở đây.':'Đã gỡ ảnh riêng khỏi trình duyệt này.';};
+const photosReady=loadPhotos();
+
 function tickMemories(dt){if(!memoryOpen)return;if(memoryAuto&&effectTime-memoryLast>4.5)moveMemory(1);gallery.position.copy(stops[6]).add(new T.Vector3(0,2.1,0));gallery.rotation.y=yaw;const n=memoryFrames.length;memoryFrames.forEach((f,i)=>{let d=(i-memoryIndex+n)%n;if(d>n/2)d-=n;const x=d*2.8,z=-Math.abs(d)*1.6;f.position.lerp(new T.Vector3(x,Math.sin(effectTime*.7+i)*.08,z),reduced?1:Math.min(1,dt*6));const size=d===0?1:.72;f.scale.lerp(new T.Vector3(size,size,size),reduced?1:Math.min(1,dt*6));f.rotation.y=T.MathUtils.lerp(f.rotation.y,-Math.sign(d)*.36,Math.min(1,dt*6));f.visible=Math.abs(d)<=2;});}
 
 
@@ -196,11 +236,15 @@ let cardFormat='post',checkinPhoto=null,cardPhotoEnabled=true,previewRequest=0;
 let cardTemplate='bloom',templatePreviewKey='',cardPhotoVersion=0;
 try{cardTemplate=getSocialTemplate(sessionStorage.getItem('team-card-template')).id;}catch{}
 SOCIAL_TEMPLATES.forEach(style=>{
- const button=document.createElement('button'),preview=document.createElement('canvas'),label=document.createElement('span');
+ const button=document.createElement('button'),preview=document.createElement('canvas'),label=document.createElement('strong'),description=document.createElement('small');
  button.className='wish-template';button.dataset.cardTemplate=style.id;button.setAttribute('aria-label',style.name+' · '+style.description);button.setAttribute('aria-pressed',String(style.id===cardTemplate));
- preview.width=144;preview.height=180;preview.setAttribute('aria-hidden','true');label.textContent=style.name;button.append(preview,label);
- button.onclick=()=>{cardTemplate=style.id;try{sessionStorage.setItem('team-card-template',cardTemplate);}catch{}updateWishPreview();};$('#wish-templates').append(button);
+ preview.width=288;preview.height=360;preview.setAttribute('aria-hidden','true');label.textContent=style.name;description.textContent=style.description;button.append(preview,label,description);
+ button.onclick=()=>{cardTemplate=style.id;try{sessionStorage.setItem('team-card-template',cardTemplate);}catch{}updateWishPreview();};
+ button.onkeydown=event=>{const step={ArrowRight:1,ArrowLeft:-1,ArrowDown:2,ArrowUp:-2}[event.key];if(!step)return;event.preventDefault();const choices=Array.from($('#wish-templates').children),next=choices[(choices.indexOf(button)+step+choices.length)%choices.length];next.focus();next.click();};
+ $('#wish-templates').append(button);
 });
+$('#wish-see-preview').onclick=()=>$('#wish-preview-area').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+
 function saveJourney(){try{sessionStorage.setItem('team-journey-v2',JSON.stringify({recipient,gifts:Array.from(keepsakeCollection.entries()),finalId:finalWish?.id,index,arrival}));}catch{}}
 function updateKeepsakeCount(){updateUI();saveJourney();}
 function shuffledWishes(){const bag=Array.from({length:wishes.length},(_,i)=>i);for(let i=bag.length-1;i>0;i--){const r=new Uint32Array(1);crypto.getRandomValues(r);const j=r[0]%(i+1);[bag[i],bag[j]]=[bag[j],bag[i]];}return bag;}
@@ -212,13 +256,13 @@ function drawWish(){
  $('#wish-recipient').textContent='Gửi '+model.recipient;
  $('#wish-keepsakes').replaceChildren();
  model.keepsakes.forEach(item=>{const entry=document.createElement('div'),title=document.createElement('strong'),detail=document.createElement('span');entry.className='wish-souvenir';title.textContent=item.title;detail.textContent=item.detail;entry.append(title,detail);$('#wish-keepsakes').append(entry);});
- $('#wish-download-status').textContent='';templatePreviewKey='';updateWishPreview();
+ $('#wish-download-status').textContent='';templatePreviewKey='';$('#wish-card').scrollTop=0;updateWishPreview();
  $('#wish-face').classList.remove('reveal');void $('#wish-face').offsetWidth;$('#wish-face').classList.add('reveal');
 }
 function wishDownloadLabel(){return cardFormat==='full'?'Tải bản kỷ niệm đầy đủ ↓':cardFormat==='story'?'Tải story 9:16 ↓':'Tải bài đăng 4:5 ↓';}
 async function composeWishCanvas(model,format,template=cardTemplate){
  const [,,artwork]=await Promise.all([document.fonts.ready,photosReady,format!=='full'&&template==='bloom'?loadCardArtwork():null,document.fonts.load('500 88px Lora'),document.fonts.load('italic 500 86px Lora'),document.fonts.load('800 85px "Be Vietnam Pro"')]);
- const photoName=keepsakeCollection.get(6)?.photoName,original=memoryPhotos.find(item=>item.name===photoName)?.canvas;
+ const original=findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6))?.canvas;
  const photo=format==='full'?original:cardPhotoEnabled?(checkinPhoto||original):null,canvas=document.createElement('canvas');
  return format==='full'?renderWishCard(canvas,model,photo):renderSocialCard(canvas,model,{format,photo,artwork,template});
 }
@@ -237,13 +281,13 @@ async function updateWishPreview(){
  $('#wish-preview-status').textContent='Đang chuẩn bị thiệp…';
  document.querySelectorAll('[data-card-format]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.cardFormat===format)));
  document.querySelectorAll('[data-card-template]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.cardTemplate===template)));
- $('#wish-template-picker').hidden=format==='full';$('#wish-template-description').textContent=getSocialTemplate(template).description;
+ $('#wish-template-picker').hidden=format==='full';$('#wish-template-description').textContent='Đang chọn: '+getSocialTemplate(template).name;$('#wish-selected-label').textContent=format==='full'?'Bản kỷ niệm đầy đủ':getSocialTemplate(template).name+' · '+(format==='story'?'Story 9:16':'Bài đăng 4:5');
  $('#wish-photo-tools').hidden=format==='full';$('#wish-download').textContent=wishDownloadLabel();$('#wish-copy').textContent=format==='full'?'Sao chép lời chúc':'Chép caption';
  try{
   const canvas=await composeWishCanvas(model,format,template);if(request!==previewRequest)return;
   const preview=$('#wish-preview');preview.width=canvas.width;preview.height=canvas.height;preview.getContext('2d').drawImage(canvas,0,0);
   $('#wish-remaining').textContent=format==='full'?'Bản lưu đầy đủ lời chúc và 7 kỷ vật.':canvas.width+' × '+canvas.height+' px · '+(format==='story'?'Sẵn sàng đăng story.':'Sẵn sàng cho bài đăng của bạn.');
-  const original=memoryPhotos.some(photo=>photo.name===keepsakeCollection.get(6)?.photoName);
+  const original=Boolean(findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6)));
   $('#wish-remove-photo').hidden=!cardPhotoEnabled||!(checkinPhoto||original);$('#wish-preview-status').textContent='';
   if(format!=='full')refreshTemplatePreviews(model);
  }catch(error){if(request===previewRequest)$('#wish-preview-status').textContent='Chưa tạo được bản xem trước. '+error.message;}
@@ -272,7 +316,7 @@ async function chooseCheckinPhoto(event){
 }
 function openWish(){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}drawWish();$('#wish-card').showModal();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}
-function makeGift(k,data,parent){const g=new T.Group();parent.add(g);const blush=mat(0xe6b1be),cream=mat(0xffefd1),green=mat(0x9bc8b6);if(k===0){box(2.5,1.2,.1,cream,[0,0,0],g);box(.12,1.2,.13,blush,[.7,0,0],g);const label=textSprite(recipient||'VÉ ĐỒNG ĐỘI',.35);label.position.set(-.2,0,.1);g.add(label);}if(k===1){const drink=cup(g,data.style||0,[0,0,0]);drink.scale.setScalar(3);const tag=textSprite(recipient||'CÙNG TEAM',.25);tag.position.set(0,-.7,.2);g.add(tag);}if(k===2){box(1.45,2.1,.12,mat(0x92749e),[0,0,0],g);const star=textSprite('✧',.8);star.position.set(0,.3,.1);g.add(star);const label=textSprite('CẢM HỨNG',.25);label.position.set(0,-.55,.1);g.add(label);}if(k===3){const ring=mesh(new T.TorusGeometry(.6,.08,10,40),mats.gold,[0,0,0],g);const num=textSprite(data.number||'✦',.7);num.position.set(0,0,.15);g.add(num);cylinder(.025,.025,.5,mats.wood,[0,.9,0],g);}if(k===4){cylinder(.5,.5,1.15,mat(0xc3dfdc),[0,0,0],g,24);cylinder(.54,.54,.16,mats.gold,[0,.65,0],g,24);for(let n=0;n<5;n++)sphere(.14,n%2?blush:mats.gold,[Math.cos(n)*.25,-.3+n*.13,Math.sin(n)*.25],g);}if(k===5){box(1.7,1.15,.12,cream,[0,0,0],g);const flap=mesh(new T.ConeGeometry(.83,.7,3),blush,[0,.12,.1],g);flap.rotation.z=Math.PI;const seal=sphere(.14,mats.gold,[0,-.12,.2],g);}if(k===6){box(1.9,2.15,.15,blush,[0,0,0],g);const photo=data.photoName?memoryPhotos.find(item=>item.name===data.photoName):memoryPhotos[memoryIndex];const texture=photo?new T.CanvasTexture(photo.canvas):placeholder(0);texture.colorSpace=T.SRGBColorSpace;mesh(new T.PlaneGeometry(1.65,1.4),new T.MeshBasicMaterial({map:texture}),[0,.15,.1],g);const stamp=textSprite('TEAM · 20/10',.2);stamp.position.set(0,-.8,.15);g.add(stamp);}return g;}
+function makeGift(k,data,parent){const g=new T.Group();parent.add(g);const blush=mat(0xe6b1be),cream=mat(0xffefd1),green=mat(0x9bc8b6);if(k===0){box(2.5,1.2,.1,cream,[0,0,0],g);box(.12,1.2,.13,blush,[.7,0,0],g);const label=textSprite(recipient||'VÉ ĐỒNG ĐỘI',.35);label.position.set(-.2,0,.1);g.add(label);}if(k===1){const drink=cup(g,data.style||0,[0,0,0]);drink.scale.setScalar(3);const tag=textSprite(recipient||'CÙNG TEAM',.25);tag.position.set(0,-.7,.2);g.add(tag);}if(k===2){box(1.45,2.1,.12,mat(0x92749e),[0,0,0],g);const star=textSprite('✧',.8);star.position.set(0,.3,.1);g.add(star);const label=textSprite('CẢM HỨNG',.25);label.position.set(0,-.55,.1);g.add(label);}if(k===3){const ring=mesh(new T.TorusGeometry(.6,.08,10,40),mats.gold,[0,0,0],g);const num=textSprite(data.number||'✦',.7);num.position.set(0,0,.15);g.add(num);cylinder(.025,.025,.5,mats.wood,[0,.9,0],g);}if(k===4){cylinder(.5,.5,1.15,mat(0xc3dfdc),[0,0,0],g,24);cylinder(.54,.54,.16,mats.gold,[0,.65,0],g,24);for(let n=0;n<5;n++)sphere(.14,n%2?blush:mats.gold,[Math.cos(n)*.25,-.3+n*.13,Math.sin(n)*.25],g);}if(k===5){box(1.7,1.15,.12,cream,[0,0,0],g);const flap=mesh(new T.ConeGeometry(.83,.7,3),blush,[0,.12,.1],g);flap.rotation.z=Math.PI;const seal=sphere(.14,mats.gold,[0,-.12,.2],g);}if(k===6){box(1.9,2.15,.15,blush,[0,0,0],g);const photo=data.photoId||data.photoName?findMemoryPhoto(allMemoryPhotos(),data):memoryPhotos[memoryIndex];const texture=photo?new T.CanvasTexture(photo.canvas):placeholder(0);texture.colorSpace=T.SRGBColorSpace;mesh(new T.PlaneGeometry(1.65,1.4),new T.MeshBasicMaterial({map:texture}),[0,.15,.1],g);const stamp=textSprite('TEAM · 20/10',.2);stamp.position.set(0,-.8,.15);g.add(stamp);}return g;}
 function showGift(k,data={}){if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);}keepsakeRoot=new T.Group();scene.add(keepsakeRoot);keepsakeRoot.position.copy(stops[k]).add(new T.Vector3(0,1.8,.5));keepsakeRoot.rotation.y=yaw;makeGift(k,data,keepsakeRoot);}
 function collectGift(k,data){if(moving||k!==index||k<0||k>6||keepsakeCollection.has(k))return;keepsakeCollection.set(k,{...data,title:stationGifts[k][0]});const g=new T.Group();scene.add(g);g.position.copy(stops[k]).add(new T.Vector3(-1.2,.8,.2));g.rotation.y=yaw;g.scale.setScalar(.4);makeGift(k,data,g);savedFrames.set(k,g);updateKeepsakeCount();celebrateAt(stops[k],60);if(k===1){const old=souvenirs.getObjectByName('drink');if(old){souvenirs.remove(old);clearGroup(old);}const d=cup(souvenirs,data.style||0,[.38,.78,.16]);d.name='drink';}if(keepsakeActive){showGift(k,data);$('#keepsake-result').textContent='Đã cất vào album hành trình. Mỗi trạm chỉ nhận một kỷ vật.';$('#keepsake-save').disabled=true;$('#station-activity').hidden=true;$('#keepsake-next').disabled=false;$('#keepsake-next').textContent='Trạm tiếp theo →';}}
 function openKeepsake(k){if(k===7){openWish();return;}if(moving)return;closeMemories();closeKeepsake();keepsakeZoom=zoom;keepsakeActive=true;$('#effect-toast').hidden=true;closeupUntil=0;zoom=innerWidth<700?16:11;targetFocus.copy(stops[k]).add(new T.Vector3(0,1.3,0));focus.copy(targetFocus);const stored=keepsakeCollection.get(k);keepsakeStyle=stored?.style||0;$('#keepsake-title').textContent=stationGifts[k][0];$('#keepsake-description').textContent=personalMessage(stationGifts[k][1]);$('#keepsake-panel').hidden=false;$('#keepsake-next').disabled=!stored;$('#keepsake-next').textContent=stored?'Trạm tiếp theo →':'Nhận kỷ vật để mở trạm tiếp theo';$('#keepsake-save').textContent=k===0?'Nhận vé & đi tiếp →':k===1?'Giữ đồ uống & đi tiếp →':'Giữ kỷ vật & đi tiếp →';$('#recipient-wrap').hidden=true;$('#recipient-name').value=recipient;$('#keepsake-save').hidden=Boolean(activities[k]);$('#keepsake-save').disabled=Boolean(stored);$('#station-activity').hidden=!activities[k]||Boolean(stored);$('#station-activity').textContent={2:'Rút lá bài cảm hứng ✧',3:'Nhận con số may mắn ◇',4:'Quay một lọ niềm vui ✿',5:'Bóc quẻ & nhận thư ✉'}[k]||'';$('#keepsake-result').textContent=stored?(stored.result||'Kỷ vật này đã ở trong album của bạn.'):'Trải nghiệm tại trạm để nhận kỷ vật, rồi tiếp tục chuyến đi. Gom đủ 7 món để mở thiệp cá nhân hóa.';renderStyles();showGift(k,stored||{});}
@@ -284,7 +328,7 @@ $('#keepsake-save').onclick=()=>{recipient=$('#recipient-name').value.trim().sli
 $('#station-activity').onclick=()=>window.dispatchEvent(new CustomEvent('station-divination',{detail:{station:index,tab:activities[index],name:recipient}}));
 window.addEventListener('station-result',e=>{const {station,result,number}=e.detail;if(station!==index||keepsakeCollection.has(station))return;collectGift(station,{result,number});});
 window.addEventListener('station-continue',e=>{if(e.detail.station===index)advanceJourney();});
-$('#memory-keep').onclick=()=>{const photo=memoryPhotos[memoryIndex];collectGift(6,{photoName:photo?.name,result:photo?'Khung ảnh từ '+photo.name:'Khung ảnh đang chờ những khoảnh khắc cùng team.'});closeMemories();advanceJourney();};
+$('#memory-keep').onclick=()=>{const photo=memoryPhotos[memoryIndex];collectGift(6,{photoId:photo?.id,photoName:photo?.name,result:photo?'Khung ảnh từ '+photo.name:'Khung ảnh đang chờ những khoảnh khắc cùng team.'});closeMemories();advanceJourney();};
 $('#wish-close').onclick=()=>$('#wish-card').close();$('#wish-download').onclick=downloadWish;
 $('#wish-copy').onclick=async()=>{try{const message=cardFormat==='full'?currentWish.text:getSocialCopy(createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection}),cardTemplate).message+'\n\nMột ngày rực rỡ cùng team. 💐\n#Happy2010 '+(isCampus?'#VNGCampus':'#VanPhongTrenMay');await navigator.clipboard.writeText((recipient?'Gửi '+recipient+' 💌\n\n':'')+message);$('#wish-copy').textContent='Đã sao chép ✓';}catch{$('#wish-download-status').textContent='Chưa sao chép được. Bạn vẫn có thể tải ảnh thiệp nhé.';}};
 document.querySelectorAll('[data-card-format]').forEach(button=>button.onclick=()=>{cardFormat=button.dataset.cardFormat;updateWishPreview();});
@@ -297,7 +341,7 @@ try{
   recipient=typeof saved.recipient==='string'?saved.recipient.slice(0,40):'';
   for(const item of saved.gifts){if(!Array.isArray(item)||item.length!==2)continue;const [k,data]=item;
    if(!Number.isInteger(k)||k<0||k>6||!data||typeof data!=='object')continue;
-   const gift={title:stationGifts[k][0],style:[0,1,2].includes(data.style)?data.style:0,result:typeof data.result==='string'?data.result.slice(0,600):'',number:typeof data.number==='string'?data.number.slice(0,2):undefined,photoName:typeof data.photoName==='string'?data.photoName.slice(0,255):undefined};
+   const gift={title:stationGifts[k][0],style:[0,1,2].includes(data.style)?data.style:0,result:typeof data.result==='string'?data.result.slice(0,600):'',number:typeof data.number==='string'?data.number.slice(0,2):undefined,photoName:typeof data.photoName==='string'?data.photoName.slice(0,255):undefined,photoId:typeof data.photoId==='string'?data.photoId.slice(0,160):undefined};
    keepsakeCollection.set(k,gift);const frame=new T.Group();scene.add(frame);frame.position.copy(stops[k]).add(new T.Vector3(-1.2,.8,.2));frame.scale.setScalar(.4);frame.rotation.y=yaw;makeGift(k,gift,frame);savedFrames.set(k,frame);
   }
   const progress=getJourneyProgress(keepsakeCollection);finalWish=progress.complete?wishes.find(w=>w.id===saved.finalId)||null:null;
