@@ -1,5 +1,5 @@
 import * as T from './three.module.js';
-import {AVATAR_ACTIONS} from './avatar-actions.js';
+import {AVATAR_ACTIONS} from './avatar-actions.js?v=campus-20261016-1';
 export function createAvatarActionEffects({scene,anchor,camera,createLabel}){
  let group=null;
  function clear(){if(!group)return;scene.remove(group);const resources=new Set();group.traverse(node=>{if(node.geometry)resources.add(node.geometry);if(node.material){resources.add(node.material);if(node.material.map)resources.add(node.material.map);}});resources.forEach(r=>r.dispose());group=null;}

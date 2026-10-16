@@ -1,4 +1,4 @@
-import {AVATAR_ACTIONS} from './avatar-actions.js';
+import {AVATAR_ACTIONS} from './avatar-actions.js?v=campus-20261016-1';
 export function createAvatarControls({input,isBlocked,onManualStart,onInteract,onStage,onAction,onStop}){
  const trigger=document.createElement('button');trigger.id='avatar-actions-open';trigger.textContent='♡ Biểu cảm';trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-controls','avatar-actions');document.querySelector('.tools').insertBefore(trigger,document.querySelector('#profile-edit')?.nextSibling||null);
  const panel=document.createElement('section');panel.id='avatar-actions';panel.hidden=true;panel.setAttribute('aria-label','Biểu cảm của nhân vật');panel.innerHTML='<div class="gesture-heading"><div><small>MỘT CHÚT CUTE CỦA BẠN</small><h2>Hôm nay, mood gì nè?</h2></div><button id="gesture-close" aria-label="Đóng biểu cảm">×</button></div><div class="gesture-buttons" role="group" aria-label="Chọn động tác"></div><div class="gesture-footer"><p id="gesture-status" role="status">Chọn một động tác để thử nhé.</p><button id="gesture-stop">Đứng yên</button></div>';
