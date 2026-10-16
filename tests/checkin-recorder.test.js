@@ -24,3 +24,8 @@ test('constructor failures, encoder errors and empty recordings release resource
  const {createCheckinRecorder}=await api();
  for(const options of [{throws:true},{empty:true},{}]){const f=fixture(options),errors=[];const rec=createCheckinRecorder({canvas:f.canvas,MediaRecorderImpl:f.Recorder,onError:e=>errors.push(e)});rec.start();if(!options.throws){if(options.empty)rec.tick(8);else f.instance().events.error({error:Error('lost encoder')});}assert.equal(rec.busy(),false);assert.equal(f.stopped(),1);assert.equal(errors.length,1);}
 });
+
+test('MP4 prefers an explicit H264 encoder over the browser default codec for social sharing',async()=>{
+ const {selectClipFormat}=await api();const type=selectClipFormat({isTypeSupported:mime=>mime.startsWith('video/mp4')});
+ assert.equal(type.extension,'mp4');assert.match(type.mimeType,/avc1/);
+});
