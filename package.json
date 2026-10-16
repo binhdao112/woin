@@ -6,6 +6,8 @@
     "test": "node --test",
     "test:coverage": "node --experimental-test-coverage --test",
     "check:pages": "node scripts/check-pages.mjs",
-    "album": "node scripts/prepare-album.mjs"
+    "album": "node scripts/prepare-album.mjs",
+    "prepare:drinks": "node scripts/prepare-drink-sheets.mjs",
+    "check:drinks": "node scripts/prepare-drink-sheets.mjs --check"
   }
 }

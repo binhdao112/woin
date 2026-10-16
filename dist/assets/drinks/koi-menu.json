@@ -1,0 +1,1801 @@
+{
+  "version": "2026-10-16",
+  "title": "KOI Thé · Trung Hòa",
+  "sourceUrl": "https://food.grab.com/vn/vi/restaurant/koi-th%C3%A9-trung-h%C3%B2a-delivery/5-C8BJVKKJFCLTE2",
+  "checkedAt": "2026-10-16",
+  "notice": "Giá tham khảo từ menu Grab đang hiển thị, chưa gồm phí giao hàng hoặc ưu đãi. Đường, đá và ghi chú là yêu cầu để host đối chiếu khi đặt.",
+  "categories": [
+    {
+      "id": "best",
+      "name": "Được yêu thích"
+    },
+    {
+      "id": "new",
+      "name": "Món mới"
+    },
+    {
+      "id": "tea",
+      "name": "Trà thanh mát"
+    },
+    {
+      "id": "milk-tea",
+      "name": "Trà sữa"
+    },
+    {
+      "id": "latte",
+      "name": "Latte"
+    },
+    {
+      "id": "macchiato",
+      "name": "Macchiato"
+    }
+  ],
+  "items": [
+    {
+      "id": "koi-e50d56e866",
+      "name": "Trà Sữa Ngũ Cốc Rang",
+      "category": "new",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e50d56e866-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-e50d56e866-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        },
+        {
+          "id": "koi-e50d56e866-hot",
+          "label": "Nóng",
+          "temperature": "hot",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-87aa3bc30b",
+      "name": "Trà Sữa Đường Đen Ngũ Cốc Rang",
+      "category": "new",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-87aa3bc30b-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 69000
+        },
+        {
+          "id": "koi-87aa3bc30b-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 93000
+        },
+        {
+          "id": "koi-87aa3bc30b-hot",
+          "label": "Nóng",
+          "temperature": "hot",
+          "price": 93000
+        }
+      ]
+    },
+    {
+      "id": "koi-ea18b4120b",
+      "name": "Trà Sữa Ngũ Cốc Rang Macchiato",
+      "category": "new",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ea18b4120b-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 72000
+        },
+        {
+          "id": "koi-ea18b4120b-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 97000
+        },
+        {
+          "id": "koi-ea18b4120b-hot",
+          "label": "Nóng",
+          "temperature": "hot",
+          "price": 97000
+        }
+      ]
+    },
+    {
+      "id": "koi-114f00e434",
+      "name": "Hồng Trà Latte Ngũ Cốc Rang",
+      "category": "new",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-114f00e434-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-114f00e434-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        },
+        {
+          "id": "koi-114f00e434-hot",
+          "label": "Nóng",
+          "temperature": "hot",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-ab353fce39",
+      "name": "Lục Trà Lài",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ab353fce39-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 47000
+        },
+        {
+          "id": "koi-ab353fce39-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 62000
+        }
+      ]
+    },
+    {
+      "id": "koi-f7d9a5cbad",
+      "name": "Lục Trà Chanh Tươi",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-f7d9a5cbad-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 54000
+        },
+        {
+          "id": "koi-f7d9a5cbad-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 72000
+        }
+      ]
+    },
+    {
+      "id": "koi-9783a34069",
+      "name": "Lục Trà Hương Hazelnut",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-9783a34069-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 52000
+        },
+        {
+          "id": "koi-9783a34069-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 69000
+        }
+      ]
+    },
+    {
+      "id": "koi-6d9fd270e6",
+      "name": "Lục Trà Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-6d9fd270e6-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 54000
+        },
+        {
+          "id": "koi-6d9fd270e6-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 72000
+        }
+      ]
+    },
+    {
+      "id": "koi-fc6ac23452",
+      "name": "Lục Trà Chanh Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-fc6ac23452-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-fc6ac23452-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-297753981b",
+      "name": "Lục Trà Đào Hồng",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-297753981b-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-297753981b-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-22aaa1a533",
+      "name": "Lục Trà Đào Hồng Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-22aaa1a533-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-22aaa1a533-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-0f5f351dae",
+      "name": "Lục Trà Đào Hồng Chanh Tươi",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-0f5f351dae-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-0f5f351dae-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-ad69718fad",
+      "name": "Lục Trà Xoài",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ad69718fad-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-ad69718fad-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-9cd2de5cf5",
+      "name": "Assam Hồng Trà",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-9cd2de5cf5-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 47000
+        },
+        {
+          "id": "koi-9cd2de5cf5-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 62000
+        }
+      ]
+    },
+    {
+      "id": "koi-48452f2121",
+      "name": "Hồng Trà Chanh Tươi",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-48452f2121-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 54000
+        },
+        {
+          "id": "koi-48452f2121-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 72000
+        }
+      ]
+    },
+    {
+      "id": "koi-6e5f440b44",
+      "name": "Hồng Trà Hương Hazelnut",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-6e5f440b44-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 52000
+        },
+        {
+          "id": "koi-6e5f440b44-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 69000
+        }
+      ]
+    },
+    {
+      "id": "koi-cb462f22bd",
+      "name": "Hồng Trà Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-cb462f22bd-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 54000
+        },
+        {
+          "id": "koi-cb462f22bd-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 72000
+        }
+      ]
+    },
+    {
+      "id": "koi-d3b9e03f33",
+      "name": "Hồng Trà Chanh Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-d3b9e03f33-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-d3b9e03f33-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-35a64d3b17",
+      "name": "Hồng Trà Đào Hồng",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-35a64d3b17-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-35a64d3b17-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-4e830f86ed",
+      "name": "Hồng Trà Đào Hồng Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-4e830f86ed-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-4e830f86ed-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-1928a65aa1",
+      "name": "Hồng Trà Đào Hồng Chanh Tươi",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-1928a65aa1-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-1928a65aa1-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-20097daf5d",
+      "name": "Hồng Trà Xoài",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-20097daf5d-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-20097daf5d-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-eb42f285e3",
+      "name": "Trà Oolong Hoàng Kim",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-eb42f285e3-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 47000
+        },
+        {
+          "id": "koi-eb42f285e3-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 62000
+        }
+      ]
+    },
+    {
+      "id": "koi-bf6309fa75",
+      "name": "Trà Oolong Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-bf6309fa75-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 54000
+        },
+        {
+          "id": "koi-bf6309fa75-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 72000
+        }
+      ]
+    },
+    {
+      "id": "koi-6392754d29",
+      "name": "Trà Oolong Chanh Tươi",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-6392754d29-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 54000
+        },
+        {
+          "id": "koi-6392754d29-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 72000
+        }
+      ]
+    },
+    {
+      "id": "koi-bb971988bf",
+      "name": "Oolong Chanh Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-bb971988bf-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-bb971988bf-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-e6c67e35f8",
+      "name": "Trà Oolong Đào Hồng",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e6c67e35f8-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-e6c67e35f8-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-ae8c2f00bc",
+      "name": "Trà Oolong Đào Hồng Mật Ong",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ae8c2f00bc-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-ae8c2f00bc-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-9d01ad7434",
+      "name": "Trà Oolong Đào Hồng Chanh Tươi",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-9d01ad7434-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-9d01ad7434-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-6ad21d6ce4",
+      "name": "Trà Oolong Xoài",
+      "category": "tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-6ad21d6ce4-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-6ad21d6ce4-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-0fb52f304d",
+      "name": "Lục Trà Sữa",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-0fb52f304d-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-0fb52f304d-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-e4c7e82a78",
+      "name": "Lục Trà Sữa Hazelnut",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e4c7e82a78-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-e4c7e82a78-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-73b3a1bbc1",
+      "name": "Lục Trà Sữa Mật Ong",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-73b3a1bbc1-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 59000
+        },
+        {
+          "id": "koi-73b3a1bbc1-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 79000
+        }
+      ]
+    },
+    {
+      "id": "koi-5da535e963",
+      "name": "Lục Trà Sữa Đào Hồng",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-5da535e963-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-5da535e963-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-ed827faf16",
+      "name": "Lục Trà Sữa Xoài",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ed827faf16-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-ed827faf16-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-6e2251b2e8",
+      "name": "Lục Trà Sữa Khoai Môn Tươi",
+      "category": "milk-tea",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-6e2251b2e8-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-6e2251b2e8-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-6f49bd87c1",
+      "name": "Hồng Trà Sữa",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-6f49bd87c1-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-6f49bd87c1-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-1c80547c3d",
+      "name": "Trà Sữa Hương Hazelnut",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-1c80547c3d-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-1c80547c3d-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-bda8b7a263",
+      "name": "Trà Sữa Mật Ong",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-bda8b7a263-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 59000
+        },
+        {
+          "id": "koi-bda8b7a263-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 79000
+        }
+      ]
+    },
+    {
+      "id": "koi-1a5c375c17",
+      "name": "Trà Sữa Đào Hồng",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-1a5c375c17-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-1a5c375c17-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-87349e4dbb",
+      "name": "Trà Sữa Xoài",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-87349e4dbb-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-87349e4dbb-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-5f6d412dc0",
+      "name": "Trà Sữa Khoai Môn Tươi",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-5f6d412dc0-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-5f6d412dc0-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-4c05380b17",
+      "name": "Trà Sữa Oolong (Có Sữa Đặc)",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-4c05380b17-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-4c05380b17-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-4416042cef",
+      "name": "Trà Sữa Oolong",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-4416042cef-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-4416042cef-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-dbe03783ae",
+      "name": "Trà Sữa Oolong Mật Ong",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-dbe03783ae-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 59000
+        },
+        {
+          "id": "koi-dbe03783ae-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 79000
+        }
+      ]
+    },
+    {
+      "id": "koi-626faf440e",
+      "name": "Trà Oolong Sữa Đào Hồng",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-626faf440e-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-626faf440e-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-eb8820e01f",
+      "name": "Trà Sữa Oolong Xoài",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-eb8820e01f-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-eb8820e01f-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-ba816139f6",
+      "name": "Trà Sữa Đường Đen",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ba816139f6-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-ba816139f6-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-76f8e98e3f",
+      "name": "Trà Sữa Milo O",
+      "category": "milk-tea",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-76f8e98e3f-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-76f8e98e3f-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-cf7f8af288",
+      "name": "Lục Trà Latte Khoai Môn Tươi",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-cf7f8af288-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 72000
+        },
+        {
+          "id": "koi-cf7f8af288-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 97000
+        }
+      ]
+    },
+    {
+      "id": "koi-6480d1c3f5",
+      "name": "Hồng Trà Latte Khoai Môn Tươi",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-6480d1c3f5-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 72000
+        },
+        {
+          "id": "koi-6480d1c3f5-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 97000
+        }
+      ]
+    },
+    {
+      "id": "koi-5a6325b54a",
+      "name": "Trà Oolong Latte Khoai Môn Tươi",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-5a6325b54a-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 72000
+        },
+        {
+          "id": "koi-5a6325b54a-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 97000
+        }
+      ]
+    },
+    {
+      "id": "koi-7011df2920",
+      "name": "Lục Trà Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-7011df2920-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-7011df2920-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-a2a4dff5b3",
+      "name": "Lục Trà Hazelnut Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-a2a4dff5b3-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-a2a4dff5b3-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-d0bbfce9a9",
+      "name": "Lục Trà Mật Ong Latte -M",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-d0bbfce9a9-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-112f82484a",
+      "name": "Lục Trà Mật Ong Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-112f82484a-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        }
+      ]
+    },
+    {
+      "id": "koi-4c4e53c8e7",
+      "name": "Hồng Trà Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-4c4e53c8e7-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-4c4e53c8e7-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-e68c4df26c",
+      "name": "Hồng Trà Hazelnut Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e68c4df26c-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-e68c4df26c-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-ebd8ca7036",
+      "name": "Hồng Trà Mật Ong Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-ebd8ca7036-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-ebd8ca7036-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-355d379464",
+      "name": "Trà Oolong Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-355d379464-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-355d379464-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-bd7e915e28",
+      "name": "Oolong Mật Ong Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-bd7e915e28-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-bd7e915e28-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-2ab4f157ea",
+      "name": "Sữa Tươi",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-2ab4f157ea-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-2ab4f157ea-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-e59b16a5cb",
+      "name": "Sữa Tươi Đường Đen",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e59b16a5cb-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 75000
+        },
+        {
+          "id": "koi-e59b16a5cb-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 102000
+        }
+      ]
+    },
+    {
+      "id": "koi-8697a73d86",
+      "name": "Milo O Latte",
+      "category": "latte",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-8697a73d86-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-8697a73d86-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-52f4abf7f5",
+      "name": "Sữa Tươi Khoai Môn",
+      "category": "latte",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-52f4abf7f5-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 77000
+        },
+        {
+          "id": "koi-52f4abf7f5-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 104000
+        }
+      ]
+    },
+    {
+      "id": "koi-f298600645",
+      "name": "Lục Trà Macchiato",
+      "category": "macchiato",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-f298600645-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-f298600645-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-e4db38d1f9",
+      "name": "Lục Trà Hương Hazelnut Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e4db38d1f9-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-e4db38d1f9-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-0109d86586",
+      "name": "Lục Trà Mật Ong Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-0109d86586-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-0109d86586-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-3c1cb078e2",
+      "name": "Lục Trà Sữa Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-3c1cb078e2-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-3c1cb078e2-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-605cd6e6ff",
+      "name": "Lục Trà Đào Hồng Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-605cd6e6ff-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-605cd6e6ff-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-9003b05367",
+      "name": "Lục Trà Xoài Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-9003b05367-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-9003b05367-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-3f268a1148",
+      "name": "Lục Trà Sữa Hạt Phỉ Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-3f268a1148-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 72000
+        },
+        {
+          "id": "koi-3f268a1148-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 97000
+        }
+      ]
+    },
+    {
+      "id": "koi-1c83bd960b",
+      "name": "Lục Trà Sữa Mật Ong Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-1c83bd960b-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 69000
+        },
+        {
+          "id": "koi-1c83bd960b-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 93000
+        }
+      ]
+    },
+    {
+      "id": "koi-e6703d03e9",
+      "name": "Hồng Trà Macchiato",
+      "category": "macchiato",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-e6703d03e9-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-e6703d03e9-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-2d29258a13",
+      "name": "Hồng Trà Hương Hazelnut Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-2d29258a13-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-2d29258a13-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-62672429eb",
+      "name": "Hồng Trà Đào Hồng Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-62672429eb-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-62672429eb-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-511ba1ce9c",
+      "name": "Hồng Trà Xoài Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-511ba1ce9c-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-511ba1ce9c-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-3d636c7601",
+      "name": "Trà Sữa Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-3d636c7601-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-3d636c7601-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-07c4fd9914",
+      "name": "Trà Sữa Hazelnut Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-07c4fd9914-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 72000
+        },
+        {
+          "id": "koi-07c4fd9914-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 97000
+        }
+      ]
+    },
+    {
+      "id": "koi-3da1dc0d87",
+      "name": "Trà Sữa Mật Ong Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-3da1dc0d87-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 69000
+        },
+        {
+          "id": "koi-3da1dc0d87-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 93000
+        }
+      ]
+    },
+    {
+      "id": "koi-e7486d163e",
+      "name": "Trà Oolong Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-e7486d163e-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 57000
+        },
+        {
+          "id": "koi-e7486d163e-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 76000
+        }
+      ]
+    },
+    {
+      "id": "koi-3a2f4e2c48",
+      "name": "Oolong Mật Ong Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-3a2f4e2c48-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-3a2f4e2c48-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    },
+    {
+      "id": "koi-8aeb29a917",
+      "name": "Trà Oolong Đào Hồng Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-8aeb29a917-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-8aeb29a917-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-9db3b91e76",
+      "name": "Trà Oolong Xoài Macchiato",
+      "category": "macchiato",
+      "bestSeller": false,
+      "variants": [
+        {
+          "id": "koi-9db3b91e76-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-2e22a78ebb",
+      "name": "Trà sữa TGBK(Golden Bubble, Taro Q, Konjac)",
+      "category": "milk-tea",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-2e22a78ebb-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 67000
+        },
+        {
+          "id": "koi-2e22a78ebb-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 90000
+        }
+      ]
+    },
+    {
+      "id": "koi-790fc0979e",
+      "name": "Trà Sữa Trân Châu Hoàng Kim",
+      "category": "milk-tea",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-790fc0979e-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 62000
+        },
+        {
+          "id": "koi-790fc0979e-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 83000
+        }
+      ]
+    },
+    {
+      "id": "koi-45e9d2d62a",
+      "name": "Sữa Tươi Trân Châu Đường Đen",
+      "category": "milk-tea",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-45e9d2d62a-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 80000
+        },
+        {
+          "id": "koi-45e9d2d62a-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 109000
+        }
+      ]
+    },
+    {
+      "id": "koi-8ed062404d",
+      "name": "Trà Sữa Sương Sáo",
+      "category": "milk-tea",
+      "bestSeller": true,
+      "variants": [
+        {
+          "id": "koi-8ed062404d-small",
+          "label": "Nhỏ",
+          "temperature": "cold",
+          "price": 64000
+        },
+        {
+          "id": "koi-8ed062404d-medium",
+          "label": "Vừa",
+          "temperature": "cold",
+          "price": 86000
+        }
+      ]
+    }
+  ]
+}

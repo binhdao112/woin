@@ -26,6 +26,8 @@ jobs:
         run: find dist scripts -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n 1 node --check
       - name: Run tests
         run: npm test
+      - name: Verify Google Sheets bundle matches the menu
+        run: npm run check:drinks
       - name: Verify project subpath and static resources
         run: npm run check:pages
       - name: Upload reviewable website
