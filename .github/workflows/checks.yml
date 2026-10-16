@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check JavaScript syntax
-        run: find dist scripts -type f \( -name '*.js' -o -name '*.mjs' \) -exec node --check {} \;
+        run: find dist scripts -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n 1 node --check
       - name: Run tests
         run: npm test
       - name: Verify project subpath and static resources

@@ -15,6 +15,7 @@ Kiểm thử bằng Node.js 18 trở lên, không cần cài thư viện:
 ```sh
 npm test
 npm run test:coverage
+npm run check:pages
 ```
 
 ## Campus thu nhỏ
@@ -54,7 +55,16 @@ Deploy hoặc push Git không đưa các ảnh đã chọn trong trình duyệt 
 
 Xuất bản toàn bộ nội dung thư mục `dist/` trên hosting tĩnh. Giữ nguyên các file modules và tên file; không cần `npm install` hay `npm run build`. Các đường dẫn tài nguyên là tương đối, phù hợp cả khi website nằm dưới `/woin/`.
 
-[GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages) xuất bản HTML, CSS và JavaScript từ repository. Nếu dùng GitHub Actions để deploy, chọn `dist/` làm thư mục artifact. Repo này chưa có workflow deploy GitHub Pages; `.openai/hosting.json` là cấu hình hosting Sites hiện có và được giữ nguyên.
+Có hai workflow GitHub Actions:
+
+- **Checks** chạy trên PR vào `main` và khi push `main`/`codex/**`: kiểm tra cú pháp, chạy kiểm thử, kiểm tra 13 tài nguyên dưới đường dẫn `/woin/` và lưu artifact `website-dist` cho reviewer tải về.
+- **Deploy GitHub Pages** chạy sau khi merge vào `main`, hoặc chạy thủ công trên `main`. Workflow kiểm thử trước, đóng gói đúng `dist/`, rồi dùng các action Pages chính thức để deploy. Nhánh review không tự ghi đè website đang chạy.
+
+Repo đã có nhánh `gh-pages` cho website cũ. Khi áp dụng workflow mới sau review, quản trị viên chọn **Settings → Pages → Build and deployment → Source → GitHub Actions** một lần. Sau đó merge PR vào `main` hoặc chạy workflow **Deploy GitHub Pages** trên `main`. Kiểm tra job **Publish website** thành công và mở URL được trả trong deployment. Không chọn thư mục gốc của nhánh source làm nội dung website, vì `index.html` nằm trong `dist/`.
+
+`npm run check:pages` phục vụ artifact thật ở `/woin/`, kiểm tra HTTP/content type của HTML, JavaScript modules, CSS và nền hoa; đồng thời phát hiện đường dẫn tuyệt đối sai hoặc sai chữ hoa/thường. Thư mục `dist/` tự đủ để deploy, không phụ thuộc file trong `output/`. [Tài liệu workflow GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+`.openai/hosting.json` là cấu hình hosting Sites hiện có và được giữ nguyên.
 
 ## Các file chính
 
