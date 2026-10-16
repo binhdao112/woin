@@ -1,8 +1,12 @@
 {
-  "sourceBranch": "codex/avatar-customization",
-  "sourceCommit": "783c252738b7595cb67e17d944c2ff9ef703305f",
-  "publishedAt": "2026-10-16T10:11:25.114516+00:00",
+  "sourceBranch": "codex/avatar-actions",
+  "sourceCommit": "db2a106ef4a82d82b25a3a28ac7c1fddd9bb972f",
+  "publishedAt": "2026-10-16T10:42:52.542417+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
-  "avatarCustomization": true
+  "avatarCustomization": true,
+  "avatarActions": true,
+  "freeRoam": true,
+  "world": "campus",
+  "cloudWorldRemoved": true
 }
