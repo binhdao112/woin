@@ -7,6 +7,7 @@ import { CAMPUS_STOPS, createCampus, getCampusRoute } from './campus.js';
 import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js';
 import {createDrinkCounter} from './drink-counter.js';
 import {drinkLabel} from './drink-orders.js';
+import {normaliseLuckySet,formatLuckySet} from './lucky-numbers.js';
 import './experience.js';
 const $=s=>document.querySelector(s), modal=$('#final');
 const isCampus=new URLSearchParams(location.search).get('world')!=='cloud';
@@ -338,11 +339,18 @@ const drinkCounter=createDrinkCounter({onKeep(order,{synced}){
 $('#drink-open').onclick=()=>{if(moving)return;closeMemories();closeKeepsake();drinkCounter.open(recipient);};
 $('#keepsake-save').onclick=()=>{recipient=$('#recipient-name').value.trim().slice(0,40)||recipient;collectGift(index,{style:keepsakeStyle,result:index===0?(recipient?'Vé dành cho '+recipient:'Chiếc vé khởi đầu một chuyến đi vui'):personalMessage(['Một ly cà phê sữa đá cùng team','Một ly trà đào cho giờ nghỉ','Một ly nước mát, thêm năng lượng'][keepsakeStyle])});renderStyles();advanceJourney();};
 $('#station-activity').onclick=()=>window.dispatchEvent(new CustomEvent('station-divination',{detail:{station:index,tab:activities[index],name:recipient}}));
-window.addEventListener('station-result',e=>{const {station,result,number}=e.detail;if(station!==index||keepsakeCollection.has(station))return;collectGift(station,{result,number});});
+window.addEventListener('station-result',e=>{const {station,result,number,luckySet}=e.detail;if(station!==index||keepsakeCollection.has(station))return;collectGift(station,{result,number,luckySet:station===3?normaliseLuckySet(luckySet):undefined});});
 window.addEventListener('station-continue',e=>{if(e.detail.station===index)advanceJourney();});
 $('#memory-keep').onclick=()=>{const photo=memoryPhotos[memoryIndex];collectGift(6,{photoId:photo?.id,photoName:photo?.name,result:photo?'Khung ảnh từ '+photo.name:'Khung ảnh đang chờ những khoảnh khắc cùng team.'});closeMemories();advanceJourney();};
 $('#wish-close').onclick=()=>$('#wish-card').close();$('#wish-download').onclick=downloadWish;
-$('#wish-copy').onclick=async()=>{try{const message=cardFormat==='full'?currentWish.text:getSocialCopy(createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection}),cardTemplate).message+'\n\nMột ngày rực rỡ cùng team. 💐\n#Happy2010 '+(isCampus?'#VNGCampus':'#VanPhongTrenMay');await navigator.clipboard.writeText((recipient?'Gửi '+recipient+' 💌\n\n':'')+message);$('#wish-copy').textContent='Đã sao chép ✓';}catch{$('#wish-download-status').textContent='Chưa sao chép được. Bạn vẫn có thể tải ảnh thiệp nhé.';}};
+$('#wish-copy').onclick=async()=>{
+ try{
+  const model=createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection});
+  const message=cardFormat==='full'?currentWish.text:getSocialCopy(model,cardTemplate).message;
+  const playful=model.luckySet?'\n\nBộ số vui 6/45: '+formatLuckySet(model.luckySet)+' · Bốc vui cùng team ✦':'';
+  await navigator.clipboard.writeText((recipient?'Gửi '+recipient+' 💌\n\n':'')+message+playful+'\n\nMột ngày rực rỡ cùng team. 💐\n#Happy2010 '+(isCampus?'#VNGCampus':'#VanPhongTrenMay'));$('#wish-copy').textContent='Đã sao chép ✓';
+ }catch{$('#wish-download-status').textContent='Chưa sao chép được. Bạn vẫn có thể tải ảnh thiệp nhé.';}
+};
 document.querySelectorAll('[data-card-format]').forEach(button=>button.onclick=()=>{cardFormat=button.dataset.cardFormat;updateWishPreview();});
 $('#wish-checkin-photo').onchange=chooseCheckinPhoto;$('#wish-remove-photo').onclick=()=>{cardPhotoEnabled=false;cardPhotoVersion++;updateWishPreview();};
 $('#keepsake-next').onclick=()=>{if(!keepsakeCollection.has(index))return;closeKeepsake();advanceJourney();};
@@ -353,7 +361,7 @@ try{
   recipient=typeof saved.recipient==='string'?saved.recipient.slice(0,40):'';
   for(const item of saved.gifts){if(!Array.isArray(item)||item.length!==2)continue;const [k,data]=item;
    if(!Number.isInteger(k)||k<0||k>6||!data||typeof data!=='object')continue;
-   const gift={title:stationGifts[k][0],style:[0,1,2].includes(data.style)?data.style:0,result:typeof data.result==='string'?data.result.slice(0,600):'',number:typeof data.number==='string'?data.number.slice(0,2):undefined,photoName:typeof data.photoName==='string'?data.photoName.slice(0,255):undefined,photoId:typeof data.photoId==='string'?data.photoId.slice(0,160):undefined};
+   const gift={title:stationGifts[k][0],style:[0,1,2].includes(data.style)?data.style:0,result:typeof data.result==='string'?data.result.slice(0,600):'',number:typeof data.number==='string'?data.number.slice(0,2):undefined,luckySet:k===3?normaliseLuckySet(data.luckySet):undefined,photoName:typeof data.photoName==='string'?data.photoName.slice(0,255):undefined,photoId:typeof data.photoId==='string'?data.photoId.slice(0,160):undefined};
    keepsakeCollection.set(k,gift);const frame=new T.Group();scene.add(frame);frame.position.copy(stops[k]).add(new T.Vector3(-1.2,.8,.2));frame.scale.setScalar(.4);frame.rotation.y=yaw;makeGift(k,gift,frame);savedFrames.set(k,frame);
   }
   const progress=getJourneyProgress(keepsakeCollection);finalWish=progress.complete?wishes.find(w=>w.id===saved.finalId)||null:null;

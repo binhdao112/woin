@@ -1,4 +1,5 @@
 import {playFortuneDraw} from './fortune-animation.js';
+import {drawLuckyBundle,formatLuckySet} from './lucky-numbers.js';
 const $=s=>document.querySelector(s), pick=a=>a[random(a.length)];
 let person='';const personal=t=>person?person+' ơi, '+t.charAt(0).toLocaleLowerCase('vi')+t.slice(1):t;window.addEventListener('journey-profile',e=>{person=e.detail.name;$('#welcome-name').value=person;$('#profile-edit').textContent=person?'☺ '+person:'☺ Tên của bạn';});
 function random(n){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n;}
@@ -7,9 +8,9 @@ const tarot=[['The Sun · Mặt trời','☀','Niềm vui & sự tự tin','Bạ
 function celebrate(){window.dispatchEvent(new CustomEvent('festival-sparkle'));}
 function openHub(){hub.showModal();renderTab(currentTab);}
 window.addEventListener('station-divination',e=>{stationContext=e.detail;if(e.detail.name)person=e.detail.name;pendingResult=null;currentTab=e.detail.tab;hub.classList.add('station-mode');$('#cosmic-keep').hidden=true;openHub();});
-function stationReady(result,number){
+function stationReady(result,number,luckySet){
  if(!stationContext)return;
- pendingResult={station:stationContext.station,result:person&&result.includes(person+' ơi')?result:personal(result),number};
+ pendingResult={station:stationContext.station,result:person&&result.includes(person+' ơi')?result:personal(result),number,luckySet};
  window.dispatchEvent(new CustomEvent('station-result',{detail:pendingResult}));
  $('#cosmic-keep').hidden=false;$('#cosmic-keep').textContent='Đã lưu kỷ vật · Đi tiếp →';
  $('#cosmic-content').querySelectorAll('button').forEach(button=>button.disabled=true);
@@ -46,7 +47,34 @@ function renderFortune(area){
 }
 
 const meanings=['Một khởi đầu nhỏ, một niềm vui mới.','Sự đồng hành khiến một ngày dễ chịu hơn.','Sáng tạo thường bắt đầu từ sự tò mò.','Dành chỗ cho sự vững vàng và nghỉ ngơi.','Một trải nghiệm khác thường ngày đang chờ bạn thử.','Nhớ dành thời gian cho điều khiến bạn thấy dễ chịu.','Một khoảng lặng có thể đem lại góc nhìn mới.','Ghi nhận sự bền bỉ và những điều bạn đã làm được.','Giữ lại điều tốt đẹp và cởi mở với chương tiếp theo.'];
-function renderNumber(area){intro(area,'Con số may mắn của bạn','Bấm để chọn ngẫu nhiên một con số từ 01 đến 99 và một lời nhắc tích cực.');const ball=document.createElement('div');ball.className='lucky-ball';ball.textContent='?';area.append(ball);const out=result(area);area.append(button('Chọn con số của mình ✧',()=>{const n=random(99)+1;ball.textContent=String(n).padStart(2,'0');ball.classList.remove('pop');void ball.offsetWidth;ball.classList.add('pop');out.textContent=personal(meanings[(n-1)%meanings.length]);stationReady('Số '+String(n).padStart(2,'0')+' · '+out.textContent,String(n).padStart(2,'0'));celebrate();}));}
+function renderNumber(area){
+ intro(area,'Một con số, sáu chút may mắn','Nhận số may mắn 01–99 và một bộ 6 số khác nhau từ 01–45. Bốc vui cùng team nhé!');
+ const stage=document.createElement('div');stage.className='number-stage';
+ const ball=document.createElement('div');ball.className='lucky-ball';ball.textContent='?';
+ const ticket=document.createElement('section');ticket.className='lucky-set';
+ const title=document.createElement('h4');title.textContent='Bộ số vui của bạn';
+ const tag=document.createElement('small');tag.textContent='6/45 · BỐC VUI CÙNG TEAM';
+ const list=document.createElement('div');list.className='lucky-set-balls';list.setAttribute('role','list');list.setAttribute('aria-label','Bộ số vui chưa được bốc');
+ for(let i=0;i<6;i++){const value=document.createElement('span');value.setAttribute('role','listitem');value.style.setProperty('--ball-index',String(i));value.textContent='—';list.append(value);}
+ let chosen;
+ const copy=button('Chép bộ số',async()=>{
+  if(!chosen)return;
+  try{await navigator.clipboard.writeText('Bộ số vui 6/45: '+formatLuckySet(chosen)+'\nBốc vui cùng team ✦');copy.textContent='Đã chép ✦';}
+  catch{copy.textContent='Chưa chép được · chọn 6 số để copy';}
+ },'lucky-set-copy');copy.disabled=true;
+ ticket.append(tag,title,list,copy);stage.append(ball,ticket);area.append(stage);
+ const out=result(area);out.classList.add('number-message');out.textContent='Một lời nhắc dễ thương cũng đang chờ bạn.';
+ const draw=button('Nhận số may mắn & bộ số vui ✧',()=>{
+  if(stationContext&&draw.disabled)return;
+  const {number,luckySet}=drawLuckyBundle();chosen=luckySet;
+  ball.textContent=number;ball.classList.remove('pop');void ball.offsetWidth;ball.classList.add('pop');
+  list.classList.remove('is-revealed');list.querySelectorAll('span').forEach((value,i)=>value.textContent=String(luckySet[i]).padStart(2,'0'));void list.offsetWidth;list.classList.add('is-revealed');list.setAttribute('aria-label','Bộ số vui 6/45: '+formatLuckySet(luckySet));
+  out.textContent=personal(meanings[(Number(number)-1)%meanings.length]);
+  stationReady('Số '+number+' · Bộ số vui 6/45: '+formatLuckySet(luckySet)+' · '+out.textContent,number,luckySet);
+  // stationReady locks game choices. Copy remains available for the saved result.
+  copy.disabled=false;copy.textContent='Chép bộ số';draw.textContent=stationContext?'Đã nhận bộ số của bạn ✦':'Bốc một bộ số vui khác ↻';celebrate();
+ });area.append(draw);
+}
 const wheelItems=['Uống một ly nước','Gửi lời cảm ơn','Nghỉ mắt một chút','Tự khen mình một điều','Rủ team đi ăn trưa','Nghe bài hát yêu thích','Giữ lại một tấm ảnh','Thử một ý tưởng mới'];let wheelTurn=0;
 function renderWheel(area){intro(area,'Vòng quay niềm vui','Để chiếc vòng chọn giúp một điều nhỏ bạn có thể làm hôm nay.');const stage=document.createElement('div');stage.className='wheel-stage';const wheel=document.createElement('div');wheel.className='joy-wheel';for(let i=0;i<8;i++){const s=document.createElement('span');s.textContent=['☕','✿','☀','✦','☺','♫','▧','✧'][i];s.style.transform='rotate('+(i*45+22.5)+'deg) translateY(-83px) rotate('+(-i*45-22.5)+'deg)';wheel.append(s);}const pin=document.createElement('div');pin.className='wheel-pin';pin.textContent='▼';stage.append(pin,wheel);area.append(stage);const out=result(area),context=stationContext;const spin=button('Quay một chút vui vẻ ↻',()=>{spin.disabled=true;out.textContent='Chiếc vòng đang chọn một niềm vui nhỏ…';const n=random(8);wheelTurn+=5;wheel.style.transform='rotate('+(wheelTurn*360-n*45-22.5)+'deg)';const complete=()=>{if(context!==stationContext||!hub.open||currentTab!=='wheel')return;out.textContent=(person?person+' nhận được: ':'')+wheelItems[n]+' — một chút thôi cũng đủ làm ngày hôm nay khác đi.';spin.disabled=false;stationReady(wheelItems[n]);celebrate();};setTimeout(complete,matchMedia('(prefers-reduced-motion: reduce)').matches?50:2300);});area.append(spin);}
 // Original ambient score synthesized locally. Audio starts only after an explicit tap.
