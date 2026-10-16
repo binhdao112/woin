@@ -23,3 +23,20 @@ test('invalid photos leave the previous host manifest unchanged',async t=>{
  await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}),/ảnh|image|PNG/i);
  assert.equal(await readFile(path.join(output,'album.json'),'utf8'),'previous');
 });
+
+test('host import handles JPEG/WebP, numeric ordering and duplicate photos',async t=>{
+ const {prepareAlbum}=await import('../scripts/prepare-album.mjs');const {input,output}=await dirs(t);
+ await writeFile(path.join(input,'2_Ảnh team.jpg'),Buffer.from([255,216,255,224,1]));
+ await writeFile(path.join(input,'10_Buổi gặp.webp'),Buffer.from('RIFFxxxxWEBPvp8test'));
+ await writeFile(path.join(input,'3_Trùng ảnh.png'),png);await writeFile(path.join(input,'4_Trùng ảnh.png'),png);
+ const result=await prepareAlbum({sourceDirectory:input,targetDirectory:output});
+ assert.equal(result.photos.length,3);assert.equal(result.photos[0].name,'2 Ảnh team');
+ assert.ok(result.photos.some(photo=>photo.src.endsWith('.webp')));
+});
+
+test('host import refuses empty or oversized albums before writing a manifest',async t=>{
+ const {prepareAlbum}=await import('../scripts/prepare-album.mjs');const {input,output}=await dirs(t);
+ await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}),/chưa có ảnh/);
+ for(let i=0;i<13;i++)await writeFile(path.join(input,i+'.png'),png);
+ await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}),/12 ảnh/);
+});

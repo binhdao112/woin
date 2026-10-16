@@ -36,3 +36,24 @@ test('saved frames select by photo ID even when host captions repeat',async()=>{
  assert.equal(findMemoryPhoto(photos,{photoName:'Gala'}),photos[0]);
  assert.equal(findMemoryPhoto(photos,{photoId:'removed',photoName:'Gala'}),undefined);
 });
+
+test('shared album limits work and falls back safely for wrong image types or decoder errors',async()=>{
+ const {normaliseSharedAlbum,loadSharedAlbum,findMemoryPhoto}=await import('../dist/memory-album.js');
+ const photos=Array.from({length:14},(_,i)=>({src:'./photo-'+i+'.png'}));
+ assert.equal(normaliseSharedAlbum({photos},base).photos.length,12);
+ assert.ok(normaliseSharedAlbum({photos},base).issues.length>0);
+ for(const image of [new Blob(['bad'],{type:'text/html'}),new Blob([],{type:'image/png'})]){
+  const fetchImpl=async url=>String(url).endsWith('album.json')?{ok:true,json:async()=>({photos:[{src:'./one.png'}]})}:{ok:true,blob:async()=>image};
+  assert.equal((await loadSharedAlbum({manifestURL:base,fetchImpl,decode:async()=>null})).photos.length,0);
+ }
+ const fetchImpl=async url=>String(url).endsWith('album.json')?{ok:true,json:async()=>({photos:[{src:'./one.png'}]})}:{ok:true,blob:async()=>new Blob(['png'],{type:'image/png'})};
+ assert.equal((await loadSharedAlbum({manifestURL:base,fetchImpl,decode:async()=>{throw Error('decode');}})).photos.length,0);
+ const first={id:'one'};assert.equal(findMemoryPhoto([first],{},0),first);
+});
+
+test('shared photo requests time out without blocking the rest of the journey',async()=>{
+ const {loadSharedAlbum}=await import('../dist/memory-album.js');
+ const fetchImpl=(url,{signal})=>new Promise((resolve,reject)=>signal.addEventListener('abort',()=>reject(Error('aborted'))));
+ const result=await loadSharedAlbum({manifestURL:base,fetchImpl,decode:async()=>null,timeoutMs:5});
+ assert.equal(result.photos.length,0);assert.ok(result.issues.length>0);
+});

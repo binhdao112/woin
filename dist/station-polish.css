@@ -7,3 +7,14 @@
 .memory-sources{display:flex;gap:7px;justify-content:center;margin:10px 0}.memory-sources button{border:1px solid #bfcfc3;background:#f6f5ec;color:#446858;min-height:38px;border-radius:22px;padding:8px 14px;font:inherit;font-size:10px}.memory-sources button[aria-pressed=true]{background:#456c58;color:#fffaf0;border-color:#456c58}.memory-sources button:disabled{opacity:.5;cursor:default}#memory-album-title{display:block;font-size:9px;color:#65816d;margin-bottom:7px}
 @media(max-width:700px){.fortune-stage{min-height:185px;padding-top:20px}.fortune-stage .fortune-tube{width:105px;height:140px}#cosmic-content .fortune-result{min-height:172px;padding:15px;font-size:11px}.memory-sources{margin:7px 0}.memory-sources button{padding:7px 12px;font-size:9px}}
 @media(prefers-reduced-motion:reduce){.fortune-result.fortune-revealed h4,.fortune-result.fortune-revealed p{animation:none}}
+#cosmic-hub[data-tab=fortune]{padding:22px 28px 16px;max-width:720px}
+#cosmic-hub[data-tab=fortune] h2{font-size:25px;line-height:1.2;margin:9px 0 12px}
+#cosmic-hub[data-tab=fortune] #cosmic-content{display:grid;grid-template-columns:190px minmax(0,1fr);column-gap:22px;align-items:center}
+#cosmic-hub[data-tab=fortune] #cosmic-content>h3{grid-column:1/-1;font-size:18px;margin:8px 0 4px}
+#cosmic-hub[data-tab=fortune] .cosmic-intro{grid-column:1/-1;font-size:11px!important;line-height:1.7;margin:3px 0 12px}
+#cosmic-hub[data-tab=fortune] .fortune-stage{grid-column:1;grid-row:3;min-height:205px}
+#cosmic-hub[data-tab=fortune] .fortune-result{grid-column:2;grid-row:3;min-height:180px;margin:0;padding:16px 18px}
+#cosmic-hub[data-tab=fortune] #cosmic-content>.cosmic-action{grid-column:1/-1;grid-row:4;justify-self:center;min-height:43px;margin:10px 0 0}
+#cosmic-hub[data-tab=fortune] .cosmic-keep-slot{min-height:51px}#cosmic-hub[data-tab=fortune] #cosmic-keep{margin:8px 0 0}
+#cosmic-hub[data-tab=fortune] .cosmic-note{margin:7px 0 0;font-size:9px!important;line-height:1.6}
+@media(max-width:700px){#cosmic-hub[data-tab=fortune]{padding:19px 17px 14px}#cosmic-hub[data-tab=fortune] h2{font-size:23px;margin:8px 0}#cosmic-hub[data-tab=fortune] #cosmic-content{grid-template-columns:1fr}#cosmic-hub[data-tab=fortune] #cosmic-content>h3{font-size:16px}#cosmic-hub[data-tab=fortune] .fortune-stage{grid-column:1;grid-row:auto;min-height:177px}#cosmic-hub[data-tab=fortune] .fortune-result{grid-column:1;grid-row:auto;min-height:165px;padding:13px 15px}#cosmic-hub[data-tab=fortune] #cosmic-content>.cosmic-action{grid-row:auto;font-size:11px;padding:10px 16px}#cosmic-hub[data-tab=fortune] .cosmic-intro{font-size:10px!important;margin-bottom:5px}}
