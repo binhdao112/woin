@@ -3,7 +3,7 @@ import { canVisitStation } from './journey.js';
 
 // An illustrated campus, inspired by public exterior photographs; not a floor plan.
 export const CAMPUS_STOPS = Object.freeze([
-  [-11, 0, 6], [-5, 0, 2], [0, 0, -3], [7, 0, -2],
+  [-11, 0, 6], [-5, 0, 2], [0, 0, -1.5], [7, 0, -1.5],
   [11, 0, 4], [6, 0, 8], [0, 0, 9], [-5, 0, 8],
 ].map(point => Object.freeze(point)));
 
@@ -116,8 +116,8 @@ export function createCampus({ label } = {}) {
   // Entry canopy and an orange VNG wordmark on the front office wing.
   box(7.5, .17, 2.1, 'white', -10, 2.5, 3.1);
   for (const x of [-13.3, -6.7]) cylinder(.075, 2.5, 'dark', x, 1.25, 3.9);
-  sign('VNG', .9, -10, 3.5, 2.45, '#db572b');
-  sign('CAMPUS', .22, -10, 2.85, 2.45, '#3b585c');
+  sign('VNG', 2, -10, 3.5, 2.45, '#db572b');
+  sign('CAMPUS', .65, -10, 2.85, 2.45, '#3b585c');
   // Green steps/terraces peel away from the east wing, facing the garden.
   for (let tier = 0; tier < 5; tier++) {
     const z = -5.2 + tier * .7, h = 2.8 - tier * .48;
@@ -125,6 +125,8 @@ export function createCampus({ label } = {}) {
     box(8.4, .1, .68, 'white', 5.8, h + .04, z);
     for (const x of [2.1, 9.5]) planter(x, z, .8, h + .2);
   }
+  planter(2.5, -5.48, 15, 2.65);
+  planter(-10, 2.15, 6, 1.65);
   // The connecting spine never crosses an office volume.
   for (let i = 0; i < CAMPUS_STOPS.length - 1; i++) path(CAMPUS_STOPS[i], CAMPUS_STOPS[i + 1]);
   path(CAMPUS_STOPS[7], CAMPUS_STOPS[0]);
@@ -157,7 +159,7 @@ export function createCampus({ label } = {}) {
   for (const x of [-6.3, -3.7]) cylinder(.065, 2.2, 'orange', x, 1.1, 9.6);
   const arch = new T.Mesh(new T.TorusGeometry(1.3, .065, 8, 32, Math.PI), materials.orange);
   arch.position.set(-5, 2.2, 9.6); group.add(arch);
-  sign('20 / 10', .4, -5, 2.35, 9.8, '#b65e49');
+  sign('20 / 10', 1, -5, 2.35, 9.8, '#b65e49');
   for (let i = 0; i < 8; i++) {
     const x = -7 + i * .55, z = 10.3 + (i % 2) * .3;
     cylinder(.02, .45, 'leaf', x, .23, z);
@@ -186,7 +188,7 @@ export function createCampus({ label } = {}) {
     const ring = new T.Mesh(new T.TorusGeometry(.82, .035, 6, 32), material);
     ring.rotation.x = -Math.PI / 2; ring.position.y = .13; marker.add(ring);
     group.add(marker); markers.push(marker);
-    sign(String(index + 1).padStart(2, '0'), .24, position[0], .72, position[2], '#36554f');
+    sign(String(index + 1).padStart(2, '0'), .85, position[0], .72, position[2], '#36554f');
   });
   function updateProgress(collection, current) {
     markers.forEach((marker, index) => {

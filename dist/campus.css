@@ -4,9 +4,10 @@
 .world-switch a:focus-visible{outline:3px solid #995e79;outline-offset:3px}
 .campus-caption{display:none}
 body[data-world=campus]{background:#e3e9dc}
-body[data-world=campus] .side{top:206px;max-width:210px}
-body[data-world=campus] .side h1{font-size:37px;line-height:1.16;letter-spacing:-1.5px}
-body[data-world=campus] .side h1 em{color:#b75b37!important}
+body[data-world=campus] .side{top:206px;max-width:245px}
+body[data-world=campus] .side h1{font-size:35px;line-height:1.16;letter-spacing:-1.5px}
+body[data-world=campus] .side h1 em{white-space:nowrap;color:#b75b37!important}
+body[data-world=cloud] .side{top:206px}
 body[data-world=campus] .side p{font-size:11px;max-width:190px;color:#54675b}
 body[data-world=campus] .tag{font-size:9px;letter-spacing:1px}
 body[data-world=campus] .route button{background:#fffdf4ef;border-color:#ffffff;color:#3f5b51}
@@ -20,6 +21,7 @@ body[data-world=campus] .campus-caption{display:block;position:absolute;left:50%
 body:has(#keepsake-panel:not([hidden])) .world-switch,body:has(#memory-controls:not([hidden])) .world-switch{display:none}
 body:has(#keepsake-panel:not([hidden])) .campus-caption,body:has(#memory-controls:not([hidden])) .campus-caption{display:none}
 @media(max-width:700px){
+ body[data-world=cloud] .side{top:184px}
  .world-switch{top:136px;left:4%;padding:3px}
  .world-switch a{padding:8px 12px;font-size:9px}
  body[data-world=campus] .side{top:184px;max-width:180px}
