@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/koi-drink-orders",
-  "sourceCommit": "4d8136f32df61bbf7c2d41c521ce916a527c321e",
-  "publishedAt": "2026-10-16T09:24:25.657152+00:00",
+  "sourceCommit": "41c49b426515abb6dadecd79ed49e6e4a88d6b0e",
+  "publishedAt": "2026-10-16T09:40:06.665711+00:00",
   "previewPath": "/woin/previews/koi/",
-  "registrationEnabled": false
+  "registrationEnabled": true
 }
