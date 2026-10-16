@@ -2,7 +2,7 @@
 
 Trạm cà phê dùng menu **KOI Thé · Trung Hòa** do host đưa sẵn vào repo. Người xem chọn món, cỡ ly, tên nhận nước, đường/đá và ghi chú. Google Sheets giữ danh sách và tổng hợp để host tự đặt nước trên Grab.
 
-**Hiện tại là bản thử:** `dist/assets/drinks/order-config.json` có `enabled: false`, chưa nối với tài khoản Google của host. Giao diện ghi rõ lựa chọn chỉ dùng trong hành trình. Chỉ bật gửi thật sau khi triển khai script bên dưới và thử xác nhận nhận dữ liệu.
+**Hiện tại là bản thử:** URL `/exec` của host đã được điền trong `dist/assets/drinks/order-config.json`, giữ `enabled: false` trong lúc chờ khởi tạo. Kiểm tra ngày 16/10/2026: endpoint và JSONP receipt truy cập được không cần đăng nhập, nhưng mã đợt `team-2010-2026` chưa được nhận; bảng Order 20/10 chưa có hai tab Đăng ký/Tổng hợp. Host cần chạy `setupKoiOrders` và cấp quyền bằng tài khoản Google của mình (bước 3). Chỉ bật gửi thật sau khi kiểm tra lại; giao diện hiện vẫn ghi rõ lựa chọn chỉ dùng trong hành trình.
 
 ## Kết nối một lần bằng tài khoản Google của host
 
