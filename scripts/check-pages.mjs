@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { normaliseSharedAlbum } from '../dist/memory-album.js';
 
 const types = {
   '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript',
@@ -55,6 +56,11 @@ export async function verifyPages(directory, basePath = '/woin/') {
       if (!response.ok) throw new Error(`${url.pathname} returned HTTP ${response.status}`);
       const extension = url.pathname.endsWith('/') ? '.html' : path.extname(url.pathname);
       if (types[extension] && !response.headers.get('content-type')?.startsWith(types[extension])) throw new Error(`Wrong content type for ${url.pathname}`);
+      if (extension === '.json' && url.pathname.endsWith('/memories/album.json')) {
+        const album = normaliseSharedAlbum(await response.json(), url);
+        if (album.issues.length) throw new Error('Invalid host album: ' + album.issues.join(' '));
+        queue.push(...album.photos.map(photo => new URL(photo.url))); continue;
+      }
       if (!['.html', '.js', '.mjs', '.css'].includes(extension)) { await response.arrayBuffer(); continue; }
       for (const reference of references(await response.text(), extension)) {
         if (/^(?:https?:|data:|blob:|mailto:|#)/i.test(reference)) continue;
