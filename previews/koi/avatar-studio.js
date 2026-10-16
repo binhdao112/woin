@@ -1,6 +1,6 @@
 import * as T from './three.module.js';
 import {AVATAR_OPTIONS,AVATAR_LABELS,createAvatarDraft,describeAvatar} from './avatar-profile.js';
-import {createAvatar} from './avatar-rig.js';
+import {createAvatar} from './avatar-rig.js?v=campus-20261016-1';
 
 const $=selector=>document.querySelector(selector);
 const icons={hair:'◡',hairColor:'◒',outfit:'✧',color:'◕',skin:'☀',accessory:'✿'};
