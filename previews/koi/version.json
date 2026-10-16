@@ -1,12 +1,13 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "deec348765c41247e4b92e1bbf51a68b05386162",
-  "publishedAt": "2026-10-16T10:51:10.933705+00:00",
+  "sourceCommit": "7e9f311ec3f70703759ac279825cbe927f37bfa2",
+  "publishedAt": "2026-10-16T10:58:36.154714+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
   "avatarActions": true,
   "freeRoam": true,
   "world": "campus",
-  "cloudWorldRemoved": true
+  "cloudWorldRemoved": true,
+  "sharedAlbumPhotos": 16
 }

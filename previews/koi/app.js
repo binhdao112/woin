@@ -4,7 +4,7 @@ import {getJourneyProgress, canVisitStation, getPrimaryAction} from './journey.j
 import {createCardModel, cardFilename, renderWishCard, canvasToPng} from './wish-card.js';
 import {renderSocialCard, socialCardFilename, getSocialCopy, loadCardArtwork, SOCIAL_TEMPLATES, getSocialTemplate} from './social-card.js';
 import { CAMPUS_STOPS, createCampus } from './campus.js';
-import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js';
+import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js?v=team-album-20261016-1';
 import {createDrinkCounter} from './drink-counter.js';
 import {drinkLabel} from './drink-orders.js';
 import {normaliseLuckySet,formatLuckySet} from './lucky-numbers.js';
