@@ -23,6 +23,16 @@ function canvasFixture() {
   return {canvas:{getContext:()=>ctx},texts,images};
 }
 
+test('all four social templates carry the same six playful numbers in both sizes',()=>{
+ const luckySet=[1,9,18,24,37,45];
+ for(const style of social.SOCIAL_TEMPLATES)for(const format of ['post','story']){
+  const {canvas,texts}=canvasFixture();social.renderSocialCard(canvas,{...model,luckySet},{template:style.id,format});
+  for(const value of luckySet)assert.ok(texts.some(item=>item.text===String(value).padStart(2,'0')),style.id+' exports number '+value);
+  assert.ok(texts.some(item=>item.text==='BỐC VUI · 6/45'));
+  assert.ok(texts.every(item=>item.y>0&&item.y<canvas.height));
+ }
+});
+
 test('four distinct templates render personalized post and story cards with or without photos', () => {
   assert.equal(social.SOCIAL_TEMPLATES?.length,4,'four selectable styles are required');
   assert.deepEqual(social.SOCIAL_TEMPLATES.map(item=>item.id),['bloom','editorial','scrapbook','midnight']);

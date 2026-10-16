@@ -24,6 +24,15 @@ test('the card includes the recipient, fixed wish and the seven actual choices',
   assert.equal(model.keepsakes[6].detail, 'Chuyến đi của team');
 });
 
+test('the keepsake and full PNG model preserve the drawn playful set and support old journeys',()=>{
+ const copy=new Map(gifts);copy.set(3,{number:'07',luckySet:[1,9,18,24,37,45]});
+ const model=card.createCardModel({recipient:'Minh Anh',wish:{text:'Chúc vui!'},gifts:copy});
+ assert.deepEqual(model.luckySet,[1,9,18,24,37,45]);
+ assert.match(model.keepsakes[3].detail,/Số 07.*01 · 09 · 18 · 24 · 37 · 45/);
+ assert.equal(card.createCardModel({wish:{text:'Vui'},gifts}).luckySet,undefined);
+ copy.set(3,{number:'07',luckySet:[1,1,2,3,4,5]});assert.equal(card.createCardModel({wish:{text:'Vui'},gifts:copy}).luckySet,undefined);
+});
+
 test('Vietnamese names produce portable filenames and text wraps even for a long unbroken name', () => {
   assert.equal(typeof card.cardFilename, 'function');
   assert.equal(card.cardFilename('Đặng Mỹ Linh'), 'thiep-20-10-dang-my-linh.png');
