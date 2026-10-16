@@ -24,6 +24,9 @@ npm run test:coverage
 - Trạm ảnh giữ đúng khung hình đang xem. Có thể giữ khung minh họa nếu chưa chọn ảnh.
 - Bộ đếm và các thanh tiến độ đều lấy từ cùng bộ sưu tập 7 kỷ vật.
 - Thiệp cuối giữ nguyên lời chúc trong chuyến đi. PNG có tên, kết quả của từng trạm và ảnh kỷ niệm đã chọn nếu ảnh còn trong thư viện trình duyệt.
+- Màn thiệp có preview và ba bản tải: bài đăng 1080×1350 (4:5), story 1080×1920 (9:16), hoặc bản kỷ niệm đầy đủ. Hai bản social dùng nền hoa minh họa và một lời nhắn ngắn, giữ số may mắn như một dấu ấn của hành trình.
+- Có thể chọn thêm ảnh check-in cho khung Polaroid hoặc dùng thiệp hoa không có ảnh. Ảnh check-in bổ sung chỉ nằm trong bộ nhớ của trang, mất khi tải lại; không thay album IndexedDB và không tải lên máy chủ. Bản kỷ niệm đầy đủ vẫn dùng ảnh của hành trình.
+- Nút “Chép caption” chuẩn bị nội dung để bạn tự đăng. Ứng dụng không tự đăng lên mạng xã hội.
 - Tiến trình và tên lưu trong `sessionStorage`, dùng lại khi tải lại trang trong cùng tab. Đóng tab có thể kết thúc phiên. Ảnh lưu riêng trong IndexedDB và không tự mất cùng phiên hành trình.
 
 ## Ảnh nằm ở đâu khi deploy từ Git?
@@ -49,6 +52,8 @@ Xuất bản toàn bộ nội dung thư mục `dist/` trên hosting tĩnh. Giữ
 - `dist/app.js`: cảnh 3D, điều hướng, album và kết nối giao diện.
 - `dist/journey.js`: quy tắc sưu tầm, tiến độ và mở khóa trạm.
 - `dist/wish-card.js`: dữ liệu thiệp, xuống dòng, vẽ canvas và mã hóa PNG.
+- `dist/social-card.js`, `dist/card-studio.css`: bố cục social, khung ảnh và giao diện preview.
+- `dist/assets/social-bloom.png`: minh họa hoa và mây, lưu ngay trong repo để deploy cùng website.
 - `dist/experience.js`: trò chơi tại trạm và nhạc nền.
 - `tests/`: kiểm thử logic hành trình và xuất thiệp.
 

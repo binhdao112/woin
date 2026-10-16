@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-const social = await import('../dist/social-card.js').catch(() => ({}));
+import * as social from '../dist/social-card.js';
 const model = {
   recipient: 'Đặng Mỹ Linh', wishNumber: '042', message: 'Một lời chúc dài của hành trình.',
   keepsakes: [{title:'Lá bài cảm hứng',detail:'The Sun · Mặt trời'},{title:'Bùa số may mắn',detail:'Số 07'}],
@@ -49,11 +49,13 @@ test('long Vietnamese names stay inside the typography area in both formats', ()
 
 test('the selected photo and illustrated background are composed into the same exported canvas', () => {
   assert.equal(typeof social.renderSocialCard,'function');
-  const {canvas,images}=canvasFixture(),photo={width:800,height:1200},artwork={width:1080,height:1350};
-  social.renderSocialCard(canvas,model,{format:'post',photo,artwork});
-  assert.equal(images.length,2);
-  assert.equal(images[0][0],artwork);assert.equal(images[1][0],photo);
-  assert.equal(images[1].length,9,'photo must use an explicit cover crop');
+  for(const format of ['post','story']) {
+    const {canvas,images}=canvasFixture(),photo={width:800,height:1200},artwork={width:1080,height:1350};
+    social.renderSocialCard(canvas,model,{format,photo,artwork});
+    assert.equal(images.length,2);
+    assert.equal(images[0][0],artwork);assert.equal(images[1][0],photo);
+    assert.equal(images[1].length,9,'photo must use an explicit cover crop');
+  }
   assert.throws(()=>social.renderSocialCard({getContext:()=>null},model),/canvas/i);
 });
 
