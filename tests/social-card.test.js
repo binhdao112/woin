@@ -23,6 +23,45 @@ function canvasFixture() {
   return {canvas:{getContext:()=>ctx},texts,images};
 }
 
+test('four distinct templates render personalized post and story cards with or without photos', () => {
+  assert.equal(social.SOCIAL_TEMPLATES?.length,4,'four selectable styles are required');
+  assert.deepEqual(social.SOCIAL_TEMPLATES.map(item=>item.id),['bloom','editorial','scrapbook','midnight']);
+  const signatures=[];
+  for(const template of social.SOCIAL_TEMPLATES) {
+    for(const format of ['post','story']) for(const photo of [undefined,{width:1200,height:800}]) {
+      const {canvas,texts,images}=canvasFixture();
+      social.renderSocialCard(canvas,model,{format,photo,template:template.id});
+      assert.equal(canvas.width,1080);assert.equal(canvas.height,format==='post'?1350:1920);
+      assert.ok(texts.some(item=>item.text.includes(model.recipient)),template.id+' includes the recipient');
+      assert.ok(texts.every(item=>item.y>0&&item.y<canvas.height),template.id+' keeps text inside the card');
+      if(photo) assert.ok(images.some(args=>args[0]===photo),template.id+' includes the selected photo');
+      if(format==='post'&&!photo)signatures.push(texts.map(item=>item.text).join('|'));
+    }
+  }
+  assert.equal(new Set(signatures).size,4,'templates have distinct content and layouts');
+});
+
+test('unknown styles fall back safely, and filenames and captions identify the selected template', () => {
+  assert.equal(typeof social.getSocialTemplate,'function');
+  assert.equal(social.getSocialTemplate('not-a-style').id,'bloom');
+  const files=social.SOCIAL_TEMPLATES.map(item=>social.socialCardFilename(model.recipient,'post',item.id));
+  assert.equal(new Set(files).size,4);
+  assert.ok(files.every(file=>/^[a-z0-9-]+\.png$/.test(file)));
+  assert.equal(social.getSocialCopy(model,'midnight').title,'Bạn là\nmột vì sao.');
+});
+
+test('all styles adapt a long Vietnamese name in both formats', () => {
+  assert.equal(social.SOCIAL_TEMPLATES?.length,4);
+  for(const template of social.SOCIAL_TEMPLATES) for(const format of ['post','story']) {
+    const {canvas,texts}=canvasFixture();
+    social.renderSocialCard(canvas,{...model,recipient:'Nguyễn '.repeat(5)+'Linh'},{format,template:template.id});
+    const names=texts.filter(item=>item.text.includes('Nguyễn'));
+    assert.ok(names.length>0,template.id);
+    assert.ok(names.every(item=>parseFloat(item.font.match(/\d+(?:\.\d+)?px/)[0])>=30),template.id);
+    assert.ok(texts.every(item=>item.y>0&&item.y<canvas.height),template.id);
+  }
+});
+
 test('the social card exports a fixed 4:5 post and 9:16 story instead of an expanding report', () => {
   assert.equal(typeof social.renderSocialCard,'function','a designed social card renderer is required');
   for (const [format,height] of [['post',1350],['story',1920]]) {
