@@ -18,6 +18,14 @@ npm run test:coverage
 npm run check:pages
 ```
 
+## Chọn nước KOI và thống kê cho host
+
+Quầy cà phê có menu KOI Thé · Trung Hòa, tìm món không dấu, chọn cỡ, đường/đá, tên nhận nước và ghi chú. Nút **Ly nước của tôi** cho quay lại sửa lựa chọn. Google Sheets có danh sách từng đăng ký và bảng gom số ly theo cấu hình để host tự đặt nước.
+
+**Bản hiện tại chưa nối Google Sheet thật**: quầy ghi rõ chế độ xem thử, chỉ giữ ly trong hành trình. Để nhận đăng ký từ các thiết bị, host triển khai file `integrations/google-sheets/Code.gs` vào Apps Script của bảng riêng rồi cung cấp URL `/exec`. [Hướng dẫn kết nối và chốt danh sách](docs/drink-orders.md).
+
+Chỉ hiện đã nhận sau khi Google xác nhận đúng mã gửi. Gửi lại sau lỗi mạng không thêm ly; đổi món cập nhật dòng cũ của cùng trình duyệt. Giá là tham khảo, host kiểm tra lại khi đặt.
+
 ## Campus thu nhỏ
 
 Không gian mặc định là **VNG Campus** (`?world=campus`). Dùng nút **Đảo trên mây** (`?world=cloud`) để xem cảnh cũ; cả hai dùng chung tiến trình trong cùng tab.
@@ -71,7 +79,7 @@ Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run chec
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 36 kiểm thử, 17 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 51 kiểm thử, 24 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 
@@ -89,6 +97,9 @@ Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #
 - `dist/experience.js`, `dist/fortune-animation.js`, `dist/station-polish.css`: trò chơi tại trạm, animation quẻ và nhạc nền.
 - `dist/memory-album.js`, `dist/assets/memories/album.json`: album dùng chung do host chuẩn bị.
 - `scripts/prepare-album.mjs`: nhập thư mục ảnh của host, tạo tên file và danh sách cho album.
-- `tests/`: kiểm thử logic hành trình và xuất thiệp.
+- `dist/drink-counter.js`, `dist/drink-counter.css`: quầy KOI và giao diện đăng ký.
+- `dist/drink-orders.js`, `dist/drink-order-client.js`, `dist/drink-registration.js`: kiểm tra lựa chọn, xác nhận và chống gửi trùng.
+- `integrations/google-sheets/Code.gs`: gói triển khai Google Sheets cho host.
+- `tests/`: kiểm thử hành trình, xuất thiệp và đăng ký nước.
 
 Ảnh chụp kiểm tra và thiệp mẫu trong `output/` chỉ là kết quả local, được loại khỏi Git.
