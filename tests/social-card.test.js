@@ -9,10 +9,14 @@ const model = {
 
 function canvasFixture() {
   const texts = [], images = [];
+  let offsetX=0,offsetY=0;const stack=[];
   const ctx = new Proxy({
     font: '20px sans-serif',
     measureText(text) { return { width: Array.from(text).length * (parseFloat(this.font.match(/\d+(?:\.\d+)?px/)?.[0]) || 20) * .52 }; },
-    fillText(text,x,y) { texts.push({text,x,y,font:this.font}); },
+    save(){stack.push([offsetX,offsetY]);},
+    restore(){[offsetX,offsetY]=stack.pop();},
+    translate(x,y){offsetX+=x;offsetY+=y;},
+    fillText(text,x,y) { texts.push({text,x:x+offsetX,y:y+offsetY,font:this.font}); },
     drawImage(...args) { images.push(args); },
     createLinearGradient: () => ({addColorStop(){}}),
   }, {get:(target,key)=>key in target?target[key]:()=>{}});

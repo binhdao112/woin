@@ -2,6 +2,7 @@ import * as T from './three.module.js';
 import {wishes} from './wishes.js';
 import {getJourneyProgress, canVisitStation, getPrimaryAction} from './journey.js';
 import {createCardModel, cardFilename, renderWishCard, canvasToPng} from './wish-card.js';
+import {renderSocialCard, socialCardFilename, getSocialCopy, loadCardArtwork} from './social-card.js';
 import './experience.js';
 const $=s=>document.querySelector(s), modal=$('#final');
 const names=["Sảnh văn phòng", "Góc cà phê", "Vườn ý tưởng", "Cầu đồng đội", "Trạm nạp năng lượng", "Bưu điện lời cảm ơn", "Trạm kỷ niệm", "Sân thượng 20/10"];
@@ -158,6 +159,7 @@ function tickMemories(dt){if(!memoryOpen)return;if(memoryAuto&&effectTime-memory
 const keepsakeCollection=new Map(),savedFrames=new Map();let keepsakeActive=false,keepsakeRoot=null,keepsakeZoom=34,keepsakeStyle=0,wishBag=[],currentWish=null,finalWish=null,recipient='';
 const stationGifts=[['Vé khởi hành','Tên bạn đã ở trên vé. Nhận chiếc vé dành riêng cho mình để bắt đầu chuyến đi nhé.','🎟'],['Ly cà phê đồng đội','Chọn đồ uống cho chuyến đi. Nhân vật sẽ mang theo món bạn chọn.','☕'],['Lá bài cảm hứng','Rút một lá tarot và giữ lại lời nhắc tích cực cho mình.','✧'],['Bùa số may mắn','Chọn một con số vui, đúc thành chiếc bùa nhỏ của chuyến đi.','◇'],['Lọ niềm vui','Quay một điều dễ thương rồi cất nó vào lọ để dành.','✿'],['Thư từ vũ trụ','Bóc một quẻ vui và giữ thông điệp trong phong thư của team.','✉'],['Khung ảnh kỷ niệm','Giữ lại một khung hình từ album của team.','▧']];
 const activities={2:'tarot',3:'number',4:'wheel',5:'fortune'};
+let cardFormat='post',checkinPhoto=null,cardPhotoEnabled=true,previewRequest=0;
 function saveJourney(){try{sessionStorage.setItem('team-journey-v2',JSON.stringify({recipient,gifts:Array.from(keepsakeCollection.entries()),finalId:finalWish?.id,index,arrival}));}catch{}}
 function updateKeepsakeCount(){updateUI();saveJourney();}
 function shuffledWishes(){const bag=Array.from({length:wishes.length},(_,i)=>i);for(let i=bag.length-1;i>0;i--){const r=new Uint32Array(1);crypto.getRandomValues(r);const j=r[0]%(i+1);[bag[i],bag[j]]=[bag[j],bag[i]];}return bag;}
@@ -166,25 +168,54 @@ function drawWish(){
  currentWish=finalWish;saveJourney();
  const model=createCardModel({recipient,wish:finalWish,gifts:keepsakeCollection});
  $('#wish-message').textContent=model.message;$('#wish-number').textContent='THIỆP '+model.wishNumber+' / 200';
- $('#wish-recipient').textContent='Gửi '+model.recipient;$('#wish-remaining').textContent='Thiệp lưu trọn những lựa chọn của bạn. Tải PNG để giữ lại chuyến đi này.';
+ $('#wish-recipient').textContent='Gửi '+model.recipient;
  $('#wish-keepsakes').replaceChildren();
  model.keepsakes.forEach(item=>{const entry=document.createElement('div'),title=document.createElement('strong'),detail=document.createElement('span');entry.className='wish-souvenir';title.textContent=item.title;detail.textContent=item.detail;entry.append(title,detail);$('#wish-keepsakes').append(entry);});
- $('#wish-copy').textContent='Sao chép lời chúc';$('#wish-download-status').textContent='';
+ $('#wish-download-status').textContent='';updateWishPreview();
  $('#wish-face').classList.remove('reveal');void $('#wish-face').offsetWidth;$('#wish-face').classList.add('reveal');
+}
+function wishDownloadLabel(){return cardFormat==='full'?'Tải bản kỷ niệm đầy đủ ↓':cardFormat==='story'?'Tải story 9:16 ↓':'Tải bài đăng 4:5 ↓';}
+async function composeWishCanvas(model,format){
+ const [,,artwork]=await Promise.all([document.fonts.ready,photosReady,format==='full'?null:loadCardArtwork(),document.fonts.load('500 88px Lora'),document.fonts.load('italic 500 86px Lora')]);
+ const photoName=keepsakeCollection.get(6)?.photoName,original=memoryPhotos.find(item=>item.name===photoName)?.canvas;
+ const photo=format==='full'?original:cardPhotoEnabled?(checkinPhoto||original):null,canvas=document.createElement('canvas');
+ return format==='full'?renderWishCard(canvas,model,photo):renderSocialCard(canvas,model,{format,photo,artwork});
+}
+async function updateWishPreview(){
+ if(!currentWish)return;
+ const request=++previewRequest,model=createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection}),format=cardFormat;
+ $('#wish-preview-status').textContent='Đang chuẩn bị thiệp…';
+ document.querySelectorAll('[data-card-format]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.cardFormat===format)));
+ $('#wish-photo-tools').hidden=format==='full';$('#wish-download').textContent=wishDownloadLabel();$('#wish-copy').textContent=format==='full'?'Sao chép lời chúc':'Chép caption';
+ try{
+  const canvas=await composeWishCanvas(model,format);if(request!==previewRequest)return;
+  const preview=$('#wish-preview');preview.width=canvas.width;preview.height=canvas.height;preview.getContext('2d').drawImage(canvas,0,0);
+  $('#wish-remaining').textContent=format==='full'?'Bản lưu đầy đủ lời chúc và 7 kỷ vật.':canvas.width+' × '+canvas.height+' px · '+(format==='story'?'Sẵn sàng đăng story.':'Sẵn sàng cho bài đăng của bạn.');
+  const original=memoryPhotos.some(photo=>photo.name===keepsakeCollection.get(6)?.photoName);
+  $('#wish-remove-photo').hidden=!cardPhotoEnabled||!(checkinPhoto||original);$('#wish-preview-status').textContent='';
+ }catch(error){if(request===previewRequest)$('#wish-preview-status').textContent='Chưa tạo được bản xem trước. '+error.message;}
 }
 async function downloadWish(){
  const button=$('#wish-download');if(button.disabled||!currentWish)return;
  button.disabled=true;button.textContent='Đang tạo thiệp…';$('#wish-download-status').textContent='';
- const model=createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection});
- const photoName=keepsakeCollection.get(6)?.photoName;
+ const model=createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection}),format=cardFormat;
  try{
-  await Promise.all([document.fonts.ready,photosReady]);
-  const photo=memoryPhotos.find(item=>item.name===photoName)?.canvas;
-  const canvas=renderWishCard(document.createElement('canvas'),model,photo),blob=await canvasToPng(canvas);
-  const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=cardFilename(model.recipient);document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-  $('#wish-download-status').textContent='Đã tạo thiệp PNG. Bạn có thể tìm trong mục tải xuống của trình duyệt.';
+  const canvas=await composeWishCanvas(model,format),blob=await canvasToPng(canvas);
+  const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=format==='full'?cardFilename(model.recipient):socialCardFilename(model.recipient,format);document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+  $('#wish-download-status').textContent='Đã tạo ảnh PNG. Hẹn gặp bạn trên bảng tin thật rực rỡ nhé!';
  }catch(error){$('#wish-download-status').textContent='Chưa tải được thiệp. '+(error.message||'Hãy thử lại.');}
- finally{button.disabled=false;button.textContent='Tải thiệp PNG ↓';}
+ finally{button.disabled=false;button.textContent=wishDownloadLabel();}
+}
+async function chooseCheckinPhoto(event){
+ const file=event.target.files?.[0];if(!file)return;
+ $('#wish-download-status').textContent='Đang chuẩn bị ảnh check-in…';
+ try{
+  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>20*1024*1024)throw Error('Chọn ảnh JPG, PNG hoặc WebP nhỏ hơn 20 MB nhé.');
+  const bitmap=await createImageBitmap(file,{imageOrientation:'from-image'}),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');
+  canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+  checkinPhoto=canvas;cardPhotoEnabled=true;await updateWishPreview();$('#wish-download-status').textContent='Ảnh đã sẵn sàng. Chọn khổ thiệp rồi tải về nhé.';
+ }catch(error){$('#wish-download-status').textContent=error.message;}
+ finally{event.target.value='';}
 }
 function openWish(){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}drawWish();$('#wish-card').showModal();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}
@@ -202,7 +233,9 @@ window.addEventListener('station-result',e=>{const {station,result,number}=e.det
 window.addEventListener('station-continue',e=>{if(e.detail.station===index)advanceJourney();});
 $('#memory-keep').onclick=()=>{const photo=memoryPhotos[memoryIndex];collectGift(6,{photoName:photo?.name,result:photo?'Khung ảnh từ '+photo.name:'Khung ảnh đang chờ những khoảnh khắc cùng team.'});closeMemories();advanceJourney();};
 $('#wish-close').onclick=()=>$('#wish-card').close();$('#wish-download').onclick=downloadWish;
-$('#wish-copy').onclick=async()=>{try{await navigator.clipboard.writeText((recipient?'Gửi '+recipient+'\n':'')+currentWish.text);$('#wish-copy').textContent='Đã sao chép ✓';}catch{$('#wish-copy').textContent='Chọn lời chúc để sao chép';}};
+$('#wish-copy').onclick=async()=>{try{const message=cardFormat==='full'?currentWish.text:getSocialCopy(createCardModel({recipient,wish:currentWish,gifts:keepsakeCollection})).message+'\n\nMột ngày rực rỡ cùng team. 💐\n#Happy2010 #VanPhongTrenMay';await navigator.clipboard.writeText((recipient?'Gửi '+recipient+' 💌\n\n':'')+message);$('#wish-copy').textContent='Đã sao chép ✓';}catch{$('#wish-download-status').textContent='Chưa sao chép được. Bạn vẫn có thể tải ảnh thiệp nhé.';}};
+document.querySelectorAll('[data-card-format]').forEach(button=>button.onclick=()=>{cardFormat=button.dataset.cardFormat;updateWishPreview();});
+$('#wish-checkin-photo').onchange=chooseCheckinPhoto;$('#wish-remove-photo').onclick=()=>{cardPhotoEnabled=false;updateWishPreview();};
 $('#keepsake-next').onclick=()=>{if(!keepsakeCollection.has(index))return;closeKeepsake();advanceJourney();};
 function refreshMemoryGift(){const data=keepsakeCollection.get(6),frame=savedFrames.get(6);if(data&&frame){clearGroup(frame);makeGift(6,data,frame);}}
 try{
