@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
 const source = await readFile(new URL('../dist/app.js', import.meta.url), 'utf8');
-const policy = await import('../dist/journey.js').catch(() => ({}));
+import * as policy from '../dist/journey.js';
 
 test('the main button opens the uncollected gift instead of leaving the first station', () => {
   const calls = [];

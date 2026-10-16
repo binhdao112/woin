@@ -3,7 +3,10 @@ const drinks = ['Cà phê sữa đá', 'Trà đào', 'Nước mát'];
 
 export function createCardModel({ recipient = '', wish, gifts }) {
   const name = recipient.trim() || 'bạn';
-  const clean = text => String(text || '').replace(new RegExp('^' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' ơi,\\s*'), '');
+  const clean = text => {
+    const value = String(text || '').replace(new RegExp('^' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' ơi,\\s*'), '');
+    return value.charAt(0).toLocaleUpperCase('vi') + value.slice(1);
+  };
   const keepsakes = titles.flatMap((title, station) => {
     if (!gifts.has(station)) return [];
     const data = gifts.get(station);

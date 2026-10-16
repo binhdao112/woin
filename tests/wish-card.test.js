@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-const card = await import('../dist/wish-card.js').catch(() => ({}));
+import * as card from '../dist/wish-card.js';
 const gifts = new Map([
   [0, {}], [1, { style: 1 }],
   [2, { result: 'Minh Anh ơi, The Sun · Mặt trời · Một lời nhắc.' }],
