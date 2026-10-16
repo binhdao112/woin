@@ -1,4 +1,4 @@
-const formats=[{mimeType:'video/mp4',extension:'mp4'},{mimeType:'video/webm;codecs=vp9',extension:'webm'},{mimeType:'video/webm;codecs=vp8',extension:'webm'},{mimeType:'video/webm',extension:'webm'}];
+const formats=[{mimeType:'video/mp4;codecs=avc1.42E028',extension:'mp4'},{mimeType:'video/mp4;codecs=avc1',extension:'mp4'},{mimeType:'video/mp4',extension:'mp4'},{mimeType:'video/webm;codecs=vp9',extension:'webm'},{mimeType:'video/webm;codecs=vp8',extension:'webm'},{mimeType:'video/webm',extension:'webm'}];
 export function selectClipFormat(Recorder){for(const type of formats){try{if(Recorder?.isTypeSupported?.(type.mimeType))return {...type};}catch{}}return null;}
 export function createCheckinRecorder({canvas,MediaRecorderImpl=globalThis.MediaRecorder,onComplete=()=>{},onError=()=>{},onState=()=>{}}){
  let session=null;
