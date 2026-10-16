@@ -17,7 +17,7 @@ export function checkinFilename(name,format='story',extension='png'){
 function rounded(ctx,x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.fill();}
 function flower(ctx,x,y,size,color){ctx.save();ctx.translate(x,y);for(let i=0;i<7;i++){ctx.rotate(Math.PI*2/7);ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(0,-size*.55,size*.29,size*.53,0,0,Math.PI*2);ctx.fill();}ctx.fillStyle='#d3aa64';ctx.beginPath();ctx.arc(0,0,size*.2,0,Math.PI*2);ctx.fill();ctx.restore();}
 function cover(ctx,image,x,y,w,h){const ratio=Math.max(w/image.width,h/image.height),sw=w/ratio,sh=h/ratio;ctx.drawImage(image,(image.width-sw)/2,(image.height-sh)/2,sw,sh,x,y,w,h);}
-export function renderCheckinCard(canvas,model,{format='story',theme='blush',avatar,photo,time=0,reducedMotion=false}={}){
+export function renderCheckinCard(canvas,model,{format='story',theme='blush',avatar,photo,time=0,reducedMotion=false,gesture='heart'}={}){
  const ctx=canvas.getContext('2d');if(!ctx)throw Error('Không thể tạo canvas check-in.');
  const {width,height}=getCheckinSize(format);if(canvas.width!==width)canvas.width=width;if(canvas.height!==height)canvas.height=height;
  const post=format==='post',dark=theme==='night',ink=dark?'#fff1dc':'#623e4c',accent=dark?'#e5c484':'#a35472',soft=dark?'#4a3c59':'#efd4d5',paper=dark?'#342c47':'#fffaf1',muted=dark?'#cdbbc9':'#8a6b70';
@@ -35,6 +35,9 @@ export function renderCheckinCard(canvas,model,{format='story',theme='blush',ava
  for(let i=0;i<10;i++){const x=110+(i*157)%880,y=heroY+35+(i*93)%heroH+Math.sin(t*.8+i)*12;ctx.save();ctx.translate(x,y);ctx.rotate(i*.7+t*.08);ctx.globalAlpha=.5;text('✦',0,14,i%3?25:38,accent,500);ctx.restore();}
  ctx.save();ctx.fillStyle=dark?'#0f102530':'#a4758720';ctx.beginPath();ctx.ellipse(heroX+heroW*.5,heroY+heroH*.96,heroW*.35,35,0,0,Math.PI*2);ctx.fill();ctx.restore();
  if(avatar)ctx.drawImage(avatar,heroX,heroY,heroW,heroH);
+ if(gesture==='sixseven'){text('6',heroX+30,heroY+heroH*.48+Math.sin(t*5)*24,80,accent,800,'Nunito, sans-serif');text('7',heroX+heroW-20,heroY+heroH*.48-Math.sin(t*5)*24,80,accent,800,'Nunito, sans-serif');}
+ if(gesture==='heart'||gesture==='hug')for(let i=0;i<3;i++)text('♡',heroX+40+i*200,heroY+heroH*(.2+i*.22)+Math.sin(t*2+i)*15,55,accent,500);
+
  if(photo){ctx.save();ctx.translate(825,heroY+heroH*.5);ctx.rotate(.10+Math.sin(t*.5)*.018);rounded(ctx,-155,-205,310,410,8,'#fffaf2');cover(ctx,photo,-135,-185,270,310);text('cùng team, cùng vui.',0,167,19,'#826365',500,'Lora, serif');ctx.restore();}
  const stampY=post?915:1385;text('7 / 7 KỶ VẬT · MỘT CHUYẾN ĐI ĐÁNG NHỚ',540,stampY,post?20:23,muted,600);
  for(const [i,item] of model.keepsakes.entries()){const x=142+i*133;rounded(ctx,x-48,stampY+27,96,102,28,paper);text(item.icon,x,stampY+81,40,accent,500);text(item.label,x,stampY+108,16,muted,500);}
