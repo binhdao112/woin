@@ -37,6 +37,17 @@ test('host import handles JPEG/WebP, numeric ordering and duplicate photos',asyn
 test('host import refuses empty or oversized albums before writing a manifest',async t=>{
  const {prepareAlbum}=await import('../scripts/prepare-album.mjs');const {input,output}=await dirs(t);
  await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}),/chưa có ảnh/);
- for(let i=0;i<13;i++)await writeFile(path.join(input,i+'.png'),png);
- await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}),/12 ảnh/);
+ for(let i=0;i<25;i++)await writeFile(path.join(input,i+'.png'),png);
+ await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}),/24 ảnh/);
+});
+
+test('sync all sixteen host photos and retain existing IDs when the folder grows',async t=>{
+ const {prepareAlbum}=await import('../scripts/prepare-album.mjs');const {input,output}=await dirs(t);
+ for(let i=0;i<16;i++)await writeFile(path.join(input,String(i+1).padStart(2,'0')+'_Team.jpg'),Buffer.from([255,216,255,224,i]));
+ const first=await prepareAlbum({sourceDirectory:input,targetDirectory:output});
+ assert.equal(first.photos.length,16);
+ for(let i=16;i<20;i++)await writeFile(path.join(input,String(i+1).padStart(2,'0')+'_Team.jpg'),Buffer.from([255,216,255,224,i]));
+ const second=await prepareAlbum({sourceDirectory:input,targetDirectory:output});
+ assert.equal(second.photos.length,20);assert.deepEqual(second.photos.slice(0,16),first.photos);
+ for(const image of second.photos)assert.equal((await readFile(path.join(output,image.src))).length,5);
 });
