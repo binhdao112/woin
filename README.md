@@ -40,6 +40,7 @@ Tám điểm dừng kết nối thành lối đi quanh sân; quay lại trạm c
 - Vé và đồ uống được lưu khi xác nhận. Các trò chơi tự lưu kết quả thành kỷ vật ngay khi có kết quả; đóng trò chơi không làm mất món đã nhận.
 - Trạm 6 lắc ống quẻ xong mới hiện thông điệp và lưu kỷ vật; đóng giữa chừng có thể mở lại để lắc tiếp. Trạm ảnh tự tải album do host chuẩn bị sẵn, giữ đúng khung hình đang xem. Có thể giữ khung minh họa nếu album chưa có ảnh.
 - Bộ đếm và các thanh tiến độ đều lấy từ cùng bộ sưu tập 7 kỷ vật.
+- Trạm số may mắn nhận cùng lúc số 01–99 và bộ số vui 6/45: sáu số khác nhau từ 01–45, sắp tăng dần. Bộ số có nút chép, được lưu cùng hành trình và xuất lên cả bốn mẫu thiệp social, caption và bản kỷ niệm đầy đủ. Hành trình cũ không tự bốc thêm số khi tải lại.
 - Thiệp cuối giữ nguyên lời chúc trong chuyến đi. PNG có tên, kết quả của từng trạm và ảnh kỷ niệm đã chọn nếu ảnh còn trong thư viện trình duyệt.
 - Màn thiệp có preview và ba bản tải: bài đăng 1080×1350 (4:5), story 1080×1920 (9:16), hoặc bản kỷ niệm đầy đủ. Hai bản social dùng nền hoa minh họa và một lời nhắn ngắn, giữ số may mắn như một dấu ấn của hành trình.
 - Có 4 mẫu social với thumbnail lớn, bố cục 2×2, dấu chọn rõ ràng và nút tải luôn hiện ở cuối màn thiệp: **Mây hoa**, **Bìa tạp chí**, **Sổ tay vui** và **Đêm sao**. Mỗi mẫu có bố cục dành cho cả khổ bài đăng/story, có hoặc không có ảnh. Đổi mẫu giữ nguyên tên, ảnh và dữ liệu hành trình; lựa chọn mẫu được nhớ trong cùng phiên trình duyệt. Tên file PNG phân biệt từng mẫu.
@@ -73,13 +74,14 @@ Repo xuất bản từ **`gh-pages` → `/`**, giữ nguyên cấu hình Pages v
 
 - Website: <https://binhdao112.github.io/woin/>
 - Bản xem riêng: <https://binhdao112.github.io/woin/previews/campus/>
+- Bản xem mới có quầy KOI và bộ số vui: <https://binhdao112.github.io/woin/previews/koi/?world=campus>
 - Nhánh nguồn giữ code, tests và docs để review. Nhánh `gh-pages` giữ artifact tĩnh để xuất bản.
 
 Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run check:pages`. Sao chép toàn bộ nội dung `dist/` vào gốc nhánh deploy trong một checkout riêng, giữ `.git/` và các snapshot `previews/` hiện có, commit rồi push `gh-pages`. Push bằng tài khoản Git có quyền ghi sẽ tự kích hoạt workflow **pages build and deployment** của GitHub. Chờ cả build và deploy thành công trước khi kiểm tra URL.
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 51 kiểm thử, 24 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 58 kiểm thử, 25 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 
@@ -95,6 +97,7 @@ Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #
 - `dist/card-templates.js`: danh sách mẫu và các bố cục tạp chí, scrapbook, đêm sao; ba mẫu này vẽ bằng canvas, không cần tải thêm ảnh nền.
 - `dist/assets/social-bloom.png`: minh họa hoa và mây, lưu ngay trong repo để deploy cùng website.
 - `dist/experience.js`, `dist/fortune-animation.js`, `dist/station-polish.css`: trò chơi tại trạm, animation quẻ và nhạc nền.
+- `dist/lucky-numbers.js`: bốc số ngẫu nhiên, kiểm tra và định dạng bộ số vui 6/45.
 - `dist/memory-album.js`, `dist/assets/memories/album.json`: album dùng chung do host chuẩn bị.
 - `scripts/prepare-album.mjs`: nhập thư mục ảnh của host, tạo tên file và danh sách cho album.
 - `dist/drink-counter.js`, `dist/drink-counter.css`: quầy KOI và giao diện đăng ký.

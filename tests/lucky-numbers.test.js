@@ -20,6 +20,8 @@ test('random integers reject biased high values before mapping to a range',async
  assert.equal(randomBelow(45,crypto),44);assert.equal(calls,2);
  for(const max of [0,-1,2.5,0x100000001])assert.throws(()=>randomBelow(max,crypto),RangeError);
  assert.equal(randomBelow(1,crypto),0);
+ const hadCrypto=Boolean(globalThis.crypto);if(!hadCrypto)globalThis.crypto=webcrypto;
+ try { assert.equal((await import('../dist/lucky-numbers.js')).drawLuckyBundle().luckySet.length,6); } finally {if(!hadCrypto)delete globalThis.crypto;}
 });
 
 test('stored sets normalize without mutation and reject corrupt or old unsupported data',async()=>{
