@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "test:coverage": "node --experimental-test-coverage --test"
+    "test:coverage": "node --experimental-test-coverage --test",
+    "check:pages": "node scripts/check-pages.mjs"
   }
 }
