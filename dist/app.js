@@ -8,6 +8,9 @@ import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js';
 import {createDrinkCounter} from './drink-counter.js';
 import {drinkLabel} from './drink-orders.js';
 import {normaliseLuckySet,formatLuckySet} from './lucky-numbers.js';
+import {normaliseAvatar} from './avatar-profile.js';
+import {createAvatar} from './avatar-rig.js';
+import {createAvatarStudio} from './avatar-studio.js';
 import './experience.js';
 const $=s=>document.querySelector(s), modal=$('#final');
 const isCampus=new URLSearchParams(location.search).get('world')!=='cloud';
@@ -85,8 +88,10 @@ for(let i=0;i<stops.length-1;i++){const a=stops[i],b=stops[i+1],d=b.clone().sub(
 }
 // Collectible symbols hovering over the destinations.
 for(let i=0;i<stops.length-1;i++){const g=new T.Group();g.position.copy(stops[i]).add(new T.Vector3(0,1.6,.5));scene.add(g);const core=i===1?mesh(new T.OctahedronGeometry(.27),mats.gold,[0,0,0],g):i===2?sphere(.25,mats.gold,[0,0,0],g):sphere(.27,mats.pink,[0,0,0],g);const ring=mesh(new T.TorusGeometry(.43,.015,6,40),mats.gold,[0,0,0],g);ring.rotation.x=Math.PI/2;gifts.push(g);}
-// Small explorer character carrying a satchel.
-const player=new T.Group();scene.add(player);cylinder(.2,.25,.55,mats.pink,[0,.57,0],player);sphere(.22,mats.cream,[0,1.03,0],player);cylinder(.31,.31,.07,mats.gold,[0,1.21,0],player,16);cylinder(.22,.25,.18,mats.gold,[0,1.31,0],player,16);box(.24,.28,.15,mats.wood,[0,.63,.24],player);for(const x of [-.27,.27]){const arm=box(.12,.34,.12,mats.pink,[x,.65,.08],player);arm.rotation.z=x>0?-.6:.3;}const legs=[];for(const x of [-.12,.12]){const l=box(.12,.3,.14,mats.dark,[x,.17,0],player);legs.push(l);}player.position.copy(stops[0]).add(new T.Vector3(0,0,.7));
+// The body is a separate child: changing clothes preserves the player's route and souvenirs.
+const player=new T.Group();scene.add(player);let appearance=normaliseAvatar(),playerAvatar=createAvatar(appearance),legs=playerAvatar.legs;player.add(playerAvatar.group);
+function applyAvatar(value){appearance=normaliseAvatar(value);player.remove(playerAvatar.group);playerAvatar.dispose();playerAvatar=createAvatar(appearance);legs=playerAvatar.legs;player.add(playerAvatar.group);}
+player.position.copy(stops[0]).add(new T.Vector3(0,0,.7));
 // Clouds and warm drifting stars.
 for(let i=0;i<(isCampus?0:18);i++){const g=new T.Group();g.position.set((Math.random()-.5)*48,-4-Math.random()*6,(Math.random()-.5)*36);for(let j=0;j<4;j++){const cloud=sphere(1.2,mat(0xf4ffff),[j*1.2,Math.random()*.3,0],g);cloud.scale.set(1,.35,.7);}scene.add(g);}
 const particles=new T.BufferGeometry(),pos=new Float32Array(450);for(let i=0;i<450;i++)pos[i]=(Math.random()-.5)*45;particles.setAttribute('position',new T.BufferAttribute(pos,3));const stars=new T.Points(particles,new T.PointsMaterial({color:0xffd59e,size:.055,transparent:true,opacity:.8}));scene.add(stars);
@@ -248,7 +253,7 @@ SOCIAL_TEMPLATES.forEach(style=>{
 });
 $('#wish-see-preview').onclick=()=>$('#wish-preview-area').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
 
-function saveJourney(){try{sessionStorage.setItem('team-journey-v2',JSON.stringify({recipient,gifts:Array.from(keepsakeCollection.entries()),finalId:finalWish?.id,index,arrival}));}catch{}}
+function saveJourney(){try{sessionStorage.setItem('team-journey-v2',JSON.stringify({recipient,avatar:appearance,gifts:Array.from(keepsakeCollection.entries()),finalId:finalWish?.id,index,arrival}));}catch{}}
 function updateKeepsakeCount(){updateUI();saveJourney();}
 function shuffledWishes(){const bag=Array.from({length:wishes.length},(_,i)=>i);for(let i=bag.length-1;i>0;i--){const r=new Uint32Array(1);crypto.getRandomValues(r);const j=r[0]%(i+1);[bag[i],bag[j]]=[bag[j],bag[i]];}return bag;}
 function drawWish(){
@@ -358,7 +363,7 @@ function refreshMemoryGift(){const data=keepsakeCollection.get(6),frame=savedFra
 try{
  const raw=sessionStorage.getItem('team-journey-v2');
  if(raw){const saved=JSON.parse(raw);if(Array.isArray(saved.gifts)&&Number.isInteger(saved.index)&&saved.index>=0&&saved.index<=7){
-  recipient=typeof saved.recipient==='string'?saved.recipient.slice(0,40):'';
+  recipient=typeof saved.recipient==='string'?saved.recipient.slice(0,40):'';applyAvatar(saved.avatar);
   for(const item of saved.gifts){if(!Array.isArray(item)||item.length!==2)continue;const [k,data]=item;
    if(!Number.isInteger(k)||k<0||k>6||!data||typeof data!=='object')continue;
    const gift={title:stationGifts[k][0],style:[0,1,2].includes(data.style)?data.style:0,result:typeof data.result==='string'?data.result.slice(0,600):'',number:typeof data.number==='string'?data.number.slice(0,2):undefined,luckySet:k===3?normaliseLuckySet(data.luckySet):undefined,photoName:typeof data.photoName==='string'?data.photoName.slice(0,255):undefined,photoId:typeof data.photoId==='string'?data.photoId.slice(0,160):undefined};
@@ -371,8 +376,9 @@ try{
 }catch{}
 
 function personalMessage(text){return recipient?recipient+' ơi, '+text.charAt(0).toLocaleLowerCase('vi')+text.slice(1):text;}
-window.addEventListener('welcome-profile',e=>{const old=recipient;recipient=e.detail.name;arrival=true;$('#recipient-name').value=recipient;$('.side .tag').textContent='20/10 · Hành trình của '+recipient;for(const [k,data] of keepsakeCollection){if(typeof data.result==='string'&&old)data.result=data.result.split(old).join(recipient);if(k===0)data.result='Vé dành cho '+recipient;const g=savedFrames.get(k);if(g){clearGroup(g);makeGift(k,data,g);}}window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient}}));updateUI();saveJourney();$('#welcome-submit').textContent='Bắt đầu hành trình →';if(keepsakeActive)openKeepsake(index);});
-window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient}}));$('#welcome-name').value=recipient;$('#welcome').showModal();updateUI();
+window.addEventListener('welcome-profile',e=>{const old=recipient;recipient=e.detail.name;applyAvatar(e.detail.avatar);arrival=true;$('#recipient-name').value=recipient;$('.side .tag').textContent='20/10 · Hành trình của '+recipient;for(const [k,data] of keepsakeCollection){if(typeof data.result==='string'&&old)data.result=data.result.split(old).join(recipient);if(k===0)data.result='Vé dành cho '+recipient;const g=savedFrames.get(k);if(g){clearGroup(g);makeGift(k,data,g);}}window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));updateUI();saveJourney();$('#welcome-submit').textContent='Bắt đầu hành trình →';if(keepsakeActive)openKeepsake(index);});
+const avatarStudio=createAvatarStudio({name:recipient,avatar:appearance});
+window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));avatarStudio.open();updateUI();
 
 window.addEventListener('festival-sparkle',()=>celebrateAt(player.position,65));
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);zoom=worldZoom();}addEventListener('resize',resize);resize();$('#loading').remove();let prev=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,overlays=Array.from(document.querySelectorAll('dialog'));let renderedWorld=false;
