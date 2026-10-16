@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
 
 const menu={version:'2026-10-16',items:[{id:'milk',name:'Hồng Trà Sữa',category:'milk-tea',variants:[{id:'milk-small',label:'Nhỏ',temperature:'cold',price:57000},{id:'milk-medium',label:'Vừa',temperature:'cold',price:76000}]},{id:'hot',name:'Trà Sữa Ngũ Cốc Rang',category:'new',variants:[{id:'hot-cup',label:'Nóng',temperature:'hot',price:83000}]}]};
 const id='e88eeec0-bbbd-49ad-a570-958d82fdc8fb';
@@ -7,7 +8,7 @@ const base={eventId:'team-2010',menuVersion:menu.version,participantId:id,reques
 
 test('drink registration uses catalog prices and exact variant, ignoring submitted price/name',async()=>{
  const {validateDrinkOrder}=await import('../dist/drink-orders.js');
- const order=validateDrinkOrder(menu,{...base,price:1,itemName:'Món giả'});
+ const order=validateDrinkOrder(menu,{...base,price:1,itemName:'Món giả',quantity:100});
  assert.equal(order.price,57000);assert.equal(order.itemName,'Hồng Trà Sữa');assert.equal(order.size,'Nhỏ');assert.equal(order.name,'Minh Anh');assert.equal(order.quantity,1);
 });
 
@@ -53,4 +54,16 @@ test('client never reports opaque POST success as a registered drink',async()=>{
  await assert.rejects(call(async()=>({status:'accepted',requestId:'someone-else',sequence:1})),/chưa xác nhận/i);
  await assert.rejects(call(async()=>({status:'rejected',requestId:base.requestId,code:'closed'})),/đóng/i);
  await assert.rejects(sendDrinkOrder({endpoint:'https://example.com/steal',payload:base}),/Google Apps Script/i);
+});
+
+test('receipt script exposes no personal fields and cleans up on success, error and timeout',async t=>{
+ const {readDrinkReceipt,isAppsScriptEndpoint}=await import('../dist/drink-order-client.js');
+ const hadCrypto=Boolean(globalThis.crypto);if(!hadCrypto)globalThis.crypto={randomUUID};t.after(()=>{if(!hadCrypto)delete globalThis.crypto;});
+ const oldDocument=globalThis.document,oldWindow=globalThis.window;let mode='success',removed=0;
+ globalThis.window={};globalThis.document={createElement:()=>({remove(){removed++;}}),head:{append(script){const url=new URL(script.src);assert.equal(url.searchParams.get('requestId'),base.requestId);assert.equal(url.searchParams.has('name'),false);if(mode==='success')window[url.searchParams.get('callback')]({status:'accepted'});if(mode==='error')script.onerror();}}};
+ t.after(()=>{globalThis.document=oldDocument;globalThis.window=oldWindow;});
+ assert.equal((await readDrinkReceipt('https://script.google.com/macros/s/test/exec',base.requestId)).status,'accepted');
+ mode='error';await assert.rejects(readDrinkReceipt('https://script.google.com/macros/s/test/exec',base.requestId),/xác nhận/);
+ mode='timeout';await assert.rejects(readDrinkReceipt('https://script.google.com/macros/s/test/exec',base.requestId,1),/xác nhận/);
+ assert.equal(removed,3);assert.equal(Object.keys(window).length,0);assert.equal(isAppsScriptEndpoint('not-url'),false);
 });
