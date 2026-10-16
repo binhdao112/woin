@@ -60,7 +60,7 @@ test('campus navigation is the default and the existing cloud world stays select
   const app = await readFile(new URL('../dist/app.js', import.meta.url), 'utf8');
   const html = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
   assert.match(app, /from ['"]\.\/campus\.js['"]/);
-  assert.match(app, /getCampusRoute\(index,\s*i\)/, 'walking follows the campus route rather than crossing buildings');
+  assert.match(app, /walkWorld\.findPath\(player.position/, 'automatic walking routes from the actual player position with collision checks');
   assert.match(html, /href="\?world=campus"/);
   assert.match(html, /href="\?world=cloud"/);
 });

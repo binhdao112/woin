@@ -34,7 +34,11 @@ Không gian mặc định là **VNG Campus** (`?world=campus`). Dùng nút **Đ�
 
 Campus là mô hình minh họa lấy cảm hứng từ [ảnh ngoại thất VNG công khai](https://vng.com.vn/news/enterprise/van-phong-vng-3969.html): hai cánh nhà trắng thấp tầng, dải kính, mái pin mặt trời, bậc cây xanh và sân trong. Đây là bố cục cách điệu cho sự kiện, không phải bản sao mặt bằng hay mô hình kiến trúc chính xác.
 
-Tám điểm dừng kết nối thành lối đi quanh sân; quay lại trạm cũ cũng đi theo tuyến thay vì băng qua nhà. Màu điểm dừng phản ánh cùng bộ sưu tập 7 kỷ vật. Các khối lặp dùng `InstancedMesh`; không cần tải mô hình 3D hoặc thư viện mới. Camera toàn cảnh co theo tỷ lệ màn hình; trên điện thoại danh sách trạm cuộn ngang đến trạm hiện tại.
+Giữ **WASD** hoặc **phím mũi tên** để tự đi bộ theo góc camera; kéo cảnh để xoay, cuộn để thu phóng. Điện thoại có bốn nút chạm để giữ và di chuyển. Bấm **E · Tương tác** khi đứng gần trạm đã mở. Đi bộ tự do không mở khóa trạm hoặc nhận quà thay bạn. Va chạm chặn các khối nhà, bậc thềm, hồ và mép đất; ở đảo mây, nhân vật đi trên đảo và các cầu nối. Bấm tên trạm/nút đi đến để tự tìm đường an toàn từ vị trí hiện tại; có thể ngắt bằng phím đi bộ. Tải lại trang trở về trạm đang lưu.
+
+Nút **♡ Biểu cảm** mở góc camera cận với sáu động tác: thả tim, vẫy tay, nhún nhảy, ôm một cái, tạo dáng và **67!** (hai bàn tay nâng hạ luân phiên). Chọn động tác mới để thay ngay; **Đứng yên**, Escape, di chuyển hoặc mở cửa sổ khác đều dừng và trả về tư thế bình thường. Chế độ giảm chuyển động dùng tư thế tĩnh và hiệu ứng đứng yên. Không cần âm thanh hoặc tài nguyên tải ngoài.
+
+Tám điểm dừng có thể tự tìm đường từ vị trí hiện tại, đi vòng các khối nhà. Màu điểm dừng phản ánh cùng bộ sưu tập 7 kỷ vật. Các khối lặp dùng `InstancedMesh`; không cần tải mô hình 3D hoặc thư viện mới. Camera toàn cảnh co theo tỷ lệ màn hình; trên điện thoại danh sách trạm cuộn ngang đến trạm hiện tại.
 
 ## Hành trình và thiệp
 
