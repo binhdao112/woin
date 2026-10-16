@@ -48,3 +48,10 @@ test('Pages smoke check validates the actual dist artifact including floral artw
   const result = await verifyPages(new URL('../dist/', import.meta.url));
   assert.ok(result.files >= 12);
 });
+
+
+test('Pages smoke check follows host album images and catches a missing shared photo', async t => {
+  const { verifyPages } = await checker();
+  const directory = await fixture(t, { ...site, 'app.js': 'new URL("./assets/memories/album.json", import.meta.url)', 'assets/memories/album.json': JSON.stringify({photos:[{src:"./missing.png",name:"Team"}]}) });
+  await assert.rejects(verifyPages(directory), /missing\.png.*404/);
+});
