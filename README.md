@@ -1,6 +1,6 @@
 # Văn phòng trên mây · 20/10
 
-Website tĩnh dùng Three.js: đi qua 8 trạm, nhận 7 kỷ vật và tải thiệp PNG cá nhân hóa. Không cần backend hoặc bước build.
+Website tĩnh dùng Three.js, với hai không gian VNG Campus và đảo trên mây: đi qua 8 trạm, nhận 7 kỷ vật và tải thiệp PNG cá nhân hóa. Không cần backend hoặc bước build.
 
 ## Chạy và kiểm tra
 
@@ -16,6 +16,14 @@ Kiểm thử bằng Node.js 18 trở lên, không cần cài thư viện:
 npm test
 npm run test:coverage
 ```
+
+## Campus thu nhỏ
+
+Không gian mặc định là **VNG Campus** (`?world=campus`). Dùng nút **Đảo trên mây** (`?world=cloud`) để xem cảnh cũ; cả hai dùng chung tiến trình trong cùng tab.
+
+Campus là mô hình minh họa lấy cảm hứng từ [ảnh ngoại thất VNG công khai](https://vng.com.vn/news/enterprise/van-phong-vng-3969.html): hai cánh nhà trắng thấp tầng, dải kính, mái pin mặt trời, bậc cây xanh và sân trong. Đây là bố cục cách điệu cho sự kiện, không phải bản sao mặt bằng hay mô hình kiến trúc chính xác.
+
+Tám điểm dừng kết nối thành lối đi quanh sân; quay lại trạm cũ cũng đi theo tuyến thay vì băng qua nhà. Màu điểm dừng phản ánh cùng bộ sưu tập 7 kỷ vật. Các khối lặp dùng `InstancedMesh`; không cần tải mô hình 3D hoặc thư viện mới. Camera toàn cảnh co theo tỷ lệ màn hình; trên điện thoại danh sách trạm cuộn ngang đến trạm hiện tại.
 
 ## Hành trình và thiệp
 
@@ -51,6 +59,7 @@ Xuất bản toàn bộ nội dung thư mục `dist/` trên hosting tĩnh. Giữ
 ## Các file chính
 
 - `dist/app.js`: cảnh 3D, điều hướng, album và kết nối giao diện.
+- `dist/campus.js`, `dist/campus.css`: mô hình campus, tuyến đi, trạng thái trạm và bố cục responsive.
 - `dist/journey.js`: quy tắc sưu tầm, tiến độ và mở khóa trạm.
 - `dist/wish-card.js`: dữ liệu thiệp, xuống dòng, vẽ canvas và mã hóa PNG.
 - `dist/social-card.js`, `dist/card-studio.css`: bố cục social, khung ảnh và giao diện preview.

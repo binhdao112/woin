@@ -30,7 +30,7 @@ body:has(#keepsake-panel:not([hidden])) .campus-caption,body:has(#memory-control
  body[data-world=campus] .progress{margin-top:8px;gap:6px}
  body[data-world=campus] .progress span{width:17px}
  body[data-world=campus] .count{margin-top:7px;font-size:8px}
- body[data-world=campus] .tools{top:94px;left:4%;right:4%;display:flex;flex-direction:row;overflow-x:auto;gap:5px;padding-bottom:3px;scrollbar-width:none}
+ body[data-world=campus] .tools{top:94px;left:4%;right:4%;display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:flex-start;max-width:92%;overflow-x:auto;gap:5px;padding-bottom:3px;scrollbar-width:none}
  body[data-world=campus] .tools button{padding:9px 8px;font-size:8px;flex-shrink:0}
  body[data-world=campus] .tools span{display:none}
  body[data-world=campus] .ambient-controls{top:54px;max-width:92%}
