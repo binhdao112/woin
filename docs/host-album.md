@@ -4,7 +4,7 @@ Host đưa ảnh vào repo trước khi deploy. Người xem tự thấy album c
 
 ## Chuẩn bị ảnh
 
-1. Đặt tối đa 12 ảnh JPG, PNG hoặc WebP trong một thư mục riêng, mỗi ảnh tối đa 20 MB. Nên xuất ảnh khoảng 1600–2000 px và dưới 1 MB để điện thoại tải nhanh. Script giữ nguyên byte ảnh gốc, không tự nén.
+1. Đặt tối đa 24 ảnh JPG, PNG hoặc WebP trong một thư mục riêng, mỗi ảnh tối đa 20 MB. Nên xuất ảnh khoảng 1600–2000 px và dưới 1 MB để điện thoại tải nhanh. Script giữ nguyên byte ảnh gốc, không tự nén.
 2. Đặt tên có thứ tự như `01 Cả team cùng nhau.jpg`, `02 Một ngày ở campus.webp`. Tên file trở thành chú thích, sắp theo số tự nhiên. Hai ảnh có nội dung giống hệt nhau chỉ nhập một lần.
 3. Tại thư mục repo, chạy:
 
@@ -40,7 +40,7 @@ Có thể chỉnh thứ tự, `title` hoặc `name` trong JSON. Giữ `id` của
 
 ## Xuất bản GitHub Pages
 
-Repo đang xuất bản artifact từ gốc nhánh `gh-pages`. Chép toàn bộ nội dung `dist/` sang nhánh deploy để giữ đủ mã nguồn và thư mục ảnh. Nếu chỉ cập nhật bản xem riêng, chép vào `previews/campus/` trên `gh-pages`. Cùng album hoạt động ở cả `/woin/` và `/woin/previews/campus/` nhờ đường dẫn tương đối.
+Repo đang xuất bản artifact từ gốc nhánh `gh-pages`. Chép toàn bộ nội dung `dist/` sang nhánh deploy để giữ đủ mã nguồn và thư mục ảnh. Nếu chỉ cập nhật bản xem riêng, chép vào `previews/koi/` trên `gh-pages`. Cùng album hoạt động ở cả `/woin/` và `/woin/previews/koi/` nhờ đường dẫn tương đối.
 
 Commit album trên nhánh nguồn chưa tự thay website đang chạy; cần xuất bản snapshot mới lên `gh-pages`. Ảnh đã xuất bản có thể xem qua website. Khi chưa có ảnh thật, album hiện khung minh họa và vẫn cho đi tiếp.
 
@@ -50,4 +50,8 @@ Commit album trên nhánh nguồn chưa tự thay website đang chạy; cần xu
 - “Ảnh riêng của tôi” chứa ảnh IndexedDB của thiết bị đó; thêm hoặc gỡ ảnh riêng không thay album chung.
 - Giữ khung ảnh lưu cả mã ảnh và chú thích. Thiệp tiếp tục dùng đúng ảnh đã chọn khi đổi nguồn ảnh hoặc đổi mẫu thiệp.
 - Nếu một ảnh bị lỗi, ảnh khác vẫn xem được. Nếu cả album chưa tải được, người xem có thể dùng ảnh riêng hoặc khung minh họa.
-- Album có thể dùng tối đa 12 ảnh. Trình duyệt tải và giải mã theo nhóm 3 ảnh, thu về canvas 1200×900 để trình chiếu và xuất thiệp.
+- Album có thể dùng tối đa 24 ảnh. Trình duyệt tải và giải mã theo nhóm 3 ảnh, thu về canvas 1200×900 để trình chiếu và xuất thiệp.
+
+## Đợt đồng bộ hiện tại
+
+Đã nhập 16 ảnh JPG từ thư mục album của host. Ảnh được giữ nguyên byte và có mã theo hash; chú thích dùng “Khoảnh khắc 01” đến “Khoảnh khắc 16” vì tên file xuất tự động quá dài. Mỗi lần host thêm ảnh, chạy lại công cụ nhập rồi kiểm tra số ảnh, giữ nguyên ID của các ảnh cũ và cập nhật chú thích trước khi deploy. Đây là đồng bộ theo yêu cầu, chưa theo dõi thư mục tự động.

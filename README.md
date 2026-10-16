@@ -64,7 +64,7 @@ Tám điểm dừng có thể tự tìm đường từ vị trí hiện tại, �
 
 Deploy hoặc push Git không đưa ảnh riêng đã chọn trong trình duyệt lên repo. Ảnh riêng không được tải lên máy chủ, không đồng bộ giữa thiết bị. Xóa dữ liệu website hoặc dùng trình duyệt khác có thể khiến album cá nhân không còn. Album của team được giữ riêng, luôn ưu tiên hiển thị và không bị thao tác “Gỡ ảnh riêng” thay đổi.
 
-Host chuẩn bị tối đa 12 ảnh JPG, PNG hoặc WebP trong một thư mục rồi chạy:
+Host chuẩn bị tối đa 24 ảnh JPG, PNG hoặc WebP trong một thư mục rồi chạy:
 
 ```sh
 npm run album -- "/đường/dẫn/thư-mục-ảnh" "Khoảnh khắc cùng team"
@@ -72,7 +72,7 @@ npm test
 npm run check:pages
 ```
 
-Lệnh chép ảnh và tạo danh sách `dist/assets/memories/album.json`; commit toàn bộ thư mục này rồi xuất bản lại `dist/`. Mọi người mở trạm 7 sẽ thấy album chung, không cần chọn ảnh trên máy. Album mặc định hiện chưa có ảnh thật của team. [Hướng dẫn thêm ảnh và deploy album](docs/host-album.md).
+Lệnh chép ảnh và tạo danh sách `dist/assets/memories/album.json`; commit toàn bộ thư mục này rồi xuất bản lại `dist/`. Mọi người mở trạm 7 sẽ thấy album chung, không cần chọn ảnh trên máy. Album hiện có **16 ảnh của team**, được đồng bộ từ thư mục host cung cấp. Thêm ảnh vào thư mục đó rồi chạy lại lệnh để nhập đợt mới; mã ảnh cũ được giữ theo nội dung. [Hướng dẫn thêm ảnh và deploy album](docs/host-album.md).
 
 ## Deploy trên GitHub Pages
 
