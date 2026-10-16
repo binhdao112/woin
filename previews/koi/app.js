@@ -366,10 +366,10 @@ function startManual({forAction=false}={}){
  closeupUntil=0;$('#effect-toast').hidden=true;moving=false;waypoints=[];player.position.y=0;
  if(!forAction){zoom=innerWidth<700?15:12;pitch=.55;targetFocus.copy(player.position).add(new T.Vector3(0,innerWidth<700?-.6:.6,0));}updateUI();
 }
-let stageCamera=null,lastNear=-2,lastInRange=true;
+let stageCamera=null,stageLabels=[],lastNear=-2,lastInRange=true;
 function setStage(open){
- if(open){gifts.forEach(gift=>gift.visible=false);stageCamera={yaw,pitch,zoom,focus:focus.clone(),target:targetFocus.clone(),rotation:player.rotation.y};player.rotation.y=yaw;pitch=.26;zoom=innerWidth<700?5.7:4.8;targetFocus.copy(player.position).add(new T.Vector3(0,.35,0));focus.copy(targetFocus);}
- else if(stageCamera){({yaw,pitch,zoom}=stageCamera);focus.copy(stageCamera.focus);targetFocus.copy(stageCamera.target);player.rotation.y=stageCamera.rotation;stageCamera=null;updateUI();}
+ if(open){gifts.forEach(gift=>gift.visible=false);campus.group.traverse(node=>{if(node.isSprite){stageLabels.push([node,node.visible]);node.visible=false;}});stageCamera={yaw,pitch,zoom,focus:focus.clone(),target:targetFocus.clone(),rotation:player.rotation.y};player.rotation.y=yaw;pitch=.26;zoom=innerWidth<700?5.7:4.8;targetFocus.copy(player.position).add(new T.Vector3(0,.35,0));focus.copy(targetFocus);}
+ else if(stageCamera){({yaw,pitch,zoom}=stageCamera);focus.copy(stageCamera.focus);targetFocus.copy(stageCamera.target);player.rotation.y=stageCamera.rotation;stageCamera=null;stageLabels.forEach(([node,visible])=>node.visible=visible);stageLabels=[];updateUI();}
 }
 function actionLabel(text){const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;const ctx=canvas.getContext('2d');ctx.fillStyle='#914c78';ctx.strokeStyle='#fffaf3';ctx.lineWidth=12;ctx.font='800 150px Nunito, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.strokeText(text,128,135);ctx.fillText(text,128,135);const sprite=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(canvas),depthTest:false,transparent:true}));sprite.scale.setScalar(.5);return sprite;}
 actionPlayer=createAvatarActionPlayer({getRig:()=>playerAvatar,isBlocked:controlsBlocked,reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches,effects:createAvatarActionEffects({scene,anchor:player,camera,createLabel:actionLabel}),onChange:state=>actionUI?.setAction(state)});
