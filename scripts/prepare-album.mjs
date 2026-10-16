@@ -7,7 +7,7 @@ import { MAX_ALBUM_PHOTOS, MAX_PHOTO_BYTES } from '../dist/memory-album.js';
 export async function prepareAlbum({ sourceDirectory, targetDirectory, title = 'Khoảnh khắc cùng team' }) {
   const entries = (await readdir(sourceDirectory, { withFileTypes: true })).filter(entry => entry.isFile() && /\.(jpe?g|png|webp)$/i.test(entry.name)).sort((a, b) => a.name.localeCompare(b.name, 'vi', { numeric: true }));
   if (!entries.length) throw Error('Thư mục chưa có ảnh JPG, PNG hoặc WebP.');
-  if (entries.length > MAX_ALBUM_PHOTOS) throw Error('Hãy chọn tối đa 12 ảnh cho album.');
+  if (entries.length > MAX_ALBUM_PHOTOS) throw Error(`Hãy chọn tối đa ${MAX_ALBUM_PHOTOS} ảnh cho album.`);
   const images = [];
   for (const entry of entries) {
     const bytes = await readFile(path.join(sourceDirectory, entry.name)), extension = path.extname(entry.name).toLowerCase().replace('.jpeg', '.jpg');
