@@ -1,4 +1,6 @@
 import {cardFilename, wrapText} from './wish-card.js';
+import {getSocialTemplate,drawCardTemplate} from './card-templates.js';
+export {SOCIAL_TEMPLATES,getSocialTemplate} from './card-templates.js';
 
 const messages = [
   'Chúc bạn luôn được yêu thương,\nđược trân trọng và tự do tỏa sáng.',
@@ -7,12 +9,14 @@ const messages = [
   'Chúc bạn một đời nhiều hoa,\nnhiều niềm vui và những người thương.',
 ];
 
-export function getSocialCopy(model) {
-  return {title:'Gửi một người\nrất đặc biệt.', message:messages[(Number(model.wishNumber)||0)%messages.length]};
+export function getSocialCopy(model,template='bloom') {
+  const style=getSocialTemplate(template);
+  return {title:style.title, message:style.message||messages[(Number(model.wishNumber)||0)%messages.length]};
 }
 
-export function socialCardFilename(recipient, format='post') {
-  return cardFilename(recipient).replace('.png', format==='story'?'-story.png':'-bai-dang.png');
+export function socialCardFilename(recipient, format='post',template='bloom') {
+  const id=getSocialTemplate(template).id,suffix=id==='bloom'?'':'-'+id;
+  return cardFilename(recipient).replace('.png',(format==='story'?'-story':'-bai-dang')+suffix+'.png');
 }
 
 function box(ctx,x,y,width,height,radius,color) {
@@ -42,11 +46,13 @@ function fallbackFlowers(ctx,height) {
   }
 }
 
-export function renderSocialCard(canvas,model,{format='post',photo,artwork}={}) {
+export function renderSocialCard(canvas,model,{format='post',photo,artwork,template='bloom'}={}) {
   const ctx=canvas.getContext('2d');
   if(!ctx)throw new Error('Trình duyệt chưa hỗ trợ canvas để tạo thiệp.');
   const story=format==='story',height=story?1920:1350;
   canvas.width=1080;canvas.height=height;
+  const id=getSocialTemplate(template).id;
+  if(id!=='bloom'){drawCardTemplate(ctx,model,{format,photo,template:id,height,copy:getSocialCopy(model,id)});return canvas;}
   const serif=(size,italic=false)=>{ctx.font=`${italic?'italic ':''}500 ${size}px Lora, Georgia, serif`;};
   const body=(size,weight=400)=>{ctx.font=`${weight} ${size}px "Be Vietnam Pro", sans-serif`;};
   const lines=(text,x,y,width,lineHeight)=>{const values=wrapText(ctx,text,width);values.forEach((value,i)=>ctx.fillText(value,x,y+i*lineHeight));return y+values.length*lineHeight;};
