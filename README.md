@@ -72,7 +72,7 @@ npm test
 npm run check:pages
 ```
 
-Lệnh chép ảnh và tạo danh sách `dist/assets/memories/album.json`; commit toàn bộ thư mục này rồi xuất bản lại `dist/`. Mọi người mở trạm 7 sẽ thấy album chung, không cần chọn ảnh trên máy. Album hiện có **16 ảnh của team**, được đồng bộ từ thư mục host cung cấp. Thêm ảnh vào thư mục đó rồi chạy lại lệnh để nhập đợt mới; mã ảnh cũ được giữ theo nội dung. [Hướng dẫn thêm ảnh và deploy album](docs/host-album.md).
+Lệnh chép ảnh và tạo danh sách `dist/assets/memories/album.json`; commit toàn bộ thư mục này rồi xuất bản lại `dist/`. Mọi người mở trạm 7 sẽ thấy album chung, không cần chọn ảnh trên máy. Album hiện có **19 ảnh của team**, được đồng bộ từ thư mục host cung cấp. Thêm ảnh vào thư mục đó rồi chạy lại lệnh để nhập đợt mới; mã ảnh cũ được giữ theo nội dung. [Hướng dẫn thêm ảnh và deploy album](docs/host-album.md).
 
 ## Check-in cuối hành trình
 
@@ -96,7 +96,7 @@ Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run chec
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 89 kiểm thử, 55 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 89 kiểm thử, 58 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 

@@ -54,4 +54,4 @@ Commit album trên nhánh nguồn chưa tự thay website đang chạy; cần xu
 
 ## Đợt đồng bộ hiện tại
 
-Đã nhập 16 ảnh JPG từ thư mục album của host. Ảnh được giữ nguyên byte và có mã theo hash; chú thích dùng “Khoảnh khắc 01” đến “Khoảnh khắc 16” vì tên file xuất tự động quá dài. Mỗi lần host thêm ảnh, chạy lại công cụ nhập rồi kiểm tra số ảnh, giữ nguyên ID của các ảnh cũ và cập nhật chú thích trước khi deploy. Đây là đồng bộ theo yêu cầu, chưa theo dõi thư mục tự động.
+Đã nhập 19 ảnh JPG từ thư mục album của host. Ảnh được giữ nguyên byte và có mã theo hash; chú thích dùng “Khoảnh khắc 01” đến “Khoảnh khắc 19” vì tên file xuất tự động quá dài. Mỗi lần host thêm ảnh, chạy lại công cụ nhập rồi kiểm tra số ảnh, giữ nguyên ID của các ảnh cũ và cập nhật chú thích trước khi deploy. Đây là đồng bộ theo yêu cầu, chưa theo dõi thư mục tự động.

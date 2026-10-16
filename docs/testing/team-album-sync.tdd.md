@@ -17,3 +17,9 @@ Yêu cầu: đưa toàn bộ ảnh trong thư mục album do host cung cấp và
 - Browser QA dùng fixture hành trình ở localhost, không xuất bản fixture và không gửi đơn nước. Trạm 7 mặc định chọn “Album của team”, tải đủ 16 ảnh, chuyển đến “16 / 16 · Khoảnh khắc 16”, và giữ thành kỷ vật “Khung ảnh từ Khoảnh khắc 16”. Không có lỗi/warning console trong lần kiểm tra này.
 - Tăng phiên bản URL của entry/module album để người từng mở trang cũng tải được giới hạn mới. Manifest vẫn dùng `cache: no-cache`; các ảnh dùng hash nên có thể cache riêng.
 - Đồng bộ theo yêu cầu. Host thêm ảnh vào cùng thư mục rồi nhắn lại; chưa thiết lập theo dõi tự động.
+
+## Bổ sung album lần 2 · 16/10/2026
+
+- Thư mục host có 19 JPG riêng biệt: 16 ảnh cũ và 3 ảnh mới, tổng 21.33 MiB. Đồng bộ đủ 19 ảnh, giữ nguyên byte.
+- Giữ nguyên ID, thứ tự và chú thích của 16 ảnh cũ; ba ảnh mới là Khoảnh khắc 17–19.
+- Toàn bộ 89 kiểm thử hiện có, 58 tài nguyên Pages và bundle Google Sheets được kiểm tra trước khi xuất bản. Đây là cập nhật dữ liệu, không thay logic album.
