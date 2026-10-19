@@ -18,7 +18,7 @@ import {createAvatarControls} from './avatar-controls.js?v=campus-20261016-1';
 import {createMovementInput,movementVector,stepMovement,createWalkableWorld,nearestStation} from './avatar-movement.js?v=campus-20261016-1';
 import {canonicalCampusURL} from './campus-url.js';
 import {createCheckinModel} from './checkin-card.js';
-import {createCheckinStudio} from './checkin-studio.js?v=popup-fit-20261019-2';
+import {createCheckinStudio} from './checkin-studio.js?v=checkin-photo-20261019-1';
 import './experience.js?v=lucky-ticket-20261019-2';
 const $=s=>document.querySelector(s), modal=$('#final');
 const campusURL=canonicalCampusURL(location.href);if(location.href!==campusURL)history.replaceState(history.state,'',campusURL);
@@ -313,8 +313,9 @@ function openFinalCheckin(){
  actionUI?.close();actionPlayer?.stop();movementInput.clear();closeKeepsake();closeMemories();$('#wish-card').close();drawWish();
  const card=createCardModel({recipient,wish:finalWish,gifts:keepsakeCollection});
  const model=createCheckinModel({gifts:keepsakeCollection,recipient,avatar:appearance,message:getSocialCopy(card).message,wishNumber:card.wishNumber});
- const getPhoto=()=>cardPhotoEnabled?(checkinPhoto||findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6))?.canvas):null;
- checkinStudio.open({model,photo:getPhoto()});photosReady.then(()=>checkinStudio.setPhoto(getPhoto(),model));
+ const getTeamPhoto=()=>findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6))?.canvas||null;
+ const getPhoto=()=>cardPhotoEnabled?(checkinPhoto||getTeamPhoto()):null;
+ checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!checkinPhoto});photosReady.then(()=>checkinStudio.setTeamPhoto(getTeamPhoto(),model,cardPhotoEnabled));
 }
 function openWish(){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}drawWish();$('#wish-card').showModal();updateWishPreview();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}
@@ -372,7 +373,7 @@ try{
 
 function personalMessage(text){return recipient?recipient+' ơi, '+text.charAt(0).toLocaleLowerCase('vi')+text.slice(1):text;}
 window.addEventListener('welcome-profile',e=>{const old=recipient;recipient=e.detail.name;applyAvatar(e.detail.avatar);arrival=true;$('#recipient-name').value=recipient;$('.side .tag').textContent='20/10 · Hành trình của '+recipient;for(const [k,data] of keepsakeCollection){if(typeof data.result==='string'&&old)data.result=data.result.split(old).join(recipient);if(k===0)data.result='Vé dành cho '+recipient;const g=savedFrames.get(k);if(g){clearGroup(g);makeGift(k,data,g);}}window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));updateUI();saveJourney();$('#welcome-submit').textContent='Bắt đầu hành trình →';if(keepsakeActive)openKeepsake(index);});
-checkinStudio=createCheckinStudio({onCards:openWish});
+checkinStudio=createCheckinStudio({onCards:openWish,onPhotoChange:photo=>{checkinPhoto=photo;cardPhotoEnabled=true;cardPhotoVersion++;}});
 $('#wish-checkin-open').onclick=openFinalCheckin;
 const avatarStudio=createAvatarStudio({name:recipient,avatar:appearance});
 window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));avatarStudio.open();updateUI();

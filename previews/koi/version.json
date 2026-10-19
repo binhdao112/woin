@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "425a2cd1eb0b8a70aa58e338995f74ed75c643e5",
-  "publishedAt": "2026-10-19T04:02:59.931529+00:00",
+  "sourceCommit": "f633126b8872c395586054b235533924cf626985",
+  "publishedAt": "2026-10-19T04:26:44.530703+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -16,5 +16,9 @@
   "prominentLuckyNumber": true,
   "popupFit": true,
   "participantNamePicker": true,
-  "participantNames": 5
+  "participantNames": 5,
+  "checkinPhotoEditor": true,
+  "printCardConcepts": 4,
+  "printRecipients": 5,
+  "printCardSize": "A6 landscape two-sided"
 }
