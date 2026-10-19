@@ -11,7 +11,7 @@ import {drinkLabel} from './drink-orders.js';
 import {normaliseLuckySet,formatLuckySet} from './lucky-numbers.js';
 import {normaliseAvatar} from './avatar-profile.js';
 import {createAvatar} from './avatar-rig.js?v=campus-20261016-1';
-import {createAvatarStudio} from './avatar-studio.js?v=campus-20261016-1';
+import {createAvatarStudio} from './avatar-studio.js?v=name-picker-20261019-1';
 import {createAvatarActionPlayer} from './avatar-actions.js?v=campus-20261016-1';
 import {createAvatarActionEffects} from './avatar-action-effects.js?v=campus-20261016-1';
 import {createAvatarControls} from './avatar-controls.js?v=campus-20261016-1';
