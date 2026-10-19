@@ -33,3 +33,21 @@ test('uncertain sends stay pending across reopening, block continuation, and ret
  f.get('drink-close').onclick();await f.counter.open(a,'member:NhanCk');assert.equal(f.get('drink-counter').dataset.drinkStep,'options');assert.match(f.get('drink-order-status').textContent,/chưa được xác nhận/);
  failed=false;await f.submit();assert.deepEqual(f.calls[1],f.calls[0]);assert.equal(f.get('drink-continue').hidden,false);
 });
+
+test('loading remains visible until the receipt arrives and repeated taps never create an extra send',async t=>{
+ let accept;const f=await drinkCounterFixture(t,{transport:()=>new Promise(resolve=>{accept=resolve;})});
+ await f.counter.open(a,'member:NhanCk');f.choose();assert.equal(f.get('drink-loading')?.hidden,true);
+ const sending=f.submit(),payload=f.calls[0];assert.equal(f.get('drink-loading').hidden,false);assert.equal(f.get('drink-order-form').attrs['aria-busy'],'true');assert.equal(f.get('drink-submit').disabled,true);assert.equal(f.get('drink-continue').hidden,true);
+ await f.submit();assert.equal(f.calls.length,1);assert.equal(f.keeps.length,0);
+ accept({status:'accepted',requestId:payload.requestId,sequence:payload.sequence});await sending;
+ assert.equal(f.get('drink-loading').hidden,true);assert.equal(f.get('drink-order-form').attrs['aria-busy'],'false');assert.equal(f.get('drink-continue').hidden,false);assert.match(f.get('drink-order-status').textContent,/Đã ghi nhận/);
+});
+
+test('loading stops on an uncertain error and starts again for the same pending request on retry',async t=>{
+ let rejectSend,accept;let failing=true;const f=await drinkCounterFixture(t,{transport:()=>new Promise((resolve,reject)=>{if(failing)rejectSend=reject;else accept=resolve;})});
+ await f.counter.open(a,'member:NhanCk');f.choose();const first=f.submit();assert.equal(f.get('drink-loading')?.hidden,false);
+ rejectSend(Error('Chưa xác nhận được kết nối'));await first;
+ assert.equal(f.get('drink-loading').hidden,true);assert.equal(f.get('drink-continue').hidden,true);assert.equal(f.get('drink-submit').disabled,false);assert.match(f.get('drink-order-status').textContent,/Chưa xác nhận/);
+ failing=false;const retry=f.submit();assert.equal(f.get('drink-loading').hidden,false);assert.deepEqual(f.calls[1],f.calls[0]);
+ accept({status:'accepted',requestId:f.calls[1].requestId,sequence:f.calls[1].sequence});await retry;assert.equal(f.get('drink-loading').hidden,true);
+});
