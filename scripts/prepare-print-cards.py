@@ -34,7 +34,7 @@ STYLES=[
  {'id':'anh-hong-pastel','layout':'dem-anh-kim','name':'Ánh hồng pastel','tag':'Bố cục ánh kim, hồng phấn dịu dàng','bg':'#FBEAF0','ink':'#6F3D52','accent':'#A76A7C','soft':'#EBCAD5','green':'#A76A7C'},
 ]
 URL='https://binhdao112.github.io/woin/'
-REVISION='main-qr-20261019-1'
+REVISION='pastel-print-20261019-1'
 
 def fonts():
  base=Path('/System/Library/Fonts/Supplemental')
@@ -189,7 +189,7 @@ def main():
  d.text((50,85),'A6 ngang · 148 × 105 mm · Ảnh team + tên riêng · Mỗi mẫu có 5 tên',font=small,fill='#716167')
  for i,style in enumerate(manifest['styles']):
   x=50+(i%2)*880;y=165+(i//2)*740
-  d.text((x,y),f'{i+1:02} / {style["name"]}',font=title,fill='#493b3f')
+  d.text((x,y),f'{style["number"]:02} / {style["name"]}',font=title,fill='#493b3f')
   d.text((x,y+45),style['tag'],font=small,fill='#716167')
   card=Image.open(out/style['previews'][0]['front']);card=ImageOps.contain(card,(820,582));board.paste(card,(x,y+90))
  board.save(out/f'{len(manifest["styles"])}-mau-thiep-A6.jpg',quality=95)
