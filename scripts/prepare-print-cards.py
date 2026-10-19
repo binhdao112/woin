@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build four A6 postcard concepts, personalized from the website roster.
+"""Build A6 postcard concepts, personalized from the website roster.
 
 Requires reportlab, Pillow, pypdf and pdftoppm. Original team photograph is
 clipped for layout only; no face retouching or synthesized people.
@@ -31,6 +31,7 @@ STYLES=[
  {'id':'dem-anh-kim','name':'Đêm ánh kim','tag':'Trang trọng, ấm áp','bg':'#172C2B','ink':'#FBF1DC','accent':'#D5B77E','soft':'#334945','green':'#D5B77E'},
  {'id':'nhat-ky','name':'Những ngày có nhau','tag':'Gần gũi, giàu kỷ niệm','bg':'#F0EBDF','ink':'#384F48','accent':'#B25D4F','soft':'#DADBC8','green':'#75836C'},
  {'id':'ruc-ro','name':'Rực rỡ theo cách riêng','tag':'Hiện đại, nổi bật','bg':'#F6E8DE','ink':'#552F52','accent':'#C55334','soft':'#E2C7D5','green':'#552F52'},
+ {'id':'anh-hong-pastel','layout':'dem-anh-kim','name':'Ánh hồng pastel','tag':'Bố cục ánh kim, hồng phấn dịu dàng','bg':'#FBEAF0','ink':'#6F3D52','accent':'#A76A7C','soft':'#EBCAD5','green':'#A76A7C'},
 ]
 URL='https://binhdao112.github.io/woin/'
 REVISION='main-qr-20261019-1'
@@ -85,7 +86,7 @@ def front(c,style,person,image):
   rect(c,10,82,35,4,'#FAF5EB');text(c,'CÙNG TEAM, THẬT VUI.',11,85,4.7,'SansBold',accent)
   text(c,name,10,95,14,'SerifBold',ink,width=113);text(c,code,10,100,6,'Sans',accent)
   flower(c,137,97,6.7,soft,accent);sprig(c,123,103,.35,style['green'])
- elif style['id']=='dem-anh-kim':
+ elif style.get('layout',style['id'])=='dem-anh-kim':
   stroke(c,accent,.65);c.rect(5*MM,5*MM,(148-10)*MM,(105-10)*MM,stroke=1,fill=0)
   text(c,'20.10',10,22,29,'Serif',accent)
   text(c,'DÀNH CHO BẠN,',138,13,6.5,'SansBold',accent,'right');text(c,'những điều đẹp nhất.',138,23,17,'SerifItalic',ink,'right')
@@ -151,10 +152,11 @@ def boxes(path,trim=True):
  with path.open('wb') as f:writer.write(f)
 
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=ROOT/'output/pdf/print-cards');args=parser.parse_args();out=args.output;out.mkdir(parents=True,exist_ok=True);fonts()
+ parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=ROOT/'output/pdf/print-cards');parser.add_argument('--style',choices=[style['id'] for style in STYLES]);args=parser.parse_args();out=args.output;out.mkdir(parents=True,exist_ok=True);fonts()
  image=ImageReader(str(ROOT/'dist/assets/memories/photos/photo-2b7c4913979c371d.jpg'))
  manifest={'size':'A6 ngang · 148 × 105 mm','bleedMm':3,'photo':'Khoảnh khắc 19','qrUrl':URL,'revision':REVISION,'people':[{'name':n,'code':c} for n,c in ROSTER],'styles':[]}
  for index,style in enumerate(STYLES,1):
+  if args.style and style['id']!=args.style:continue
   slug=f'{index:02}-{style["id"]}';pdf=out/f'{slug}-A6-5-ten.pdf';c=canvas.Canvas(str(pdf),pagesize=(162*MM,119*MM),pageCompression=1,invariant=1)
   for person in ROSTER:
    for side in (front,back):
@@ -180,8 +182,8 @@ def main():
   proof.unlink();manifest['styles'].append({**style,'number':index,'pdf':pdf.name,'previews':previews})
   print(slug,'10 pages',pdf.stat().st_size)
  (out/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
- # Four full front designs on one comparison board.
- board=Image.new('RGB',(1800,1700),'#e9e2d8');d=ImageDraw.Draw(board)
+ # The comparison board grows with the selected designs.
+ board=Image.new('RGB',(1800,220+math.ceil(len(manifest['styles'])/2)*740),'#e9e2d8');d=ImageDraw.Draw(board)
  title=ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial Bold.ttf',34);small=ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf',23)
  d.text((50,30),'MỘT TẤM THIỆP, NHIỀU CÁCH GỬI THƯƠNG.',font=title,fill='#493b3f')
  d.text((50,85),'A6 ngang · 148 × 105 mm · Ảnh team + tên riêng · Mỗi mẫu có 5 tên',font=small,fill='#716167')
@@ -190,7 +192,7 @@ def main():
   d.text((x,y),f'{i+1:02} / {style["name"]}',font=title,fill='#493b3f')
   d.text((x,y+45),style['tag'],font=small,fill='#716167')
   card=Image.open(out/style['previews'][0]['front']);card=ImageOps.contain(card,(820,582));board.paste(card,(x,y+90))
- board.save(out/'4-mau-thiep-A6.jpg',quality=95)
+ board.save(out/f'{len(manifest["styles"])}-mau-thiep-A6.jpg',quality=95)
  print('Output:',out)
 
 if __name__=='__main__':main()
