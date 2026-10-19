@@ -27,15 +27,15 @@ export function mountPopupPager(container,{pageSize=4,initialPage=0}={}){
 }
 export function installPopupFit({doc=document,win=window}={}){
  let frame=0;
- function refresh(){frame=0;for(const dialog of doc.querySelectorAll('dialog')){
-  if(!dialog.open||dialog.id==='checkin-final')continue;
+ function refresh(){frame=0;for(const dialog of doc.querySelectorAll('dialog,#keepsake-panel')){
+  if((dialog.id==='keepsake-panel'?dialog.hidden:!dialog.open)||dialog.id==='checkin-final')continue;
   dialog.classList.add('popup-fit');
   const scale=fitPopupScale(dialog.offsetWidth,dialog.offsetHeight,win.innerWidth,win.innerHeight);
   dialog.style.setProperty('--popup-scale',String(scale));
  }}
  function queue(){if(!frame)frame=win.requestAnimationFrame(refresh);}
  const mutations=new win.MutationObserver(queue);mutations.observe(doc.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['open','hidden','class']});
- const sizes=new win.ResizeObserver(queue);doc.querySelectorAll('dialog').forEach(d=>sizes.observe(d));
+ const sizes=new win.ResizeObserver(queue);doc.querySelectorAll('dialog,#keepsake-panel').forEach(d=>sizes.observe(d));
  win.addEventListener('resize',queue);doc.fonts?.ready.then(queue);queue();
  return {refresh,dispose(){mutations.disconnect();sizes.disconnect();win.removeEventListener('resize',queue);win.cancelAnimationFrame(frame);}};
 }

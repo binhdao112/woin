@@ -1,4 +1,4 @@
-import {mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-1';
+import {mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-2';
 import {findDrink,searchDrinks,validateDrinkOrder,drinkLabel,SUGAR_OPTIONS,ICE_OPTIONS} from './drink-orders.js';
 import {sendDrinkOrder,isAppsScriptEndpoint} from './drink-order-client.js';
 import {createDrinkRegistrationStore} from './drink-registration.js';
@@ -94,7 +94,7 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
     async open(name){
       dialog.dataset.drinkStep='menu';if(!dialog.open)dialog.showModal();dialog.scrollTop=0;status('Đang mở quầy KOI…');await ready;
       if(!menu)return;selected=null;$('#drink-name').value=name||'';$('#drink-sugar').value='Mặc định';$('#drink-ice').value='Mặc định';$('#drink-note').value='';
-      const saved=state();apply(saved.pending||saved.confirmed||localDraft);if(!saved.pending&&name)$('#drink-name').value=name;
+      const saved=state();apply(saved.pending||saved.confirmed||localDraft);dialog.dataset.drinkStep=selected?'options':'menu';if(!saved.pending&&name)$('#drink-name').value=name;
       status(saved.pending?'Lần gửi trước chưa được xác nhận. Bấm kiểm tra lại; lựa chọn cũ được giữ để tránh gửi trùng.':saved.confirmed?'Bạn đã đăng ký 1 ly. Đổi lựa chọn rồi bấm cập nhật nếu muốn.':'');
       renderMenu();renderSelection();
     },

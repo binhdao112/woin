@@ -1,5 +1,5 @@
 import * as T from './three.module.js';
-import {mountPopupTabs} from './popup-layout.js?v=popup-fit-20261019-1';
+import {mountPopupTabs} from './popup-layout.js?v=popup-fit-20261019-2';
 import {createAvatar} from './avatar-rig.js?v=campus-20261016-1';
 import {AVATAR_ACTIONS,createAvatarActionPlayer} from './avatar-actions.js?v=campus-20261016-1';
 import {renderCheckinCard,checkinFilename} from './checkin-card.js';
