@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "7c3d28affc07f907333fc0f4d14ce7a55c6a833c",
-  "publishedAt": "2026-10-19T07:18:50.988150+00:00",
+  "sourceCommit": "4ca21f755787780c535c44795ac942037cbe0ff8",
+  "publishedAt": "2026-10-19T07:25:18.191264+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -28,5 +28,7 @@
   "drinkSummaryPatchAvailable": true,
   "drinkSummaryBackendDeployment": "pending-host-update",
   "drinkSendingAnimation": true,
-  "drinkSendingRevision": "drink-loading-20261019-1"
+  "drinkSendingRevision": "drink-loading-20261019-1",
+  "prominentDrinkActions": true,
+  "drinkActionRevision": "drink-actions-20261019-1"
 }
