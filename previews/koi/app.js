@@ -20,8 +20,8 @@ import {createAvatarControls} from './avatar-controls.js?v=campus-20261016-1';
 import {createMovementInput,movementVector,stepMovement,createWalkableWorld,nearestStation} from './avatar-movement.js?v=campus-20261016-1';
 import {canonicalCampusURL} from './campus-url.js';
 import {createCheckinModel} from './checkin-card.js';
-import {createCheckinStudio} from './checkin-studio.js?v=participant-photos-20261019-1';
-import {loadParticipantPhotoBindings,findParticipantPhoto,createParticipantPhotoStore} from './participant-photos.js?v=participant-photos-20261019-1';
+import {createCheckinStudio} from './checkin-studio.js?v=photo-choices-20261019-1';
+import {loadParticipantPhotoBindings,findParticipantPhoto,getParticipantPhotos,createParticipantPhotoStore} from './participant-photos.js?v=photo-choices-20261019-1';
 import './experience.js?v=lucky-ticket-20261019-2';
 const $=s=>document.querySelector(s), modal=$('#final');
 const campusURL=canonicalCampusURL(location.href);if(location.href!==campusURL)history.replaceState(history.state,'',campusURL);
@@ -263,7 +263,7 @@ async function composeWishCanvas(model,format,template=cardTemplate){
  const owner=profileKey,preference=photoPreferences.read(owner);
  const [,,artwork]=await Promise.all([document.fonts.ready,photosReady,format!=='full'&&template==='bloom'?loadCardArtwork():null,document.fonts.load('500 88px Lora'),document.fonts.load('italic 500 86px Lora'),document.fonts.load('800 85px "Be Vietnam Pro"')]);
  const original=getParticipantTeamPhoto(owner);
- const photo=format==='full'?original:preference.enabled?(preference.photo||original):null,canvas=document.createElement('canvas');
+ const photo=preference.enabled?(preference.photo||original):null,canvas=document.createElement('canvas');
  return format==='full'?renderWishCard(canvas,model,photo):renderSocialCard(canvas,model,{format,photo,artwork,template});
 }
 async function refreshTemplatePreviews(model){
@@ -322,7 +322,8 @@ function openFinalCheckin(){
  const model=createCheckinModel({gifts:keepsakeCollection,recipient,avatar:appearance,message:getSocialCopy(card).message,wishNumber:card.wishNumber});
  const owner=profileKey,preference=photoPreferences.read(owner),getTeamPhoto=()=>getParticipantTeamPhoto(owner);
  const getPhoto=()=>preference.enabled?(preference.photo||getTeamPhoto()):null;
- checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!preference.photo});photosReady.then(()=>{if(owner===profileKey)checkinStudio.setTeamPhoto(getTeamPhoto(),model,preference.enabled);});
+ const getChoices=()=>getParticipantPhotos(sharedPhotos,participantPhotoBindings,owner);
+ checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!preference.photo,photoChoices:getChoices()});photosReady.then(()=>{if(owner===profileKey){checkinStudio.setPhotoChoices(getChoices(),model);checkinStudio.setTeamPhoto(getTeamPhoto(),model,preference.enabled);}});
 }
 function openWish({templates=false}={}){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}if(templates){if(cardFormat==='full')cardFormat='post';wishTabs.select(0);$('.wish-studio-body').classList.remove('preview-only');$('#wish-see-preview').textContent='Phóng to thiệp';$('#wish-see-preview').setAttribute('aria-pressed','false');}drawWish();$('#wish-card').showModal();updateWishPreview();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}

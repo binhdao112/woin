@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "ebb90b4a20d8079111fbb90b45f9b91aee10b7b5",
-  "publishedAt": "2026-10-19T09:12:07.808445+00:00",
+  "sourceCommit": "9fd7501ea164716a53bd0a50678ac74319e16019",
+  "publishedAt": "2026-10-19T09:28:18.332624+00:00",
   "previewPath": "/woin/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -42,5 +42,14 @@
   "checkinTemplateRevision": "checkin-templates-20261019-1",
   "participantPhotoBindings": true,
   "participantPhotoCount": 5,
-  "participantPhotoRevision": "album-people-20261019-1"
+  "participantPhotoRevision": "album-people-20261019-1",
+  "participantPhotoChoices": true,
+  "participantPhotoChoicesRevision": "photo-choices-20261019-1",
+  "participantPhotoChoicesCounts": {
+    "member:HanNHG2": 3,
+    "member:LyHK": 8,
+    "member:NgocNTB12": 6,
+    "member:NhanCk": 1,
+    "member:ThaoNTK": 3
+  }
 }

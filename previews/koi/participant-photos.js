@@ -5,13 +5,18 @@ const members=new Set(PARTICIPANT_NAMES.map(name=>'member:'+name.split(' - ').at
 const photoId=value=>typeof value==='string'&&/^[\w-]{1,160}$/.test(value)?value:null;
 
 export function normaliseParticipantPhotoBindings(data){
- const participants={};
+ const participants={},albums={};
  for(const [key,value] of Object.entries(data?.participants||{}))if(members.has(key)&&photoId(value))participants[key]=value;
- return {defaultPhotoId:photoId(data?.defaultPhotoId),participants};
+ for(const key of members){const values=Array.isArray(data?.albums?.[key])?data.albums[key]:[],ids=[participants[key],...values].filter(photoId);if(ids.length)albums[key]=[...new Set(ids)].slice(0,48);}
+ return {defaultPhotoId:photoId(data?.defaultPhotoId),participants,albums};
 }
 export async function loadParticipantPhotoBindings({fetchImpl=fetch}={}){
  try{const response=await fetchImpl(PARTICIPANT_PHOTOS_URL,{cache:'no-cache'});if(!response.ok)throw Error();return normaliseParticipantPhotoBindings(await response.json());}
- catch{return {defaultPhotoId:null,participants:{}};}
+ catch{return {defaultPhotoId:null,participants:{},albums:{}};}
+}
+export function getParticipantPhotos(photos,bindings,profileKey){
+ const ids=bindings?.albums?.[profileKey]||[bindings?.participants?.[profileKey]];
+ return [...new Set(ids)].map(id=>photos.find(photo=>photo.id===id)).filter(Boolean);
 }
 export function findParticipantPhoto(photos,bindings,profileKey){
  const assigned=bindings?.participants?.[profileKey];
