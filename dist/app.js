@@ -315,7 +315,7 @@ function openFinalCheckin(){
  const model=createCheckinModel({gifts:keepsakeCollection,recipient,avatar:appearance,message:getSocialCopy(card).message,wishNumber:card.wishNumber});
  const getTeamPhoto=()=>findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6))?.canvas||null;
  const getPhoto=()=>cardPhotoEnabled?(checkinPhoto||getTeamPhoto()):null;
- checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!checkinPhoto});photosReady.then(()=>checkinStudio.setTeamPhoto(getTeamPhoto(),model));
+ checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!checkinPhoto});photosReady.then(()=>checkinStudio.setTeamPhoto(getTeamPhoto(),model,cardPhotoEnabled));
 }
 function openWish(){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}drawWish();$('#wish-card').showModal();updateWishPreview();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}
