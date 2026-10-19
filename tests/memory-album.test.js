@@ -38,9 +38,9 @@ test('saved frames select by photo ID even when host captions repeat',async()=>{
 });
 
 test('shared album limits work and falls back safely for wrong image types or decoder errors',async()=>{
- const {normaliseSharedAlbum,loadSharedAlbum,findMemoryPhoto}=await import('../dist/memory-album.js');
- const photos=Array.from({length:26},(_,i)=>({src:'./photo-'+i+'.png'}));
- assert.equal(normaliseSharedAlbum({photos},base).photos.length,24);
+ const {normaliseSharedAlbum,loadSharedAlbum,findMemoryPhoto,MAX_ALBUM_PHOTOS}=await import('../dist/memory-album.js');
+ const photos=Array.from({length:MAX_ALBUM_PHOTOS+2},(_,i)=>({src:'./photo-'+i+'.png'}));
+ assert.equal(normaliseSharedAlbum({photos},base).photos.length,MAX_ALBUM_PHOTOS);
  assert.ok(normaliseSharedAlbum({photos},base).issues.length>0);
  for(const image of [new Blob(['bad'],{type:'text/html'}),new Blob([],{type:'image/png'})]){
   const fetchImpl=async url=>String(url).endsWith('album.json')?{ok:true,json:async()=>({photos:[{src:'./one.png'}]})}:{ok:true,blob:async()=>image};
@@ -49,6 +49,12 @@ test('shared album limits work and falls back safely for wrong image types or de
  const fetchImpl=async url=>String(url).endsWith('album.json')?{ok:true,json:async()=>({photos:[{src:'./one.png'}]})}:{ok:true,blob:async()=>new Blob(['png'],{type:'image/png'})};
  assert.equal((await loadSharedAlbum({manifestURL:base,fetchImpl,decode:async()=>{throw Error('decode');}})).photos.length,0);
  const first={id:'one'};assert.equal(findMemoryPhoto([first],{},0),first);
+});
+
+test('the expanded host album displays all 26 images instead of silently truncating at 24',async()=>{
+ const {normaliseSharedAlbum}=await import('../dist/memory-album.js');
+ const photos=Array.from({length:26},(_,i)=>({id:'team-'+i,src:'./photos/photo-'+i+'.jpg'}));
+ const album=normaliseSharedAlbum({photos},base);assert.equal(album.photos.length,26);assert.deepEqual(album.issues,[]);
 });
 
 test('shared photo requests time out without blocking the rest of the journey',async()=>{
