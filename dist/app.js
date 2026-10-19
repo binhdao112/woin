@@ -18,7 +18,7 @@ import {createMovementInput,movementVector,stepMovement,createWalkableWorld,near
 import {canonicalCampusURL} from './campus-url.js';
 import {createCheckinModel} from './checkin-card.js';
 import {createCheckinStudio} from './checkin-studio.js';
-import './experience.js';
+import './experience.js?v=lucky-ticket-20261019-1';
 const $=s=>document.querySelector(s), modal=$('#final');
 const campusURL=canonicalCampusURL(location.href);if(location.href!==campusURL)history.replaceState(history.state,'',campusURL);
 document.body.dataset.world='campus';

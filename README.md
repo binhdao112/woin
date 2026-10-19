@@ -46,7 +46,7 @@ Tám điểm dừng có thể tự tìm đường từ vị trí hiện tại, �
 - Vé và đồ uống được lưu khi xác nhận. Các trò chơi tự lưu kết quả thành kỷ vật ngay khi có kết quả; đóng trò chơi không làm mất món đã nhận.
 - Trạm 6 lắc ống quẻ xong mới hiện thông điệp và lưu kỷ vật; đóng giữa chừng có thể mở lại để lắc tiếp. Trạm ảnh tự tải album do host chuẩn bị sẵn, giữ đúng khung hình đang xem. Có thể giữ khung minh họa nếu album chưa có ảnh.
 - Bộ đếm và các thanh tiến độ đều lấy từ cùng bộ sưu tập 7 kỷ vật.
-- Trạm số may mắn nhận cùng lúc số 01–99 và bộ số vui 6/45: sáu số khác nhau từ 01–45, sắp tăng dần. Bộ số có nút chép, được lưu cùng hành trình và xuất lên cả bốn mẫu thiệp social, caption và bản kỷ niệm đầy đủ. Hành trình cũ không tự bốc thêm số khi tải lại.
+- Trạm số may mắn có hai lượt: chạm quả cầu để nhận số 01–99, rồi chạm vé Vietlott vừa xuất hiện để mở bộ số vui 6/45: sáu số khác nhau từ 01–45, sắp tăng dần. Bộ số có nút chép, được lưu cùng hành trình và xuất lên cả bốn mẫu thiệp social, caption và bản kỷ niệm đầy đủ. Hành trình cũ không tự bốc thêm số khi tải lại.
 - Thiệp cuối giữ nguyên lời chúc trong chuyến đi. PNG có tên, kết quả của từng trạm và ảnh kỷ niệm đã chọn nếu ảnh còn trong thư viện trình duyệt.
 - Màn thiệp có preview và ba bản tải: bài đăng 1080×1350 (4:5), story 1080×1920 (9:16), hoặc bản kỷ niệm đầy đủ. Hai bản social dùng nền hoa minh họa và một lời nhắn ngắn, giữ số may mắn như một dấu ấn của hành trình.
 - Có 4 mẫu social với thumbnail lớn, bố cục 2×2, dấu chọn rõ ràng và nút tải luôn hiện ở cuối màn thiệp: **Mây hoa**, **Bìa tạp chí**, **Sổ tay vui** và **Đêm sao**. Mỗi mẫu có bố cục dành cho cả khổ bài đăng/story, có hoặc không có ảnh. Đổi mẫu giữ nguyên tên, ảnh và dữ liệu hành trình; lựa chọn mẫu được nhớ trong cùng phiên trình duyệt. Tên file PNG phân biệt từng mẫu.
@@ -96,7 +96,7 @@ Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run chec
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 89 kiểm thử, 58 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 93 kiểm thử, 59 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 
