@@ -1,5 +1,5 @@
 import {playFortuneDraw} from './fortune-animation.js';
-import {mountLuckyNumber} from './lucky-number-studio.js?v=lucky-ticket-20261019-1';
+import {mountLuckyNumber} from './lucky-number-studio.js?v=lucky-ticket-20261019-2';
 const $=s=>document.querySelector(s), pick=a=>a[random(a.length)];
 let person='';const personal=t=>person?person+' ơi, '+t.charAt(0).toLocaleLowerCase('vi')+t.slice(1):t;window.addEventListener('journey-profile',e=>{person=e.detail.name;$('#welcome-name').value=person;$('#profile-edit').textContent=person?'✦ '+person+' · Nhân vật':'✦ Tạo nhân vật';$('#profile-edit').setAttribute('aria-label','Chỉnh tên và nhân vật'+(person?' của '+person:''));if(person)$('.side .tag').textContent='20/10 · Hành trình của '+person;});
 function random(n){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n;}

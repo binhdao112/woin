@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "53d0b2bbbe8ebda9e1dd64c7029a2bdc64757d83",
-  "publishedAt": "2026-10-19T03:30:42.249931+00:00",
+  "sourceCommit": "b69e8820328e3619a9b0dfac4fd84aa99b775182",
+  "publishedAt": "2026-10-19T03:35:53.285512+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -12,5 +12,6 @@
   "sharedAlbumPhotos": 19,
   "checkinStudio": true,
   "fullExperience": true,
-  "luckyTicketTwoStep": true
+  "luckyTicketTwoStep": true,
+  "prominentLuckyNumber": true
 }

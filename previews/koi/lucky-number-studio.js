@@ -16,7 +16,8 @@ export function mountLuckyNumber(area,{
  const intro=node('p','cosmic-intro','Chạm vào quả cầu để nhận số may mắn của mình nhé.');
  const orb=button('lucky-orb','Lấy số may mắn');
  orb.append(node('span','lucky-orb-value','?'),node('small','lucky-orb-hint','CHẠM ĐỂ NHẬN SỐ'));
- const single=node('p','lucky-single');single.hidden=true;
+ const single=node('p','lucky-single'),singleValue=node('strong','lucky-single-value');single.hidden=true;
+ single.append(node('span','lucky-single-label','Số may mắn của bạn'),singleValue);
  const ticket=button('lucky-ticket-open','Mở vé Vietlott để nhận 6 số ngẫu nhiên');ticket.hidden=true;
  ticket.append(node('small','lucky-ticket-eyebrow','MỘT CHÚT MAY MẮN NỮA, DÀNH CHO BẠN'),node('strong','lucky-ticket-brand','VIETLOTT'),node('span','lucky-ticket-mega','MEGA 6/45'),node('span','lucky-ticket-seal','✦'),node('span','lucky-ticket-tap','Chạm để mở 6 số của bạn →'),node('small','lucky-ticket-footnote','VÉ VUI · 20 / 10'));
  const result=node('section','lucky-ticket-result');result.hidden=true;result.setAttribute('aria-label','Vé số vui của bạn');
@@ -32,7 +33,7 @@ export function mountLuckyNumber(area,{
  orb.onclick=()=>{
   if(number!==null)return;
   number=drawNumber();orb.hidden=true;orb.disabled=true;
-  single.textContent='Số may mắn của bạn · '+number;single.hidden=false;
+  singleValue.textContent=number;single.hidden=false;
   step.textContent='02 / 02 · MỞ VÉ MAY MẮN';title.textContent='Có một tấm vé gửi bạn.';
   intro.textContent='Chạm vào tấm vé để mở thêm 6 số ngẫu nhiên nhé.';
   ticket.hidden=false;status.textContent='Bạn nhận được số '+number+'. Tấm vé của bạn đã sẵn sàng.';
