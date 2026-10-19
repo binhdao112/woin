@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "fc48cb2369e812ea4b8b26643127dd527081f589",
-  "publishedAt": "2026-10-19T07:53:21.395397+00:00",
+  "sourceCommit": "df3eecf8714c2ad00c72cd554d19d4d01a136741",
+  "publishedAt": "2026-10-19T08:23:36.938990+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -35,5 +35,7 @@
   "fullMenuRevision": "full-menu-20261019-1",
   "guestDrinkPricesHidden": true,
   "teamTreatCopy": true,
-  "drinkTreatRevision": "team-treat-20261019-1"
+  "drinkTreatRevision": "team-treat-20261019-1",
+  "visibleCheckinTemplates": true,
+  "checkinTemplateRevision": "checkin-templates-20261019-1"
 }
