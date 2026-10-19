@@ -8,7 +8,6 @@ import {resolveParticipantKey,participantOrderName} from './participant-profile.
 const MENU_URL=new URL('./assets/drinks/koi-menu.json',import.meta.url);
 const CONFIG_URL=new URL('./assets/drinks/order-config.json',import.meta.url);
 const $=selector=>document.querySelector(selector);
-const money=value=>new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(value);
 const sameChoice=(a,b)=>a&&b&&['menuVersion','name','variantId','sugar','ice','note'].every(key=>String(a[key]||'').trim()===String(b[key]||'').trim());
 
 export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
@@ -47,8 +46,8 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
     for(const item of items){
       const button=document.createElement('button');button.type='button';button.className='drink-menu-item';button.setAttribute('aria-pressed',String(found?.item.id===item.id));button.disabled=busy||pending;
       const cup=document.createElement('span');cup.className='drink-cup drink-cup-'+item.category;cup.setAttribute('aria-hidden','true');cup.textContent='✦';
-      const info=document.createElement('span'),title=document.createElement('strong'),price=document.createElement('small');title.textContent=item.name;
-      price.textContent='Từ '+money(Math.min(...item.variants.map(variant=>variant.price)));info.append(title,price);
+      const info=document.createElement('span'),title=document.createElement('strong'),sizes=document.createElement('small');title.textContent=item.name;
+      sizes.textContent=[...new Set(item.variants.map(variant=>variant.label))].join(' · ');info.append(title,sizes);
       const marker=document.createElement('span');marker.className='drink-marker';marker.textContent=found?.item.id===item.id?'✓':'＋';marker.setAttribute('aria-hidden','true');button.append(cup,info,marker);
       button.onclick=()=>{selected=item.variants[0].id;status('');renderMenu();renderSelection();dialog.dataset.drinkStep='options';$('#drink-change').focus();};
       $('#drink-menu-list').append(button);
@@ -58,10 +57,10 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
   function renderSelection(){
     if(!menu)return;
     const found=selected?findDrink(menu,selected):null,saved=state(),pending=Boolean(saved.pending),confirmed=!pending&&sameChoice(draft(),saved.confirmed);
-    $('#drink-picked-name').textContent=found?found.item.name:'Chọn một ly thật hợp gu';$('#drink-picked-price').textContent=found?money(found.variant.price):'Một chút ngọt ngào cho giờ nghỉ';
-    $('#drink-footer-choice').textContent=found?found.item.name+' · '+found.variant.label+' · '+money(found.variant.price):'';
+    $('#drink-picked-name').textContent=found?found.item.name:'Chọn một ly thật hợp gu';$('#drink-picked-detail').textContent=found?'Chọn cỡ ly, đường và đá theo gu của bạn nhé.':'Một chút ngọt ngào cho giờ nghỉ';
+    $('#drink-footer-choice').textContent=found?found.item.name+' · '+found.variant.label:'';
     $('#drink-variants').replaceChildren();
-    if(found)for(const variant of found.item.variants){const button=document.createElement('button');button.type='button';button.textContent=variant.label+' · '+money(variant.price);button.setAttribute('aria-pressed',String(variant.id===selected));button.disabled=busy||pending;button.onclick=()=>{selected=variant.id;status('');renderSelection();};$('#drink-variants').append(button);}
+    if(found)for(const variant of found.item.variants){const button=document.createElement('button');button.type='button';button.textContent=variant.label;button.setAttribute('aria-pressed',String(variant.id===selected));button.disabled=busy||pending;button.onclick=()=>{selected=variant.id;status('');renderSelection();};$('#drink-variants').append(button);}
     const sending=busy&&sendingProfileKey===profileKey;
     $('#drink-loading').hidden=!sending;form.setAttribute('aria-busy',String(sending));
     form.querySelector('fieldset').disabled=busy||pending;

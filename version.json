@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "6b2e9afa3cda788a37389ced07013062864610eb",
-  "publishedAt": "2026-10-19T07:37:25.961848+00:00",
+  "sourceCommit": "fc48cb2369e812ea4b8b26643127dd527081f589",
+  "publishedAt": "2026-10-19T07:53:21.365513+00:00",
   "previewPath": "/woin/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -34,5 +34,8 @@
   "prominentDrinkActions": true,
   "drinkActionRevision": "drink-actions-20261019-1",
   "fullMenuImage": true,
-  "fullMenuRevision": "full-menu-20261019-1"
+  "fullMenuRevision": "full-menu-20261019-1",
+  "guestDrinkPricesHidden": true,
+  "teamTreatCopy": true,
+  "drinkTreatRevision": "team-treat-20261019-1"
 }
