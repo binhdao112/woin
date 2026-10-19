@@ -1,0 +1,18 @@
+THIỆP CỨNG 20/10 - BỘ MẪU ĐỂ CHỐT THIẾT KẾ
+
+QR LINK CHÍNH: https://binhdao112.github.io/woin/
+Phiên bản main-qr-20261019-1. File tải từ trang chọn mẫu có đuôi -QR-chinh.pdf để phân biệt bản mới.
+
+Thành phẩm: A6 ngang, 148 x 105 mm, hai mặt, một tấm cho mỗi người.
+Ảnh chung: Khoảnh khắc 19 trong album của team.
+Mỗi PDF có 10 trang: trước/sau của Châu Kim Nhẩn, tiếp theo trước/sau của Nguyễn Thị Kim Thảo, Hoàng Khánh Ly, Nguyễn Trần Bảo Ngọc và Nguyễn Hoàng Gia Hân.
+
+Thông số PDF:
+- MediaBox 162 x 119 mm, đã có dấu cắt.
+- TrimBox 148 x 105 mm; lề từ MediaBox tới TrimBox là 7 mm.
+- BleedBox mở rộng TrimBox 3 mm mỗi cạnh.
+- Chữ và đồ họa dạng vector; font tiếng Việt được nhúng.
+- Ảnh gốc được nhúng; độ phân giải hiệu dụng từ 490 dpi ở khung rộng128 mm.
+- Hình xem trước JPG chỉ để chọn mẫu. Dùng PDF để in.
+
+Sau khi chốt mẫu/nội dung, nhà in có thể bình trang lên giấy theo máy của mình, giữ đúng tỷ lệ 100%, cắt theo TrimBox và kiểm tra thứ tự hai mặt bằng một bản thử. Mã QR ở mặt sau mở hành trình web 20/10.

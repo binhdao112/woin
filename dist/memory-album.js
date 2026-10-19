@@ -1,5 +1,5 @@
 export const SHARED_ALBUM_URL = new URL('./assets/memories/album.json', import.meta.url);
-export const MAX_ALBUM_PHOTOS = 12;
+export const MAX_ALBUM_PHOTOS = 48;
 export const MAX_PHOTO_BYTES = 20 * 1024 * 1024;
 
 export function normaliseSharedAlbum(data, manifestURL) {
@@ -18,7 +18,7 @@ export function normaliseSharedAlbum(data, manifestURL) {
       photos.push({ id, name: String(item.name || 'Khoảnh khắc cùng team').trim().slice(0, 120), url: url.href });
     } catch { issues.push('Một ảnh trong album có đường dẫn hoặc mã ảnh không hợp lệ.'); }
   }
-  if (data.photos.length > MAX_ALBUM_PHOTOS) issues.push('Album chỉ hiển thị tối đa 12 ảnh.');
+  if (data.photos.length > MAX_ALBUM_PHOTOS) issues.push(`Album chỉ hiển thị tối đa ${MAX_ALBUM_PHOTOS} ảnh.`);
   return { title: String(data.title || 'Album của team').slice(0, 100), photos, issues };
 }
 

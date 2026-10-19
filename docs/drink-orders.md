@@ -4,6 +4,10 @@ Trạm cà phê dùng menu **KOI Thé · Trung Hòa** do host đưa sẵn vào r
 
 **Đã bật nhận đăng ký:** host chạy `setupKoiOrders` ngày 16/10/2026; bảng Order 20/10 có hai tab Đăng ký/Tổng hợp, endpoint nhận đúng mã đợt `team-2010-2026`. URL `/exec` đã được điền trong `dist/assets/drinks/order-config.json` với `enabled: true`. Nút **Gửi lựa chọn cho host** hiện ở bản xem KOI; khi sửa một ly đã được nhận, nút đổi thành **Cập nhật lựa chọn**.
 
+Quầy có nút **Menu full ở đây** để xem ảnh KOI do host cung cấp, phóng to/thu nhỏ, kéo hoặc vuốt và mở ảnh gốc. Đóng bằng nút quay lại hoặc Escape vẫn giữ nguyên món, cỡ ly và ghi chú. Ảnh này là tham khảo; menu đặt nước và giá gửi lên Sheet vẫn lấy từ danh mục đã kiểm tra.
+
+Giao diện chọn món, cỡ ly và xác nhận không hiện giá hay tổng tiền, kèm lời mời **“Gu của bạn, team bao. Chọn món mình mê, hôm nay cứ để được chiều!”**. Giá trong ảnh menu được giữ nguyên theo yêu cầu của host. Danh mục và Apps Script vẫn giữ giá tham khảo để host xem chi phí trong Sheet.
+
 ## Kết nối một lần bằng tài khoản Google của host
 
 1. Tạo một [Google Sheet](https://sheets.google.com/create), đặt tên như **20/10 · Đăng ký KOI**. Giữ bảng riêng tư; chỉ chia sẻ cho người cùng phụ trách đặt nước nếu cần.
@@ -31,7 +35,7 @@ URL `/exec` là địa chỉ dịch vụ công khai của form, không phải m�
 - Chọn tab **Tổng hợp**, dùng **File → Download** để tải CSV hoặc Excel. Host đối chiếu với menu Grab và tự đặt; website chỉ thu thập lựa chọn.
 - Nếu host sửa/xóa dòng thủ công, chốt đăng ký trước rồi chọn **Quầy KOI → Cập nhật tổng hợp**. Không đổi tên tab hoặc cấu trúc cột mà chưa sửa script.
 
-Mã nhận diện gắn với trình duyệt, không phải tài khoản nhân viên. Cùng tên vẫn có thể là hai người; dùng hai thiết bị hoặc xóa dữ liệu trình duyệt có thể tạo hai đăng ký. Host kiểm tra tên trùng trước khi chốt. Không dùng chung một trình duyệt để đăng ký thay nhiều người.
+Mỗi người trong danh sách tên có mã riêng trong trình duyệt. Chọn sang người khác mở một lựa chọn trống; quay lại đúng người chỉ khôi phục ly của người đó. Sửa biệt danh check-in vẫn giữ tên nhận nước theo danh sách. Khách nhập tên ngoài danh sách có mã riêng và giữ mã khi sửa biệt danh. Đây chưa phải đăng nhập: dùng hai thiết bị hoặc xóa dữ liệu trình duyệt vẫn có thể tạo hai đăng ký. Host kiểm tra tên trùng trước khi chốt. Đơn cũ của trình duyệt chỉ được chuyển sang hồ sơ có tên trùng và chỉ một hồ sơ được nhận mã cũ; dữ liệu đã nằm trong Sheet không bị tự sửa/xóa.
 
 ## Phạm vi menu và giá
 
@@ -55,8 +59,8 @@ Sau đó cập nhật lại `Code.gs` trên Google và phát hành phiên bản 
 - Chỉ hiện “Đã ghi nhận” sau khi nhận đúng mã xác nhận từ Google Sheets. POST trả response không đọc được không đủ để coi là gửi thành công.
 - Trong lúc chưa xác nhận, lựa chọn và mã gửi được giữ trong `localStorage`. Bấm thử lại hoặc tải lại trang dùng lại đúng mã, không tạo thêm ly. Không cho sửa một lần gửi còn đang chờ.
 - Có thể tiếp tục hành trình trong lúc chờ; giao diện và kỷ vật ghi rõ chưa xác nhận. Việc đi tiếp không hủy một yêu cầu có thể đã tới Google.
-- Khi đã được nhận, nút **Ly nước của tôi** cho mở lại và cập nhật. Mỗi lần gửi mới thay dòng của trình duyệt đó, không thêm số ly. Thay đổi lựa chọn không làm tăng bộ đếm kỷ vật.
-- Nếu chọn đi tiếp khi còn thay đổi chưa gửi, vẫn giữ ly đã đăng ký trước đó. Chức năng tự hủy đăng ký chưa có; host có thể chốt rồi chỉnh bảng nếu cần hủy.
+- Khi đã được nhận, nút **Ly nước của tôi** cho mở lại và cập nhật. Mỗi lần gửi mới thay dòng của đúng hồ sơ trên trình duyệt đó, không thêm số ly. Thay đổi lựa chọn không làm tăng bộ đếm kỷ vật.
+- Quầy không tự chọn món, không tạo đơn khi mở hoặc đổi tên, và không có nút bỏ qua để tự sinh một ly mặc định. Khi kết nối Sheet đang bật, chỉ được đi tiếp với lựa chọn đã được xác nhận; lần gửi đang chờ phải kiểm tra lại. Chức năng tự hủy đăng ký chưa có; host có thể chốt rồi chỉnh bảng nếu cần hủy.
 
 ## Dữ liệu và kiểm tra
 

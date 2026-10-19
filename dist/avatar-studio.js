@@ -1,6 +1,7 @@
 import * as T from './three.module.js';
 import {AVATAR_OPTIONS,AVATAR_LABELS,createAvatarDraft,describeAvatar} from './avatar-profile.js';
-import {createAvatar} from './avatar-rig.js';
+import {createAvatar} from './avatar-rig.js?v=campus-20261016-1';
+import {createNamePicker} from './name-picker.js';
 
 const $=selector=>document.querySelector(selector);
 const icons={hair:'◡',hairColor:'◒',outfit:'✧',color:'◕',skin:'☀',accessory:'✿'};
@@ -26,6 +27,7 @@ function choiceArt(field,option,avatar){
 export function createAvatarStudio({name='',avatar}={}){
  const dialog=$('#welcome'),draft=createAvatarDraft(avatar),container=$('#avatar-preview');
  let savedName=name,field='hair',angle=0,renderer,scene,camera,rig;
+ const namePicker=createNamePicker({select:$('#welcome-participant'),input:$('#welcome-name'),edit:$('#welcome-name-edit'),label:$('.avatar-name-label'),onChange:name=>{$('#avatar-name').textContent=name||'Sắp là bạn rồi ✦';}});
 
  function drawPreview(){
   if(!renderer||!dialog.open)return;
@@ -69,7 +71,7 @@ export function createAvatarStudio({name='',avatar}={}){
   button.onclick=()=>{field=key;showChoices();document.querySelectorAll('[data-avatar-field]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));if(innerWidth<=700){const pane=$('.avatar-controls');pane.scrollTop+=$('#avatar-choices').getBoundingClientRect().top-pane.getBoundingClientRect().top-3;}};$('#avatar-categories').append(button);
  }
  function open(){
-  draft.cancel();field='hair';angle=0;$('#welcome-name').value=savedName;$('#welcome-name').setCustomValidity('');$('#avatar-cancel').hidden=!savedName;$('#welcome-submit').textContent=savedName?'Lưu nhân vật & tiếp tục →':'Cùng nhân vật của mình đi chơi →';
+  draft.cancel();field='hair';angle=0;namePicker.restore(savedName);$('#avatar-cancel').hidden=!savedName;$('#welcome-submit').textContent=savedName?'Lưu nhân vật & tiếp tục →':'Cùng nhân vật của mình đi chơi →';
   $('#welcome-music').checked=$('#music-toggle').getAttribute('aria-pressed')==='true';$('#avatar-name').textContent=savedName||'Sắp là bạn rồi ✦';
   dialog.showModal();dialog.scrollTop=0;$('#welcome .avatar-layout').scrollTop=0;$('.avatar-controls').scrollTop=0;showChoices();updateSelection();
  }
@@ -78,11 +80,9 @@ export function createAvatarStudio({name='',avatar}={}){
  dialog.addEventListener('cancel',event=>{if(!savedName)event.preventDefault();else draft.cancel();});
  $('#avatar-random').onclick=()=>{draft.randomize();showChoices();updateSelection();};
  $('#avatar-turn-left').onclick=()=>{angle-=Math.PI/4;drawPreview();};$('#avatar-turn-right').onclick=()=>{angle+=Math.PI/4;drawPreview();};
- $('#welcome-name').oninput=()=>{$('#welcome-name').setCustomValidity('');$('#avatar-name').textContent=$('#welcome-name').value.trim()||'Sắp là bạn rồi ✦';};
  $('#welcome-form').onsubmit=event=>{
-  event.preventDefault();const name=$('#welcome-name').value.trim().replace(/\s+/g,' ').slice(0,40);
-  if(!name){$('#welcome-name').setCustomValidity('Cho mình biết tên bạn nhé.');$('#welcome-name').reportValidity();return;}
-  $('#welcome-name').setCustomValidity('');const avatar=draft.commit();savedName=name;
+  event.preventDefault();if(!namePicker.validate())return;const name=namePicker.read();
+  const avatar=draft.commit();savedName=name;
   window.dispatchEvent(new CustomEvent('welcome-profile',{detail:{name,avatar}}));dialog.close();
   window.dispatchEvent(new CustomEvent('profile-music',{detail:{enabled:$('#welcome-music').checked}}));
  };

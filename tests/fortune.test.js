@@ -11,7 +11,7 @@ test('fortune results are withheld until the shake finishes',()=>{
   const element=()=>({className:'',classList:{add(){},remove(){}},setAttribute(){},removeAttribute(){},style:{},append(){},replaceChildren(){},animate(){return {finished:Promise.resolve(),cancel(){}};}});
   const area=element();area.append=(...items)=>nodes.push(...items);
   const context={document:{createElement:element},intro(){},result:element,button:(text,fn)=>({textContent:text,onclick:fn}),pick:a=>a[0],fortunes:[['Cát','Thông điệp']],personal:x=>x,stationReady:()=>saved++,celebrate(){},stationContext:{station:5},currentTab:'fortune',hub:{open:true},matchMedia:()=>({matches:false}),activeFortuneCancel:null,playFortuneDraw:(node,options)=>{complete=options.onReveal;return {cancel(){},finished:Promise.resolve()};}};
-  const start=source.indexOf('function renderFortune('),end=source.indexOf('\nconst meanings=',start);
+  const start=source.indexOf('function renderFortune('),end=source.indexOf('\nfunction renderNumber(',start);
   vm.runInNewContext(source.slice(start,end),context);
   context.renderFortune(area);nodes.at(-1).onclick();
   assert.equal(saved,0,'do not save or resize the result while the tube starts shaking');

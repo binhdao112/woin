@@ -1,0 +1,344 @@
+{
+  "size": "A6 ngang · 148 × 105 mm",
+  "bleedMm": 3,
+  "photo": "Khoảnh khắc 19",
+  "qrUrl": "https://binhdao112.github.io/woin/",
+  "revision": "pink-collection-20261019-1",
+  "people": [
+    {
+      "name": "Châu Kim Nhẩn",
+      "code": "NhanCk"
+    },
+    {
+      "name": "Nguyễn Thị Kim Thảo",
+      "code": "ThaoNTK"
+    },
+    {
+      "name": "Hoàng Khánh Ly",
+      "code": "LyHK"
+    },
+    {
+      "name": "Nguyễn Trần Bảo Ngọc",
+      "code": "NgocNTB12"
+    },
+    {
+      "name": "Nguyễn Hoàng Gia Hân",
+      "code": "HanNHG2"
+    }
+  ],
+  "styles": [
+    {
+      "id": "vuon-hong",
+      "name": "Vườn hồng",
+      "tag": "Dịu dàng, thanh lịch",
+      "bg": "#FAF5EB",
+      "ink": "#493A3D",
+      "accent": "#A26173",
+      "soft": "#E9D8D7",
+      "green": "#697A62",
+      "number": 1,
+      "pdf": "01-vuon-hong-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "01-vuon-hong-NhanCk-front.jpg",
+          "back": "01-vuon-hong-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "01-vuon-hong-ThaoNTK-front.jpg",
+          "back": "01-vuon-hong-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "01-vuon-hong-LyHK-front.jpg",
+          "back": "01-vuon-hong-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "01-vuon-hong-NgocNTB12-front.jpg",
+          "back": "01-vuon-hong-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "01-vuon-hong-HanNHG2-front.jpg",
+          "back": "01-vuon-hong-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "dem-anh-kim",
+      "name": "Đêm ánh kim",
+      "tag": "Trang trọng, ấm áp",
+      "bg": "#172C2B",
+      "ink": "#FBF1DC",
+      "accent": "#D5B77E",
+      "soft": "#334945",
+      "green": "#D5B77E",
+      "number": 2,
+      "pdf": "02-dem-anh-kim-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "02-dem-anh-kim-NhanCk-front.jpg",
+          "back": "02-dem-anh-kim-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "02-dem-anh-kim-ThaoNTK-front.jpg",
+          "back": "02-dem-anh-kim-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "02-dem-anh-kim-LyHK-front.jpg",
+          "back": "02-dem-anh-kim-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "02-dem-anh-kim-NgocNTB12-front.jpg",
+          "back": "02-dem-anh-kim-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "02-dem-anh-kim-HanNHG2-front.jpg",
+          "back": "02-dem-anh-kim-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "nhat-ky",
+      "name": "Những ngày có nhau",
+      "tag": "Gần gũi, giàu kỷ niệm",
+      "bg": "#F0EBDF",
+      "ink": "#384F48",
+      "accent": "#B25D4F",
+      "soft": "#DADBC8",
+      "green": "#75836C",
+      "number": 3,
+      "pdf": "03-nhat-ky-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "03-nhat-ky-NhanCk-front.jpg",
+          "back": "03-nhat-ky-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "03-nhat-ky-ThaoNTK-front.jpg",
+          "back": "03-nhat-ky-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "03-nhat-ky-LyHK-front.jpg",
+          "back": "03-nhat-ky-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "03-nhat-ky-NgocNTB12-front.jpg",
+          "back": "03-nhat-ky-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "03-nhat-ky-HanNHG2-front.jpg",
+          "back": "03-nhat-ky-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "ruc-ro",
+      "name": "Rực rỡ theo cách riêng",
+      "tag": "Hiện đại, nổi bật",
+      "bg": "#F6E8DE",
+      "ink": "#552F52",
+      "accent": "#C55334",
+      "soft": "#E2C7D5",
+      "green": "#552F52",
+      "number": 4,
+      "pdf": "04-ruc-ro-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "04-ruc-ro-NhanCk-front.jpg",
+          "back": "04-ruc-ro-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "04-ruc-ro-ThaoNTK-front.jpg",
+          "back": "04-ruc-ro-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "04-ruc-ro-LyHK-front.jpg",
+          "back": "04-ruc-ro-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "04-ruc-ro-NgocNTB12-front.jpg",
+          "back": "04-ruc-ro-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "04-ruc-ro-HanNHG2-front.jpg",
+          "back": "04-ruc-ro-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "anh-hong-pastel",
+      "layout": "dem-anh-kim",
+      "name": "Ánh hồng pastel",
+      "tag": "Bố cục ánh kim, hồng phấn dịu dàng",
+      "bg": "#FBEAF0",
+      "ink": "#6F3D52",
+      "accent": "#A76A7C",
+      "soft": "#EBCAD5",
+      "green": "#A76A7C",
+      "number": 5,
+      "pdf": "05-anh-hong-pastel-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "05-anh-hong-pastel-NhanCk-front.jpg",
+          "back": "05-anh-hong-pastel-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "05-anh-hong-pastel-ThaoNTK-front.jpg",
+          "back": "05-anh-hong-pastel-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "05-anh-hong-pastel-LyHK-front.jpg",
+          "back": "05-anh-hong-pastel-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "05-anh-hong-pastel-NgocNTB12-front.jpg",
+          "back": "05-anh-hong-pastel-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "05-anh-hong-pastel-HanNHG2-front.jpg",
+          "back": "05-anh-hong-pastel-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "no-hong-ballet",
+      "name": "Nơ hồng ballet",
+      "tag": "Hồng sữa, nơ lụa và một chút điệu đà",
+      "bg": "#FFF5F7",
+      "ink": "#773C53",
+      "accent": "#B76C89",
+      "soft": "#F3D1DE",
+      "green": "#B76C89",
+      "number": 6,
+      "pdf": "06-no-hong-ballet-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "06-no-hong-ballet-NhanCk-front.jpg",
+          "back": "06-no-hong-ballet-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "06-no-hong-ballet-ThaoNTK-front.jpg",
+          "back": "06-no-hong-ballet-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "06-no-hong-ballet-LyHK-front.jpg",
+          "back": "06-no-hong-ballet-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "06-no-hong-ballet-NgocNTB12-front.jpg",
+          "back": "06-no-hong-ballet-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "06-no-hong-ballet-HanNHG2-front.jpg",
+          "back": "06-no-hong-ballet-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "hong-tra-hoa",
+      "name": "Hồng trà hoa",
+      "tag": "Hồng trà ấm, hoa mềm và nét thanh lịch",
+      "bg": "#FFF4EE",
+      "ink": "#68424B",
+      "accent": "#A65F72",
+      "soft": "#EEC9CD",
+      "green": "#8A8B74",
+      "number": 7,
+      "pdf": "07-hong-tra-hoa-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "07-hong-tra-hoa-NhanCk-front.jpg",
+          "back": "07-hong-tra-hoa-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "07-hong-tra-hoa-ThaoNTK-front.jpg",
+          "back": "07-hong-tra-hoa-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "07-hong-tra-hoa-LyHK-front.jpg",
+          "back": "07-hong-tra-hoa-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "07-hong-tra-hoa-NgocNTB12-front.jpg",
+          "back": "07-hong-tra-hoa-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "07-hong-tra-hoa-HanNHG2-front.jpg",
+          "back": "07-hong-tra-hoa-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "pink-muse",
+      "name": "Pink Muse",
+      "tag": "Bìa tạp chí, hồng rose và khí chất riêng",
+      "bg": "#F5C7D8",
+      "ink": "#702D4E",
+      "accent": "#A4446C",
+      "soft": "#FFE9F0",
+      "green": "#A4446C",
+      "number": 8,
+      "pdf": "08-pink-muse-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "08-pink-muse-NhanCk-front.jpg",
+          "back": "08-pink-muse-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "08-pink-muse-ThaoNTK-front.jpg",
+          "back": "08-pink-muse-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "08-pink-muse-LyHK-front.jpg",
+          "back": "08-pink-muse-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "08-pink-muse-NgocNTB12-front.jpg",
+          "back": "08-pink-muse-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "08-pink-muse-HanNHG2-front.jpg",
+          "back": "08-pink-muse-HanNHG2-back.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "defaultPhotoId": "team-2b7c4913979c371d",
+  "participants": {
+    "member:HanNHG2": "team-0e167030a1edf4a2",
+    "member:LyHK": "team-eb4c43859c85b6d2",
+    "member:NgocNTB12": "team-d67ede168c4d32ec",
+    "member:NhanCk": "team-ed9591071794f700",
+    "member:ThaoNTK": "team-b92d2d04951d2426"
+  },
+  "albums": {
+    "member:HanNHG2": [
+      "team-0e167030a1edf4a2",
+      "team-595ba59ea494a49f",
+      "team-d71c3ac6613734e4"
+    ],
+    "member:LyHK": [
+      "team-eb4c43859c85b6d2",
+      "team-67bccfefbbc2f506",
+      "team-f693d040a6bcd9ae",
+      "team-8bef2bb7dfe0965f",
+      "team-a48ac6f537c5abe2",
+      "team-b92d2d04951d2426",
+      "team-6e510a0b25131904",
+      "team-74d97e75c45e68d1"
+    ],
+    "member:NgocNTB12": [
+      "team-d67ede168c4d32ec",
+      "team-b7dea9a745bd75c8",
+      "team-cb1a50c5f2a38114",
+      "team-44ff10b77ff1f2f2",
+      "team-b1264071e251abda",
+      "team-36ea014f4bc33937"
+    ],
+    "member:NhanCk": [
+      "team-ed9591071794f700"
+    ],
+    "member:ThaoNTK": [
+      "team-b92d2d04951d2426",
+      "team-ae56c89e7d6d7ed9",
+      "team-8906e811521e798a"
+    ]
+  }
+}

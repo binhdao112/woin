@@ -43,7 +43,7 @@ function heart(ctx,x,y,size,color){
 function editorial(ctx,model,{story,photo,copy,height}){
   const ink='#252522',red='#a34139';ctx.fillStyle='#f3eee5';ctx.fillRect(0,0,1080,height);
   ctx.strokeStyle=ink;ctx.lineWidth=1;ctx.strokeRect(42,42,996,height-84);
-  ctx.textAlign='left';ctx.fillStyle=ink;font(ctx,16,{bold:true});ctx.fillText('VĂN PHÒNG TRÊN MÂY',76,96);
+  ctx.textAlign='left';ctx.fillStyle=ink;font(ctx,16,{bold:true});ctx.fillText('VNG CAMPUS',76,96);
   ctx.textAlign='right';ctx.fillText('20 / 10  ·  SPECIAL ISSUE',1004,96);
   ctx.textAlign='center';font(ctx,story?330:278,{serif:true});ctx.fillText('HER',540,story?405:370);
   font(ctx,18);ctx.fillText('THE MAIN CHARACTER EDITION',540,story?468:425);
