@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import vm from 'node:vm';
 
 function dom(){
  const doc={createElement(tag){return {tag,ownerDocument:doc,children:[],attrs:{},style:{values:{},setProperty(k,v){this.values[k]=v;}},classList:{add(){}},hidden:false,setAttribute(k,v){this.attrs[k]=String(v);},append(...items){for(const x of items){x.parentNode=this;this.children.push(x);}},insertBefore(x,before){x.parentNode=this;if(before)this.children.splice(this.children.indexOf(before),0,x);else this.children.push(x);},after(x){this.parentNode.insertBefore(x,this.parentNode.children[this.parentNode.children.indexOf(this)+1]);},remove(){this.parentNode.children=this.parentNode.children.filter(x=>x!==this);},focus(){doc.activeElement=this;}};}};
@@ -43,4 +45,15 @@ test('fitter observes popup content and resize, skips clean check-in mode, and c
  const d=el('dialog');Object.assign(d,{id:'cosmic-hub',open:true,offsetWidth:560,offsetHeight:800});const checkin=el('dialog');Object.assign(checkin,{id:'checkin-final',open:true});doc.body=el('body');doc.querySelectorAll=()=>[d,checkin];
  const win={innerWidth:1280,innerHeight:720,addEventListener(){},removeEventListener(){removed++;},requestAnimationFrame:()=>1,cancelAnimationFrame(){},MutationObserver:class{observe(){}disconnect(){disconnected++;}},ResizeObserver:class{observe(){}disconnect(){disconnected++;}}};
  const fitter=installPopupFit({doc,win});fitter.refresh();assert.equal(d.style.values['--popup-scale'],'0.87');assert.equal(checkin.style.values['--popup-scale'],undefined);d.open=false;fitter.refresh();fitter.dispose();assert.equal(disconnected,2);assert.equal(removed,1);
+});
+
+test('reopening a saved or pending drink shows its options directly while a new choice starts at the menu',async()=>{
+ const source=await readFile(new URL('../dist/drink-counter.js',import.meta.url),'utf8');
+ const start=source.indexOf('    async open(name){'),end=source.indexOf('\n    },',start);
+ for(const pending of [null,{variantId:'saved-variant',name:'Mây'}]){
+  const inputs=new Map(),context={dialog:{open:false,dataset:{},showModal(){this.open=true;}},ready:Promise.resolve(),menu:{},selected:null,localDraft:null,status(){},state:()=>({pending,confirmed:null}),renderMenu(){},renderSelection(){},$:id=>{if(!inputs.has(id))inputs.set(id,{value:''});return inputs.get(id);}};
+  context.apply=order=>{if(order)context.selected=order.variantId;};
+  const counter=vm.runInNewContext('({'+source.slice(start,end)+'\n}})',context);await counter.open('Mây');
+  assert.equal(context.dialog.dataset.drinkStep,pending?'options':'menu');assert.equal(context.selected,pending?.variantId||null);
+ }
 });
