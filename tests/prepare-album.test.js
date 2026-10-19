@@ -60,6 +60,8 @@ test('filename prefixes generate stable participant bindings and choose the firs
  const id=name=>album.photos.find(p=>p.name===name.replace('.jpg','').replaceAll('_',' ')).id;
  assert.equal(bindings.defaultPhotoId,id('team_01.jpg'));for(const code of ['NhanCk','ThaoNTK','LyHK','NgocNTB12','HanNHG2'])assert.equal(bindings.participants['member:'+code],id(code+'_01.jpg'));
  assert.equal(Object.keys(bindings.participants).length,5);
+ assert.deepEqual(bindings.albums['member:NhanCk'],[id('NhanCk_01.jpg'),id('NhanCk_02.jpg')]);
+ for(const code of ['ThaoNTK','LyHK','NgocNTB12','HanNHG2'])assert.deepEqual(bindings.albums['member:'+code],[id(code+'_01.jpg')]);
  const prior=id('LyHK_01.jpg');await rename(path.join(input,'LyHK_01.jpg'),path.join(input,'lyhk_03.jpg'));
  await prepareAlbum({sourceDirectory:input,targetDirectory:output});assert.equal(JSON.parse(await readFile(path.join(output,'portraits.json'),'utf8')).participants['member:LyHK'],prior);
 });
@@ -72,5 +74,6 @@ test('bindings retain explicit group fallback for unrenamed imports, support dup
  await rename(path.join(input,'Raw.jpg'),path.join(input,'LyHK_01.jpg'));await writeFile(path.join(input,'ThaoNTK_01.jpg'),Buffer.from([255,216,255,224,1]));
  const second=await prepareAlbum({sourceDirectory:input,targetDirectory:output}),saved=await readFile(path.join(output,'portraits.json'),'utf8'),bindings=JSON.parse(saved);
  assert.equal(second.photos.length,1);assert.equal(bindings.participants['member:LyHK'],bindings.participants['member:ThaoNTK']);assert.equal(bindings.defaultPhotoId,null);
+ assert.deepEqual(bindings.albums['member:LyHK'],bindings.albums['member:ThaoNTK']);assert.equal(bindings.albums['member:LyHK'].length,1);
  await writeFile(path.join(input,'bad.png'),'invalid');await assert.rejects(prepareAlbum({sourceDirectory:input,targetDirectory:output}));assert.equal(await readFile(path.join(output,'portraits.json'),'utf8'),saved);
 });

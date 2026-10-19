@@ -11,6 +11,8 @@ test('card composition uses the selected participant instead of another person k
  vm.createContext(context);vm.runInContext(fn+';this.compose=composeWishCanvas;',context);
  assert.equal((await context.compose({recipient:'Ly'},'post')).photo,'Ly');
  assert.equal((await context.compose({recipient:'Ly'},'full')).photo,'Ly');
+ context.photoPreferences.read=()=>({photo:'Ảnh Ly đã chọn',enabled:true});
+ assert.equal((await context.compose({recipient:'Ly'},'post')).photo,'Ảnh Ly đã chọn');assert.equal((await context.compose({recipient:'Ly'},'full')).photo,'Ảnh Ly đã chọn');
 });
 
 test('photo lookup honors explicit participant IDs and only uses the configured group fallback',async()=>{
@@ -30,7 +32,15 @@ test('custom photos, hidden state and late decoding stay with their original par
 
 test('bindings reject unknown roster keys or image URLs and missing config never invents a portrait',async()=>{
  const {normaliseParticipantPhotoBindings,loadParticipantPhotoBindings}=await api();
- assert.deepEqual(normaliseParticipantPhotoBindings({defaultPhotoId:'group',participants:{'member:LyHK':'ly','member:Nobody':'other','member:ThaoNTK':'https://example.com/p.jpg'}}),{defaultPhotoId:'group',participants:{'member:LyHK':'ly'}});
- assert.deepEqual(await loadParticipantPhotoBindings({fetchImpl:async()=>{throw Error('offline');}}),{defaultPhotoId:null,participants:{}});
- assert.deepEqual(await loadParticipantPhotoBindings({fetchImpl:async()=>({ok:true,json:async()=>bindings})}),bindings);
+ assert.deepEqual(normaliseParticipantPhotoBindings({defaultPhotoId:'group',participants:{'member:LyHK':'ly','member:Nobody':'other','member:ThaoNTK':'https://example.com/p.jpg'}}),{defaultPhotoId:'group',participants:{'member:LyHK':'ly'},albums:{'member:LyHK':['ly']}});
+ assert.deepEqual(await loadParticipantPhotoBindings({fetchImpl:async()=>{throw Error('offline');}}),{defaultPhotoId:null,participants:{},albums:{}});
+ assert.deepEqual(await loadParticipantPhotoBindings({fetchImpl:async()=>({ok:true,json:async()=>bindings})}),{...bindings,albums:{'member:LyHK':['ly'],'member:ThaoNTK':['thao']}});
+});
+
+test('each participant gallery includes only their assigned images, removes duplicates and skips unavailable images',async()=>{
+ const {normaliseParticipantPhotoBindings,getParticipantPhotos}=await api(),all=[...photos,{id:'ly2',canvas:'Ly 2'}];
+ const config=normaliseParticipantPhotoBindings({...bindings,albums:{'member:LyHK':['ly2','ly','ly2','missing','https://other/photo.jpg'],'member:ThaoNTK':['thao'],'member:Nobody':['ly']}});
+ assert.deepEqual(config.albums['member:LyHK'],['ly','ly2','missing']);assert.equal(config.albums['member:Nobody'],undefined);
+ assert.deepEqual(getParticipantPhotos(all,config,'member:LyHK').map(p=>p.id),['ly','ly2']);assert.deepEqual(getParticipantPhotos(all,config,'member:ThaoNTK').map(p=>p.id),['thao']);assert.deepEqual(getParticipantPhotos(all,config,'guest:unknown'),[]);
+ assert.deepEqual(getParticipantPhotos(all,bindings,'member:LyHK').map(p=>p.id),['ly']);
 });
