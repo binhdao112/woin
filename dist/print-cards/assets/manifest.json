@@ -1,0 +1,185 @@
+{
+  "size": "A6 ngang · 148 × 105 mm",
+  "bleedMm": 3,
+  "photo": "Khoảnh khắc 19",
+  "people": [
+    {
+      "name": "Châu Kim Nhẩn",
+      "code": "NhanCk"
+    },
+    {
+      "name": "Nguyễn Thị Kim Thảo",
+      "code": "ThaoNTK"
+    },
+    {
+      "name": "Hoàng Khánh Ly",
+      "code": "LyHK"
+    },
+    {
+      "name": "Nguyễn Trần Bảo Ngọc",
+      "code": "NgocNTB12"
+    },
+    {
+      "name": "Nguyễn Hoàng Gia Hân",
+      "code": "HanNHG2"
+    }
+  ],
+  "styles": [
+    {
+      "id": "vuon-hong",
+      "name": "Vườn hồng",
+      "tag": "Dịu dàng, thanh lịch",
+      "bg": "#FAF5EB",
+      "ink": "#493A3D",
+      "accent": "#A26173",
+      "soft": "#E9D8D7",
+      "green": "#697A62",
+      "number": 1,
+      "pdf": "01-vuon-hong-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "01-vuon-hong-NhanCk-front.jpg",
+          "back": "01-vuon-hong-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "01-vuon-hong-ThaoNTK-front.jpg",
+          "back": "01-vuon-hong-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "01-vuon-hong-LyHK-front.jpg",
+          "back": "01-vuon-hong-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "01-vuon-hong-NgocNTB12-front.jpg",
+          "back": "01-vuon-hong-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "01-vuon-hong-HanNHG2-front.jpg",
+          "back": "01-vuon-hong-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "dem-anh-kim",
+      "name": "Đêm ánh kim",
+      "tag": "Trang trọng, ấm áp",
+      "bg": "#172C2B",
+      "ink": "#FBF1DC",
+      "accent": "#D5B77E",
+      "soft": "#334945",
+      "green": "#D5B77E",
+      "number": 2,
+      "pdf": "02-dem-anh-kim-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "02-dem-anh-kim-NhanCk-front.jpg",
+          "back": "02-dem-anh-kim-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "02-dem-anh-kim-ThaoNTK-front.jpg",
+          "back": "02-dem-anh-kim-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "02-dem-anh-kim-LyHK-front.jpg",
+          "back": "02-dem-anh-kim-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "02-dem-anh-kim-NgocNTB12-front.jpg",
+          "back": "02-dem-anh-kim-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "02-dem-anh-kim-HanNHG2-front.jpg",
+          "back": "02-dem-anh-kim-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "nhat-ky",
+      "name": "Những ngày có nhau",
+      "tag": "Gần gũi, giàu kỷ niệm",
+      "bg": "#F0EBDF",
+      "ink": "#384F48",
+      "accent": "#B25D4F",
+      "soft": "#DADBC8",
+      "green": "#75836C",
+      "number": 3,
+      "pdf": "03-nhat-ky-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "03-nhat-ky-NhanCk-front.jpg",
+          "back": "03-nhat-ky-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "03-nhat-ky-ThaoNTK-front.jpg",
+          "back": "03-nhat-ky-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "03-nhat-ky-LyHK-front.jpg",
+          "back": "03-nhat-ky-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "03-nhat-ky-NgocNTB12-front.jpg",
+          "back": "03-nhat-ky-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "03-nhat-ky-HanNHG2-front.jpg",
+          "back": "03-nhat-ky-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "ruc-ro",
+      "name": "Rực rỡ theo cách riêng",
+      "tag": "Hiện đại, nổi bật",
+      "bg": "#F6E8DE",
+      "ink": "#552F52",
+      "accent": "#C55334",
+      "soft": "#E2C7D5",
+      "green": "#552F52",
+      "number": 4,
+      "pdf": "04-ruc-ro-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "04-ruc-ro-NhanCk-front.jpg",
+          "back": "04-ruc-ro-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "04-ruc-ro-ThaoNTK-front.jpg",
+          "back": "04-ruc-ro-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "04-ruc-ro-LyHK-front.jpg",
+          "back": "04-ruc-ro-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "04-ruc-ro-NgocNTB12-front.jpg",
+          "back": "04-ruc-ro-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "04-ruc-ro-HanNHG2-front.jpg",
+          "back": "04-ruc-ro-HanNHG2-back.jpg"
+        }
+      ]
+    }
+  ]
+}
