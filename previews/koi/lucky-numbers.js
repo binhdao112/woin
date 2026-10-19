@@ -6,10 +6,16 @@ export function randomBelow(max, source = globalThis.crypto) {
 }
 
 export function drawLuckyBundle(pick = randomBelow) {
-  const number = String(pick(99) + 1).padStart(2, '0');
+  return { number: drawLuckyNumber(pick), luckySet: drawLuckySet(pick) };
+}
+
+export function drawLuckyNumber(pick = randomBelow) {
+  return String(pick(99) + 1).padStart(2, '0');
+}
+
+export function drawLuckySet(pick = randomBelow) {
   const pool = Array.from({ length: 45 }, (_, index) => index + 1);
-  const luckySet = Array.from({ length: 6 }, () => pool.splice(pick(pool.length), 1)[0]).sort((a, b) => a - b);
-  return { number, luckySet };
+  return Array.from({ length: 6 }, () => pool.splice(pick(pool.length), 1)[0]).sort((a, b) => a - b);
 }
 
 export function normaliseLuckySet(value) {
