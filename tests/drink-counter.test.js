@@ -51,3 +51,23 @@ test('loading stops on an uncertain error and starts again for the same pending 
  failing=false;const retry=f.submit();assert.equal(f.get('drink-loading').hidden,false);assert.deepEqual(f.calls[1],f.calls[0]);
  accept({status:'accepted',requestId:f.calls[1].requestId,sequence:f.calls[1].sequence});await retry;assert.equal(f.get('drink-loading').hidden,true);
 });
+
+test('full image menu opens over the counter, allows reading and returns without changing or submitting the selected drink',async t=>{
+ const f=await drinkCounterFixture(t);await f.counter.open(a,'member:NhanCk');f.choose();f.get('drink-note').value='Ít ngọt nhé';
+ const before=f.get('drink-footer-choice').textContent,open=f.get('drink-menu-full-open');assert.equal(typeof open?.onclick,'function');
+ Object.assign(f.get('drink-menu-full-viewport'),{clientWidth:320,clientHeight:400,scrollLeft:0,scrollTop:0});
+ open.onclick();assert.equal(f.get('drink-menu-full').open,true);assert.equal(f.get('drink-counter').open,true);assert.equal(f.calls.length,0);
+ assert.equal(f.get('drink-menu-full-zoom-out').disabled,true);f.get('drink-menu-full-zoom-in').onclick();assert.ok(parseFloat(f.get('drink-menu-full-image').style.width)>320);
+ f.get('drink-menu-full-close').onclick();assert.equal(f.get('drink-menu-full').open,false);assert.equal(f.get('drink-counter').open,true);assert.equal(f.get('drink-footer-choice').textContent,before);assert.equal(f.get('drink-note').value,'Ít ngọt nhé');assert.equal(f.calls.length,0);
+ open.onclick();assert.equal(f.get('drink-menu-full-zoom-out').disabled,true);assert.equal(f.get('drink-menu-full-viewport').scrollLeft,0);
+});
+
+test('menu image zoom is bounded, native close restores focus, and an image failure can recover',async t=>{
+ const f=await drinkCounterFixture(t);await f.counter.open(a,'member:NhanCk');const open=f.get('drink-menu-full-open');assert.equal(typeof open?.onclick,'function');
+ const viewport=f.get('drink-menu-full-viewport'),image=f.get('drink-menu-full-image');Object.assign(viewport,{clientWidth:320,clientHeight:400,scrollLeft:0,scrollTop:0});open.onclick();
+ for(let i=0;i<10;i++)f.get('drink-menu-full-zoom-in').onclick();assert.equal(f.get('drink-menu-full-zoom-in').disabled,true);assert.ok(parseFloat(image.style.width)<=320*8);
+ f.get('drink-menu-full-reset').onclick();assert.equal(parseFloat(image.style.width),320);assert.equal(f.get('drink-menu-full-zoom-out').disabled,true);
+ image.onerror();assert.equal(f.get('drink-menu-full-error').hidden,false);image.onload();assert.equal(f.get('drink-menu-full-error').hidden,true);
+ // Closing with Escape is a native dialog close event, rather than the explicit close button.
+ f.get('drink-menu-full').close();assert.equal(open.ownerDocument.activeElement,open);assert.equal(f.calls.length,0);assert.equal(f.keeps.length,0);
+});
