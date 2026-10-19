@@ -50,10 +50,11 @@ test('fitter observes popup content and resize, skips clean check-in mode, and c
 test('reopening a saved or pending drink shows its options directly while a new choice starts at the menu',async()=>{
  const source=await readFile(new URL('../dist/drink-counter.js',import.meta.url),'utf8');
  const start=source.indexOf('    async open(name){'),end=source.indexOf('\n    },',start);
- for(const pending of [null,{variantId:'saved-variant',name:'Mây'}]){
-  const inputs=new Map(),context={dialog:{open:false,dataset:{},showModal(){this.open=true;}},ready:Promise.resolve(),menu:{},selected:null,localDraft:null,status(){},state:()=>({pending,confirmed:null}),renderMenu(){},renderSelection(){},$:id=>{if(!inputs.has(id))inputs.set(id,{value:''});return inputs.get(id);}};
+ for(const saved of [{pending:null,confirmed:null},{pending:{variantId:'saved-variant',name:'Mây'},confirmed:null},{pending:null,confirmed:{variantId:'saved-variant',name:'Mây'}}]){
+  const order=saved.pending||saved.confirmed;
+  const inputs=new Map(),context={dialog:{open:false,dataset:{},showModal(){this.open=true;}},ready:Promise.resolve(),menu:{},selected:null,localDraft:null,status(){},state:()=>saved,renderMenu(){},renderSelection(){},$:id=>{if(!inputs.has(id))inputs.set(id,{value:''});return inputs.get(id);}};
   context.apply=order=>{if(order)context.selected=order.variantId;};
   const counter=vm.runInNewContext('({'+source.slice(start,end)+'\n}})',context);await counter.open('Mây');
-  assert.equal(context.dialog.dataset.drinkStep,pending?'options':'menu');assert.equal(context.selected,pending?.variantId||null);
+  assert.equal(context.dialog.dataset.drinkStep,order?'options':'menu');assert.equal(context.selected,order?.variantId||null);
  }
 });
