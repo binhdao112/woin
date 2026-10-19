@@ -36,3 +36,10 @@ Yêu cầu trực tiếp của host: giao diện ban đầu chỉ có một số
 4. Đi tiếp: dùng pendingResult của trạm đang mở → đóng modal → dispatch station-continue; không xóa kỷ vật đã lưu.
 
 Kết quả chỉ được lưu sau bước mở vé. Nếu đóng/tải lại trước bước đó thì chưa có kỷ vật và có thể thử lại số đầu. Các hành trình cũ có kết quả vẫn giữ nguyên dữ liệu. Animation CSS tắt khi prefers-reduced-motion; không thêm ảnh/logo tải ngoài hoặc phụ thuộc mới.
+
+## Phóng lớn số chính theo phản hồi · 19/10
+
+- Tách nhãn và chữ số thành hai phần; chữ số chính 96px ở desktop, 88px ở mobile, vẫn hiện sau khi mở vé. Không thay luồng bốc, giá trị hay cách lưu.
+- Các kiểm thử hiện có được cập nhật điểm đọc giá trị sang phần chữ số; không thêm kiểm thử mới cho thay đổi trình bày này. `npm test`: 93/93; Pages:59 tài nguyên.
+- Browser thực 390×844 xác nhận font88px và dialog698px vừa màn hình, không cuộn bên trong; desktop1280×720 xác nhận font96px. Vé vẫn hiển thị 6 số riêng ở bên dưới.
+- Screenshot local: `output/lucky-large-open-mobile.png`.

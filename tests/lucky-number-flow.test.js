@@ -22,7 +22,7 @@ test('first tap draws only the single number and exposes a closed ticket; second
  assert.equal(f.visible(orb),true);assert.equal(f.visible(ticket),false);assert.equal(f.visible(numbers),false);assert.equal(f.visible(copy),false);
  ticket.onclick();assert.deepEqual(f.counts(),{singles:0,sets:0,sparkles:0});
  orb.onclick();assert.deepEqual(f.counts(),{singles:1,sets:0,sparkles:1});assert.equal(f.saved.length,0);
- assert.equal(f.visible(orb),false);assert.equal(f.visible(ticket),true);assert.equal(f.visible(numbers),false);assert.match(f.find('lucky-single').textContent,/07/);assert.equal(f.document.activeElement,ticket);
+ assert.equal(f.visible(orb),false);assert.equal(f.visible(ticket),true);assert.equal(f.visible(numbers),false);assert.match(f.find('lucky-single-value').textContent,/07/);assert.equal(f.document.activeElement,ticket);
  orb.onclick();assert.equal(f.counts().singles,1);
  ticket.onclick();assert.equal(f.saved.length,1);assert.equal(f.saved[0].number,'07');assert.deepEqual(f.saved[0].luckySet,[1,9,18,24,37,45]);assert.match(f.saved[0].result,/Số 07/);
  assert.equal(f.visible(ticket),false);assert.equal(f.visible(numbers),true);assert.equal(f.visible(copy),true);assert.equal(copy.disabled,false);assert.equal(f.find('lucky-ticket-quote').textContent,quote);assert.equal(f.document.activeElement,copy);
@@ -42,7 +42,7 @@ test('copy is unavailable before the ticket opens and clipboard failure allows r
 test('the standalone number experience uses the real random helpers and completes without a station callback',async()=>{
  const {mountLuckyNumber}=await import('../dist/lucky-number-studio.js');const f=fixture();mountLuckyNumber(f.area,{clipboard:f.options.clipboard});
  f.find('lucky-orb').onclick();f.find('lucky-ticket-open').onclick();const values=f.find('lucky-set-balls').children.map(n=>Number(n.textContent));
- assert.equal(new Set(values).size,6);assert.ok(values.every(n=>n>=1&&n<=45));assert.match(f.find('lucky-single').textContent,/\b(?:0[1-9]|[1-9][0-9])\b/);
+ assert.equal(new Set(values).size,6);assert.ok(values.every(n=>n>=1&&n<=45));assert.match(f.find('lucky-single-value').textContent,/\b(?:0[1-9]|[1-9][0-9])\b/);
 });
 
 test('experience wires completion after opening the ticket even though stationReady locks all game buttons',async()=>{
