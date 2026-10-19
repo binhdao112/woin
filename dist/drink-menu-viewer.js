@@ -1,7 +1,7 @@
 // The reference photo is independent of the order form and never submits a drink.
 export function createDrinkMenuViewer({dialog,opener,close,viewport,stage,image,zoomIn,zoomOut,reset,label,loading,error}){
  let zoom=1,pan=null;
- const dimensions=()=>({width:image.naturalWidth||2048,height:image.naturalHeight||1448});
+ const dimensions=()=>({width:image.naturalWidth||2480,height:image.naturalHeight||1754});
  const fit=()=>{const size=dimensions();return Math.min(Math.max(1,viewport.clientWidth)/size.width,Math.max(1,viewport.clientHeight)/size.height);};
  function render(){
   const size=dimensions(),scale=fit()*zoom,width=Math.max(1,Math.round(size.width*scale)),height=Math.max(1,Math.round(size.height*scale));

@@ -4,6 +4,8 @@ Trạm cà phê dùng menu **KOI Thé · Trung Hòa** do host đưa sẵn vào r
 
 **Đã bật nhận đăng ký:** host chạy `setupKoiOrders` ngày 16/10/2026; bảng Order 20/10 có hai tab Đăng ký/Tổng hợp, endpoint nhận đúng mã đợt `team-2010-2026`. URL `/exec` đã được điền trong `dist/assets/drinks/order-config.json` với `enabled: true`. Nút **Gửi lựa chọn cho host** hiện ở bản xem KOI; khi sửa một ly đã được nhận, nút đổi thành **Cập nhật lựa chọn**.
 
+Quầy có nút **Menu full ở đây** để xem ảnh KOI do host cung cấp, phóng to/thu nhỏ, kéo hoặc vuốt và mở ảnh gốc. Đóng bằng nút quay lại hoặc Escape vẫn giữ nguyên món, cỡ ly và ghi chú. Ảnh này là tham khảo; menu đặt nước và giá gửi lên Sheet vẫn lấy từ danh mục đã kiểm tra.
+
 ## Kết nối một lần bằng tài khoản Google của host
 
 1. Tạo một [Google Sheet](https://sheets.google.com/create), đặt tên như **20/10 · Đăng ký KOI**. Giữ bảng riêng tư; chỉ chia sẻ cho người cùng phụ trách đặt nước nếu cần.
