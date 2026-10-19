@@ -1,5 +1,5 @@
 import * as T from './three.module.js';
-import {installPopupFit,mountPopupTabs,mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-1';
+import {installPopupFit,mountPopupTabs,mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-2';
 import {wishes} from './wishes.js';
 import {getJourneyProgress, canVisitStation, getPrimaryAction} from './journey.js';
 import {createCardModel, cardFilename, renderWishCard, canvasToPng} from './wish-card.js';
@@ -18,7 +18,7 @@ import {createAvatarControls} from './avatar-controls.js?v=campus-20261016-1';
 import {createMovementInput,movementVector,stepMovement,createWalkableWorld,nearestStation} from './avatar-movement.js?v=campus-20261016-1';
 import {canonicalCampusURL} from './campus-url.js';
 import {createCheckinModel} from './checkin-card.js';
-import {createCheckinStudio} from './checkin-studio.js?v=popup-fit-20261019-1';
+import {createCheckinStudio} from './checkin-studio.js?v=popup-fit-20261019-2';
 import './experience.js?v=lucky-ticket-20261019-2';
 const $=s=>document.querySelector(s), modal=$('#final');
 const campusURL=canonicalCampusURL(location.href);if(location.href!==campusURL)history.replaceState(history.state,'',campusURL);

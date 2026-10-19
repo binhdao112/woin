@@ -1,4 +1,4 @@
-import {mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-1';
+import {mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-2';
 import {findDrink,searchDrinks,validateDrinkOrder,drinkLabel,SUGAR_OPTIONS,ICE_OPTIONS} from './drink-orders.js';
 import {sendDrinkOrder,isAppsScriptEndpoint} from './drink-order-client.js';
 import {createDrinkRegistrationStore} from './drink-registration.js';
