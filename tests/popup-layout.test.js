@@ -42,9 +42,9 @@ test('list paging hides only off-page choices, keeps values, and refreshes for a
 
 test('fitter observes popup content and resize, skips clean check-in mode, and cleans up listeners',async()=>{
  const {installPopupFit}=await import('../dist/popup-layout.js');const {doc,el}=dom();let disconnected=0,removed=0;
- const d=el('dialog');Object.assign(d,{id:'cosmic-hub',open:true,offsetWidth:560,offsetHeight:800});const checkin=el('dialog');Object.assign(checkin,{id:'checkin-final',open:true});doc.body=el('body');doc.querySelectorAll=()=>[d,checkin];
+ const d=el('dialog');Object.assign(d,{id:'cosmic-hub',open:true,offsetWidth:560,offsetHeight:800});const checkin=el('dialog');Object.assign(checkin,{id:'checkin-final',open:true});const keepsake=el('section');Object.assign(keepsake,{id:'keepsake-panel',hidden:false,offsetWidth:560,offsetHeight:800});doc.body=el('body');doc.querySelectorAll=()=>[d,checkin,keepsake];
  const win={innerWidth:1280,innerHeight:720,addEventListener(){},removeEventListener(){removed++;},requestAnimationFrame:()=>1,cancelAnimationFrame(){},MutationObserver:class{observe(){}disconnect(){disconnected++;}},ResizeObserver:class{observe(){}disconnect(){disconnected++;}}};
- const fitter=installPopupFit({doc,win});fitter.refresh();assert.equal(d.style.values['--popup-scale'],'0.87');assert.equal(checkin.style.values['--popup-scale'],undefined);d.open=false;fitter.refresh();fitter.dispose();assert.equal(disconnected,2);assert.equal(removed,1);
+ const fitter=installPopupFit({doc,win});fitter.refresh();assert.equal(d.style.values['--popup-scale'],'0.87');assert.equal(checkin.style.values['--popup-scale'],undefined);assert.equal(keepsake.style.values['--popup-scale'],'0.87');d.open=false;keepsake.hidden=true;fitter.refresh();fitter.dispose();assert.equal(disconnected,2);assert.equal(removed,1);
 });
 
 test('reopening a saved or pending drink shows its options directly while a new choice starts at the menu',async()=>{
