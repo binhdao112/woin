@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "f633126b8872c395586054b235533924cf626985",
-  "publishedAt": "2026-10-19T04:38:51.197246+00:00",
+  "sourceCommit": "fb8be6f12ff1227ae85750024b744ea9e119f961",
+  "publishedAt": "2026-10-19T05:00:13.470568+00:00",
   "previewPath": "/woin/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -22,5 +22,7 @@
   "printRecipients": 5,
   "printCardSize": "A6 landscape two-sided",
   "deploymentPath": "/woin/",
-  "releaseChannel": "main-site"
+  "releaseChannel": "main-site",
+  "printQrUrl": "https://binhdao112.github.io/woin/",
+  "printQrRevision": "main-qr-20261019-1"
 }
