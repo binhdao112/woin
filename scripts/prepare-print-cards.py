@@ -32,9 +32,12 @@ STYLES=[
  {'id':'nhat-ky','name':'Những ngày có nhau','tag':'Gần gũi, giàu kỷ niệm','bg':'#F0EBDF','ink':'#384F48','accent':'#B25D4F','soft':'#DADBC8','green':'#75836C'},
  {'id':'ruc-ro','name':'Rực rỡ theo cách riêng','tag':'Hiện đại, nổi bật','bg':'#F6E8DE','ink':'#552F52','accent':'#C55334','soft':'#E2C7D5','green':'#552F52'},
  {'id':'anh-hong-pastel','layout':'dem-anh-kim','name':'Ánh hồng pastel','tag':'Bố cục ánh kim, hồng phấn dịu dàng','bg':'#FBEAF0','ink':'#6F3D52','accent':'#A76A7C','soft':'#EBCAD5','green':'#A76A7C'},
+ {'id':'no-hong-ballet','name':'Nơ hồng ballet','tag':'Hồng sữa, nơ lụa và một chút điệu đà','bg':'#FFF5F7','ink':'#773C53','accent':'#B76C89','soft':'#F3D1DE','green':'#B76C89'},
+ {'id':'hong-tra-hoa','name':'Hồng trà hoa','tag':'Hồng trà ấm, hoa mềm và nét thanh lịch','bg':'#FFF4EE','ink':'#68424B','accent':'#A65F72','soft':'#EEC9CD','green':'#8A8B74'},
+ {'id':'pink-muse','name':'Pink Muse','tag':'Bìa tạp chí, hồng rose và khí chất riêng','bg':'#F5C7D8','ink':'#702D4E','accent':'#A4446C','soft':'#FFE9F0','green':'#A4446C'},
 ]
 URL='https://binhdao112.github.io/woin/'
-REVISION='pastel-print-20261019-1'
+REVISION='pink-collection-20261019-1'
 
 def fonts():
  base=Path('/System/Library/Fonts/Supplemental')
@@ -66,6 +69,27 @@ def sprig(c,x,y,scale,color):
   c.saveState();c.translate(px*MM,py*MM);c.rotate(angle);p=c.beginPath();p.moveTo(0,0);p.curveTo(2*MM,4*MM,6*MM,5*MM,8*MM,1*MM);p.curveTo(5*MM,-2*MM,2*MM,-2*MM,0,0);c.drawPath(p,fill=0,stroke=1);c.restoreState()
  c.restoreState()
 
+def bow(c,x,y,size,color,soft):
+ c.saveState();c.translate(x*MM,H-y*MM);c.scale(size*MM,size*MM)
+ # Two broad silk loops and separate flowing tails, drawn as vector curves.
+ fill(c,soft);stroke(c,color,.025)
+ for direction in (-1,1):
+  c.saveState();c.scale(direction,1)
+  p=c.beginPath();p.moveTo(0,0);p.curveTo(.5,.3,1.25,.9,1.35,.3);p.curveTo(1.55,-.35,.5,-.35,0,0);c.drawPath(p,fill=1,stroke=1)
+  p=c.beginPath();p.moveTo(.05,-.08);p.curveTo(.35,-.55,.38,-.95,.82,-1.25);p.lineTo(.52,-1.12);p.lineTo(.35,-1.4);p.curveTo(.08,-.8,.05,-.5,-.08,-.1);p.close();c.drawPath(p,fill=1,stroke=1)
+  c.restoreState()
+ fill(c,color);c.ellipse(-.15,-.18,.15,.18,fill=1,stroke=0);c.restoreState()
+
+def rose(c,x,y,r,color,soft):
+ circle(c,x,y,r,soft)
+ c.saveState();c.translate(x*MM,H-y*MM);stroke(c,color,.55)
+ p=c.beginPath()
+ for i in range(101):
+  angle=i*.17;radius=r*.82*(1-i/125)
+  px=math.cos(angle)*radius*MM;py=math.sin(angle)*radius*MM
+  p.moveTo(px,py) if i==0 else p.lineTo(px,py)
+ c.drawPath(p);c.restoreState()
+
 def photo(c,image,x,y,w,h,border=None):
  if border:rect(c,x-1.2,y-1.2,w+2.4,h+2.4,border)
  # Bias crop upward to retain the heads of the back row in this specific photo.
@@ -92,6 +116,30 @@ def front(c,style,person,image):
   text(c,'DÀNH CHO BẠN,',138,13,6.5,'SansBold',accent,'right');text(c,'những điều đẹp nhất.',138,23,17,'SerifItalic',ink,'right')
   photo(c,image,10,30,128,54,accent)
   text(c,name,74,94,14.8,'SerifBold',ink,'center',width=124);text(c,code+'  /  MỘT NGƯỜI ĐỒNG ĐỘI ĐẶC BIỆT',74,99.4,5.3,'Sans',accent,'center')
+ elif style['id']=='no-hong-ballet':
+  stroke(c,soft,.8);c.roundRect(5*MM,5*MM,138*MM,95*MM,3*MM,stroke=1,fill=0)
+  text(c,'20 / 10',10,15,7,'SansBold',accent)
+  text(c,'GỬI BẠN MỘT CHÚT YÊU THƯƠNG',138,15,5.2,'SansBold',accent,'right')
+  bow(c,74,11,6.5,accent,soft)
+  text(c,'một ngày thật xinh.',74,29,20,'SerifItalic',ink,'center')
+  rect(c,9,34,130,53,'#FFFFFF');photo(c,image,10.5,35.5,127,50)
+  text(c,name,74,94,14.6,'SerifBold',ink,'center',width=125)
+  text(c,code+'  /  LUÔN ĐƯỢC YÊU THƯƠNG',74,99,5.3,'Sans',accent,'center')
+ elif style['id']=='hong-tra-hoa':
+  stroke(c,soft,.7);c.rect(5*MM,5*MM,138*MM,95*MM,stroke=1,fill=0)
+  text(c,'20.10  /  GỬI NHỮNG NGƯỜI THƯƠNG QUÝ',10,13,5.8,'SansBold',accent)
+  text(c,'Nở hoa theo cách riêng.',10,26,20,'SerifItalic',ink,width=113)
+  sprig(c,128,30,.5,style['green']);rose(c,137,14,4.4,accent,soft);rose(c,128,18,3.1,accent,'#F6DFD8')
+  rect(c,9,33.5,130,53,'#FFFFFF');photo(c,image,10.5,35,127,50)
+  text(c,name,74,94,14.6,'SerifBold',ink,'center',width=117)
+  text(c,code+'  /  THẬT VUI VÌ CÓ BẠN Ở ĐÂY',74,99,5.2,'Sans',accent,'center')
+  rose(c,9,94,3.3,accent,soft);rose(c,139,94,3.3,accent,soft)
+ elif style['id']=='pink-muse':
+  text(c,'muse.',9,28,44,'SerifItalic',ink)
+  text(c,'20',138,19,24,'Serif',ink,'right');text(c,'THÁNG MƯỜI',138,26,5.8,'SansBold',accent,'right')
+  rect(c,8.5,32.5,131,55,'#FFF9F7');photo(c,image,10,34,128,52)
+  text(c,name,74,95,15,'SerifBold',ink,'center',width=126)
+  text(c,code+'  /  THE MAIN CHARACTER, ALWAYS.',74,101,5.3,'SansBold',accent,'center')
  elif style['id']=='nhat-ky':
   for y in range(6,105,5):line(c,0,y,148,y,'#E5DFCF',.25)
   text(c,'NHỮNG NGÀY CÓ NHAU.',9,13,18,'SerifBold',ink,width=113)
@@ -141,7 +189,12 @@ def back(c,style,person):
  text(c,code,10,99,5.6,'SansBold',accent)
  qr(c,118,71,20,'#304C42','#FFFFFF');text(c,'Mở chuyến đi 20/10',128,96,5.5,'Sans',ink,'center')
  text(c,URL.removeprefix('https://'),128,100.2,4.5,'Sans',ink,'center',width=29)
- sprig(c,128,57,.73,accent)
+ if style['id']=='no-hong-ballet':bow(c,128,45,9,accent,style['soft'])
+ elif style['id']=='pink-muse':
+  circle(c,128,45,10,style['soft']);text(c,'20',128,46,19,'SerifItalic',ink,'center');text(c,'THÁNG 10',128,51,4.6,'SansBold',accent,'center')
+ else:
+  sprig(c,128,57,.73,accent)
+  if style['id']=='hong-tra-hoa':rose(c,132,42,5,accent,style['soft'])
 
 def boxes(path,trim=True):
  reader=PdfReader(path);writer=PdfWriter()
@@ -171,7 +224,9 @@ def main():
   # Render each trim-size personalized preview directly from a trim-size PDF.
   proof=out/f'{slug}-preview.pdf';c=canvas.Canvas(str(proof),pagesize=(W,H),pageCompression=1,invariant=1)
   for person in ROSTER:
-   front(c,style,person,image);c.showPage();back(c,style,person);c.showPage()
+   # Match print-page state isolation so QR rendering stays correct on later pages.
+   c.saveState();front(c,style,person,image);c.restoreState();c.showPage()
+   c.saveState();back(c,style,person);c.restoreState();c.showPage()
   c.save()
   subprocess.run(['pdftoppm','-scale-to','1600','-jpeg','-jpegopt','quality=90','-r','150',str(proof),str(out/slug)],check=True,capture_output=True)
   previews=[]
