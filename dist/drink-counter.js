@@ -13,7 +13,7 @@ const sameChoice=(a,b)=>a&&b&&['menuVersion','name','variantId','sugar','ice','n
 export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
   const dialog=$('#drink-counter'),form=$('#drink-order-form');
   let menuPager=null;
-  let menu,config={eventId:'team-2010-2026',enabled:false,endpoint:''},store,selected=null,category='best',busy=false,storageError=false,profileKey='',generation=0;
+  let menu,config={eventId:'team-2010-2026',enabled:false,endpoint:''},store,selected=null,category='best',busy=false,storageError=false,profileKey='',generation=0,sendingProfileKey='';
   const localDrafts=new Map();
   const ready=Promise.all([
     fetch(MENU_URL).then(response=>{if(!response.ok)throw Error();return response.json();}),
@@ -60,6 +60,8 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
     $('#drink-footer-choice').textContent=found?found.item.name+' · '+found.variant.label+' · '+money(found.variant.price):'';
     $('#drink-variants').replaceChildren();
     if(found)for(const variant of found.item.variants){const button=document.createElement('button');button.type='button';button.textContent=variant.label+' · '+money(variant.price);button.setAttribute('aria-pressed',String(variant.id===selected));button.disabled=busy||pending;button.onclick=()=>{selected=variant.id;status('');renderSelection();};$('#drink-variants').append(button);}
+    const sending=busy&&sendingProfileKey===profileKey;
+    $('#drink-loading').hidden=!sending;form.setAttribute('aria-busy',String(sending));
     form.querySelector('fieldset').disabled=busy||pending;
     $('#drink-ice').disabled=busy||pending||found?.variant.temperature==='hot';$('#drink-ice-note').hidden=found?.variant.temperature!=='hot';
     $('#drink-submit').hidden=!config.enabled||confirmed;$('#drink-submit').disabled=busy||!selected||!store||!profileKey||storageError;
@@ -73,12 +75,12 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
     const submittingStore=store,submittingGeneration=generation;let payload;
     try {const pending=state().pending;if(!pending)normalized();payload=submittingStore.prepare(draft());}
     catch(error){status(error.message);return;}
-    busy=true;status('Đang gửi lựa chọn. Chỉ hiện đã nhận khi Google Sheets xác nhận.');renderMenu();renderSelection();
+    busy=true;sendingProfileKey=profileKey;status('Đang gửi lựa chọn. Chờ Sheet xác nhận một chút nhé.');renderMenu();renderSelection();
     try {
       const receipt=await transport({endpoint:config.endpoint,payload});submittingStore.confirm(receipt);
       if(submittingGeneration===generation)status('Đã ghi nhận 1 ly cho '+payload.name+'. Bạn có thể đổi món và cập nhật trên trình duyệt này.');
     }catch(error){if(error.definitive)submittingStore.reject();if(submittingGeneration===generation)status(error.message||'Chưa xác nhận được. Bấm thử lại để kiểm tra.');}
-    finally{busy=false;renderMenu();renderSelection();}
+    finally{busy=false;sendingProfileKey='';renderMenu();renderSelection();}
   }
   function finish(order,synced){dialog.close();onKeep?.(order,{synced,profileKey});}
   form.onsubmit=submit;

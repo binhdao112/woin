@@ -21,7 +21,7 @@ test('no default cup: explicit choices for two people create separate Sheets row
 test('a late receipt after switching people confirms its own store without assigning a cup or success to the new person',async t=>{
  let accept;const f=await drinkCounterFixture(t,{transport:()=>new Promise(resolve=>{accept=resolve;})});
  await f.counter.open(a,'member:NhanCk');f.choose();const sending=f.submit(),payload=f.calls[0];
- f.get('drink-close').onclick();await f.counter.open(b,'member:ThaoNTK');assert.equal(f.get('drink-submit').disabled,true);
+ f.get('drink-close').onclick();await f.counter.open(b,'member:ThaoNTK');assert.equal(f.get('drink-submit').disabled,true);assert.equal(f.get('drink-loading').hidden,true);
  accept({status:'accepted',requestId:payload.requestId,sequence:payload.sequence});await sending;
  assert.equal(f.get('drink-continue').hidden,true);assert.equal(f.get('drink-submit').disabled,true);assert.match(f.get('drink-order-status').textContent,/Chưa chọn nước/);assert.equal(f.counter.getSavedConfirmed(b,'member:ThaoNTK'),null);
  await f.counter.open(a,'member:NhanCk');assert.equal(f.get('drink-continue').hidden,false);assert.match(f.get('drink-footer-choice').textContent,/.+/);assert.equal(f.keeps.length,0);
