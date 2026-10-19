@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "fb8be6f12ff1227ae85750024b744ea9e119f961",
-  "publishedAt": "2026-10-19T05:00:13.470568+00:00",
+  "sourceCommit": "a516f06f17380f322cbe1559fe4c3edaa2dc0ac8",
+  "publishedAt": "2026-10-19T07:10:46.921725+00:00",
   "previewPath": "/woin/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -24,5 +24,9 @@
   "deploymentPath": "/woin/",
   "releaseChannel": "main-site",
   "printQrUrl": "https://binhdao112.github.io/woin/",
-  "printQrRevision": "main-qr-20261019-1"
+  "printQrRevision": "main-qr-20261019-1",
+  "drinkProfileIsolation": true,
+  "drinkSkipRemoved": true,
+  "drinkSummaryPatchAvailable": true,
+  "drinkSummaryBackendDeployment": "pending-host-update"
 }
