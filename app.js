@@ -5,7 +5,7 @@ import {getJourneyProgress, canVisitStation, getPrimaryAction} from './journey.j
 import {createCardModel, cardFilename, renderWishCard, canvasToPng} from './wish-card.js';
 import {renderSocialCard, socialCardFilename, getSocialCopy, loadCardArtwork, SOCIAL_TEMPLATES, getSocialTemplate} from './social-card.js';
 import { CAMPUS_STOPS, createCampus } from './campus.js';
-import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js?v=team-album-20261016-1';
+import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js?v=album-people-20261019-1';
 import {createDrinkCounter} from './drink-counter.js?v=team-treat-20261019-1';
 import {drinkLabel} from './drink-orders.js';
 import {resolveParticipantKey} from './participant-profile.js';
@@ -20,7 +20,8 @@ import {createAvatarControls} from './avatar-controls.js?v=campus-20261016-1';
 import {createMovementInput,movementVector,stepMovement,createWalkableWorld,nearestStation} from './avatar-movement.js?v=campus-20261016-1';
 import {canonicalCampusURL} from './campus-url.js';
 import {createCheckinModel} from './checkin-card.js';
-import {createCheckinStudio} from './checkin-studio.js?v=checkin-templates-20261019-1';
+import {createCheckinStudio} from './checkin-studio.js?v=participant-photos-20261019-1';
+import {loadParticipantPhotoBindings,findParticipantPhoto,createParticipantPhotoStore} from './participant-photos.js?v=participant-photos-20261019-1';
 import './experience.js?v=lucky-ticket-20261019-2';
 const $=s=>document.querySelector(s), modal=$('#final');
 const campusURL=canonicalCampusURL(location.href);if(location.href!==campusURL)history.replaceState(history.state,'',campusURL);
@@ -161,6 +162,7 @@ function tickEffects(dt){effectTime+=dt;for(let i=animations.length-1;i>=0;i--){
 
 
 let memoryOpen=false, memoryIndex=0, memoryAuto=true, memoryLast=0, memoryPhotos=[], memoryFrames=[], gallerySavedZoom=34;
+let participantPhotoBindings={defaultPhotoId:null,participants:{}};
 let sharedPhotos=[],personalPhotos=[],memorySource='shared',memoryAlbumTitle='Album của team',albumIssues=[],photosLoading=true,photoSelectionVersion=0;
 function allMemoryPhotos(){return [...sharedPhotos,...personalPhotos];}
 const gallery=new T.Group();scene.add(gallery);gallery.visible=false;
@@ -196,7 +198,8 @@ async function loadPersonalPhotos(){
 }
 async function loadPhotos(){
  const version=photoSelectionVersion;
- const [shared,local]=await Promise.all([loadSharedAlbum({decode:imageCanvas}),loadPersonalPhotos()]);
+ const [shared,local,bindings]=await Promise.all([loadSharedAlbum({decode:imageCanvas}),loadPersonalPhotos(),loadParticipantPhotoBindings()]);
+ participantPhotoBindings=bindings;
  sharedPhotos=shared.photos;memoryAlbumTitle=shared.title;albumIssues=shared.issues;photosLoading=false;
  if(version===photoSelectionVersion){personalPhotos=local;memorySource=sharedPhotos.length?'shared':personalPhotos.length?'personal':'shared';}
  setMemorySource(memorySource);
@@ -224,7 +227,8 @@ function tickMemories(dt){if(!memoryOpen)return;if(memoryAuto&&effectTime-memory
 const keepsakeCollection=new Map(),savedFrames=new Map();let keepsakeActive=false,keepsakeRoot=null,keepsakeZoom=34,keepsakeStyle=0,wishBag=[],currentWish=null,finalWish=null,recipient='',profileKey='';
 const stationGifts=[['Vé khởi hành','Tên bạn đã ở trên vé. Nhận chiếc vé dành riêng cho mình để bắt đầu chuyến đi nhé.','🎟'],['Ly cà phê đồng đội','Chọn đồ uống cho chuyến đi. Nhân vật sẽ mang theo món bạn chọn.','☕'],['Lá bài cảm hứng','Rút một lá tarot và giữ lại lời nhắc tích cực cho mình.','✧'],['Bùa số may mắn','Chọn một con số vui, đúc thành chiếc bùa nhỏ của chuyến đi.','◇'],['Lọ niềm vui','Quay một điều dễ thương rồi cất nó vào lọ để dành.','✿'],['Thư từ vũ trụ','Bóc một quẻ vui và giữ thông điệp trong phong thư của team.','✉'],['Khung ảnh kỷ niệm','Giữ lại một khung hình từ album của team.','▧']];
 const activities={2:'tarot',3:'number',4:'wheel',5:'fortune'};
-let cardFormat='post',checkinPhoto=null,cardPhotoEnabled=true,previewRequest=0;
+let cardFormat='post',previewRequest=0;const photoPreferences=createParticipantPhotoStore();
+function getParticipantTeamPhoto(owner=profileKey){return findParticipantPhoto(sharedPhotos,participantPhotoBindings,owner)?.canvas||null;}
 let cardTemplate='bloom',templatePreviewKey='',cardPhotoVersion=0;
 try{cardTemplate=getSocialTemplate(sessionStorage.getItem('team-card-template')).id;}catch{}
 SOCIAL_TEMPLATES.forEach(style=>{
@@ -256,9 +260,10 @@ function drawWish(){
 }
 function wishDownloadLabel(){return cardFormat==='full'?'Tải bản kỷ niệm đầy đủ ↓':cardFormat==='story'?'Tải story 9:16 ↓':'Tải bài đăng 4:5 ↓';}
 async function composeWishCanvas(model,format,template=cardTemplate){
+ const owner=profileKey,preference=photoPreferences.read(owner);
  const [,,artwork]=await Promise.all([document.fonts.ready,photosReady,format!=='full'&&template==='bloom'?loadCardArtwork():null,document.fonts.load('500 88px Lora'),document.fonts.load('italic 500 86px Lora'),document.fonts.load('800 85px "Be Vietnam Pro"')]);
- const original=findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6))?.canvas;
- const photo=format==='full'?original:cardPhotoEnabled?(checkinPhoto||original):null,canvas=document.createElement('canvas');
+ const original=getParticipantTeamPhoto(owner);
+ const photo=format==='full'?original:preference.enabled?(preference.photo||original):null,canvas=document.createElement('canvas');
  return format==='full'?renderWishCard(canvas,model,photo):renderSocialCard(canvas,model,{format,photo,artwork,template});
 }
 async function refreshTemplatePreviews(model){
@@ -282,8 +287,8 @@ async function updateWishPreview(){
   const canvas=await composeWishCanvas(model,format,template);if(request!==previewRequest)return;
   const preview=$('#wish-preview');preview.width=canvas.width;preview.height=canvas.height;preview.getContext('2d').drawImage(canvas,0,0);
   $('#wish-remaining').textContent=format==='full'?'Bản lưu đầy đủ lời chúc và 7 kỷ vật.':canvas.width+' × '+canvas.height+' px · '+(format==='story'?'Sẵn sàng đăng story.':'Sẵn sàng cho bài đăng của bạn.');
-  const original=Boolean(findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6)));
-  $('#wish-remove-photo').hidden=!cardPhotoEnabled||!(checkinPhoto||original);$('#wish-preview-status').textContent='';
+  const preference=photoPreferences.read(profileKey),original=Boolean(getParticipantTeamPhoto());
+  $('#wish-remove-photo').hidden=!preference.enabled||!(preference.photo||original);$('#wish-preview-status').textContent='';
   if(format!=='full')refreshTemplatePreviews(model);
  }catch(error){if(request===previewRequest)$('#wish-preview-status').textContent='Chưa tạo được bản xem trước. '+error.message;}
 }
@@ -299,14 +304,14 @@ async function downloadWish(){
  finally{button.disabled=false;button.textContent=wishDownloadLabel();}
 }
 async function chooseCheckinPhoto(event){
- const file=event.target.files?.[0];if(!file)return;
+ const file=event.target.files?.[0];if(!file)return;const ticket=photoPreferences.beginSelection(profileKey);
  $('#wish-download-status').textContent='Đang chuẩn bị ảnh check-in…';
  try{
   if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>20*1024*1024)throw Error('Chọn ảnh JPG, PNG hoặc WebP nhỏ hơn 20 MB nhé.');
   const bitmap=await createImageBitmap(file,{imageOrientation:'from-image'}),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');
   canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
-  checkinPhoto=canvas;cardPhotoEnabled=true;cardPhotoVersion++;await updateWishPreview();$('#wish-download-status').textContent='Ảnh đã sẵn sàng. Chọn khổ thiệp rồi tải về nhé.';
- }catch(error){$('#wish-download-status').textContent=error.message;}
+  if(!photoPreferences.commitSelection(ticket,canvas)||ticket.profileKey!==profileKey)return;cardPhotoVersion++;await updateWishPreview();$('#wish-download-status').textContent='Ảnh đã sẵn sàng. Chọn khổ thiệp rồi tải về nhé.';
+ }catch(error){if(ticket.profileKey===profileKey)$('#wish-download-status').textContent=error.message;}
  finally{event.target.value='';}
 }
 let checkinStudio=null;
@@ -315,9 +320,9 @@ function openFinalCheckin(){
  actionUI?.close();actionPlayer?.stop();movementInput.clear();closeKeepsake();closeMemories();$('#wish-card').close();drawWish();
  const card=createCardModel({recipient,wish:finalWish,gifts:keepsakeCollection});
  const model=createCheckinModel({gifts:keepsakeCollection,recipient,avatar:appearance,message:getSocialCopy(card).message,wishNumber:card.wishNumber});
- const getTeamPhoto=()=>findMemoryPhoto(allMemoryPhotos(),keepsakeCollection.get(6))?.canvas||null;
- const getPhoto=()=>cardPhotoEnabled?(checkinPhoto||getTeamPhoto()):null;
- checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!checkinPhoto});photosReady.then(()=>checkinStudio.setTeamPhoto(getTeamPhoto(),model,cardPhotoEnabled));
+ const owner=profileKey,preference=photoPreferences.read(owner),getTeamPhoto=()=>getParticipantTeamPhoto(owner);
+ const getPhoto=()=>preference.enabled?(preference.photo||getTeamPhoto()):null;
+ checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!preference.photo});photosReady.then(()=>{if(owner===profileKey)checkinStudio.setTeamPhoto(getTeamPhoto(),model,preference.enabled);});
 }
 function openWish({templates=false}={}){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}if(templates){if(cardFormat==='full')cardFormat='post';wishTabs.select(0);$('.wish-studio-body').classList.remove('preview-only');$('#wish-see-preview').textContent='Phóng to thiệp';$('#wish-see-preview').setAttribute('aria-pressed','false');}drawWish();$('#wish-card').showModal();updateWishPreview();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}
@@ -374,7 +379,7 @@ $('#wish-copy').onclick=async()=>{
  }catch{$('#wish-download-status').textContent='Chưa sao chép được. Bạn vẫn có thể tải ảnh thiệp nhé.';}
 };
 document.querySelectorAll('[data-card-format]').forEach(button=>button.onclick=()=>{cardFormat=button.dataset.cardFormat;updateWishPreview();});
-$('#wish-checkin-photo').onchange=chooseCheckinPhoto;$('#wish-remove-photo').onclick=()=>{cardPhotoEnabled=false;cardPhotoVersion++;updateWishPreview();};
+$('#wish-checkin-photo').onchange=chooseCheckinPhoto;$('#wish-remove-photo').onclick=()=>{photoPreferences.setEnabled(profileKey,false);cardPhotoVersion++;updateWishPreview();};
 $('#keepsake-next').onclick=()=>{if(!keepsakeCollection.has(index))return;closeKeepsake();advanceJourney();};
 function refreshMemoryGift(){const data=keepsakeCollection.get(6),frame=savedFrames.get(6);if(data&&frame){clearGroup(frame);makeGift(6,data,frame);}}
 try{
@@ -393,9 +398,9 @@ try{
 }catch{}
 
 function personalMessage(text){return recipient?recipient+' ơi, '+text.charAt(0).toLocaleLowerCase('vi')+text.slice(1):text;}
-window.addEventListener('welcome-profile',e=>{const old=recipient;recipient=e.detail.name;profileKey=resolveParticipantKey(recipient,profileKey);applyAvatar(e.detail.avatar);arrival=true;$('#recipient-name').value=recipient;$('.side .tag').textContent='20/10 · Hành trình của '+recipient;for(const [k,data] of keepsakeCollection){if(k!==1&&typeof data.result==='string'&&old)data.result=data.result.split(old).join(recipient);if(k===0)data.result='Vé dành cho '+recipient;const g=savedFrames.get(k);if(g){clearGroup(g);makeGift(k,data,g);}}window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));updateUI();saveJourney();$('#welcome-submit').textContent='Bắt đầu hành trình →';reconcileCurrentDrink();if(keepsakeActive)openKeepsake(index);});
+window.addEventListener('welcome-profile',e=>{const old=recipient;recipient=e.detail.name;profileKey=resolveParticipantKey(recipient,profileKey);previewRequest++;cardPhotoVersion++;applyAvatar(e.detail.avatar);arrival=true;$('#recipient-name').value=recipient;$('.side .tag').textContent='20/10 · Hành trình của '+recipient;for(const [k,data] of keepsakeCollection){if(k!==1&&typeof data.result==='string'&&old)data.result=data.result.split(old).join(recipient);if(k===0)data.result='Vé dành cho '+recipient;const g=savedFrames.get(k);if(g){clearGroup(g);makeGift(k,data,g);}}window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));updateUI();saveJourney();$('#welcome-submit').textContent='Bắt đầu hành trình →';reconcileCurrentDrink();if(keepsakeActive)openKeepsake(index);});
 drinkCounter.ready.then(reconcileCurrentDrink);
-checkinStudio=createCheckinStudio({onCards:()=>openWish({templates:true}),onPhotoChange:photo=>{checkinPhoto=photo;cardPhotoEnabled=true;cardPhotoVersion++;}});
+checkinStudio=createCheckinStudio({onCards:()=>openWish({templates:true}),onPhotoChange:photo=>{if(photo)photoPreferences.setPhoto(profileKey,photo);else photoPreferences.resetPhoto(profileKey);cardPhotoVersion++;}});
 $('#wish-checkin-open').onclick=openFinalCheckin;
 const avatarStudio=createAvatarStudio({name:recipient,avatar:appearance});
 window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));avatarStudio.open();updateUI();

@@ -1,5 +1,5 @@
 export const SHARED_ALBUM_URL = new URL('./assets/memories/album.json', import.meta.url);
-export const MAX_ALBUM_PHOTOS = 24;
+export const MAX_ALBUM_PHOTOS = 48;
 export const MAX_PHOTO_BYTES = 20 * 1024 * 1024;
 
 export function normaliseSharedAlbum(data, manifestURL) {

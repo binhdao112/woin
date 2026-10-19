@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "df3eecf8714c2ad00c72cd554d19d4d01a136741",
-  "publishedAt": "2026-10-19T08:23:36.938990+00:00",
+  "sourceCommit": "ebb90b4a20d8079111fbb90b45f9b91aee10b7b5",
+  "publishedAt": "2026-10-19T09:12:07.839994+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -9,7 +9,7 @@
   "freeRoam": true,
   "world": "campus",
   "cloudWorldRemoved": true,
-  "sharedAlbumPhotos": 19,
+  "sharedAlbumPhotos": 25,
   "checkinStudio": true,
   "fullExperience": true,
   "luckyTicketTwoStep": true,
@@ -37,5 +37,8 @@
   "teamTreatCopy": true,
   "drinkTreatRevision": "team-treat-20261019-1",
   "visibleCheckinTemplates": true,
-  "checkinTemplateRevision": "checkin-templates-20261019-1"
+  "checkinTemplateRevision": "checkin-templates-20261019-1",
+  "participantPhotoBindings": true,
+  "participantPhotoCount": 5,
+  "participantPhotoRevision": "album-people-20261019-1"
 }
