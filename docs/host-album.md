@@ -4,7 +4,7 @@ Host đưa ảnh vào repo trước khi deploy. Người xem tự thấy album c
 
 ## Chuẩn bị ảnh
 
-1. Đặt tối đa 24 ảnh JPG, PNG hoặc WebP trong một thư mục riêng, mỗi ảnh tối đa 20 MB. Nên xuất ảnh khoảng 1600–2000 px và dưới 1 MB để điện thoại tải nhanh. Script giữ nguyên byte ảnh gốc, không tự nén.
+1. Đặt tối đa 48 ảnh JPG, PNG hoặc WebP trong một thư mục riêng, mỗi ảnh tối đa 20 MB. Nên xuất ảnh khoảng 1600–2200 px và dưới 1 MB để điện thoại tải nhanh. Script giữ nguyên byte ảnh đầu vào, không tự nén. Với ảnh gốc quá nặng, tạo bản web ở thư mục tạm rồi nhập bản đó; giữ nguyên folder gốc của host.
 2. Đặt tên có thứ tự như `01 Cả team cùng nhau.jpg`, `02 Một ngày ở campus.webp`. Tên file trở thành chú thích, sắp theo số tự nhiên. Hai ảnh có nội dung giống hệt nhau chỉ nhập một lần.
 3. Tại thư mục repo, chạy:
 
@@ -60,8 +60,10 @@ Commit album trên nhánh nguồn chưa tự thay website đang chạy; cần xu
 - “Ảnh riêng của tôi” chứa ảnh IndexedDB của thiết bị đó; thêm hoặc gỡ ảnh riêng không thay album chung.
 - Giữ khung ảnh lưu cả mã ảnh và chú thích cho kỷ vật ở trạm 7. Thiệp check-in dùng ảnh đã gắn theo mã người hoặc ảnh tự chọn của đúng người đó, độc lập với ảnh đang trình chiếu.
 - Nếu một ảnh bị lỗi, ảnh khác vẫn xem được. Nếu cả album chưa tải được, người xem có thể dùng ảnh riêng hoặc khung minh họa.
-- Album có thể dùng tối đa 24 ảnh. Trình duyệt tải và giải mã theo nhóm 3 ảnh, thu về canvas 1200×900 để trình chiếu và xuất thiệp.
+- Album có thể dùng tối đa 48 ảnh. Trình duyệt tải và giải mã theo nhóm 3 ảnh, thu về canvas 1200×900 để trình chiếu và xuất thiệp.
 
 ## Đợt đồng bộ hiện tại
 
-Đã nhập 19 ảnh JPG từ thư mục album của host. Ảnh được giữ nguyên byte và có mã theo hash; chú thích dùng “Khoảnh khắc 01” đến “Khoảnh khắc 19” vì tên file xuất tự động quá dài. Mỗi lần host thêm ảnh, chạy lại công cụ nhập rồi kiểm tra số ảnh, giữ nguyên ID của các ảnh cũ và cập nhật chú thích trước khi deploy. Đây là đồng bộ theo yêu cầu, chưa theo dõi thư mục tự động.
+Ngày19/10/2026: đã nhập26file được host đổi prefix, tương ứng25ảnh khác nhau. Hai file `lyhk_DSC00772.jpg` và `thaontk_DSC00772 copy.jpg` có cùng nội dung nên dùng chung một asset; cả hai liên kết mã người vẫn được giữ. Đủ5mã người và5ảnh có prefixteam. Các ảnh chính được chọn theo thứ tự tên file; ảnh tập thể mặc định giữ bức đã dùng cho thiệp in. Chú thích rút gọn theo mã tên thay cho chuỗi timestamp dài.
+
+Sáu file JPEG lớn (gồm một bản trùng) được tạo bản web cạnh dài tối đa2200px, JPEG88, có xử lý hướng EXIF. Tổng26file từ170,55MiB còn26,38MiB; toàn bộ26file gốc được kiểm tra SHA-256 và không thay đổi.18IDảnh cũ còn trong album;7asset mới được thêm. Những asset cũ không còn trong danh sách vẫn giữ trong repo để không phá tài nguyên đã xuất bản hoặc bộ thiệp in. Mỗi lần host thêm ảnh, đồng bộ theo yêu cầu và kiểm tra lại bindings trước khi deploy; chưa theo dõi thư mục tự động.
