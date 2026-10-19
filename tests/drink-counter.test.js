@@ -84,3 +84,13 @@ test('enlarged menu supports mouse panning, leaves touch to native scrolling, an
  f.get('drink-menu-full-reset').onclick();viewport.clientWidth=280;f.events.get('image-resize')();assert.equal(parseFloat(f.get('drink-menu-full-image').style.width),280);
  f.get('drink-menu-full-close').onclick();f.events.get('image-resize')();assert.equal(f.calls.length,0);
 });
+
+test('guest menu, size choices and confirmation omit prices while the host still receives the correct catalog cost',async t=>{
+ const backend=await createSheetsFixture(),f=await drinkCounterFixture(t,{transport:({payload})=>backend.post(payload)});
+ const text=node=>[node.textContent,...(node.children||[]).map(text)].join(' '),priceText=/₫|\d{1,3}[.,]\d{3}/;
+ await f.counter.open(a,'member:NhanCk');f.get('drink-categories').children[0].onclick();
+ assert.doesNotMatch(text(f.get('drink-menu-list')),priceText);
+ f.choose();assert.doesNotMatch(text(f.get('drink-variants')),priceText);assert.doesNotMatch(f.get('drink-footer-choice').textContent,priceText);
+ await f.submit();f.get('drink-continue').onclick();assert.doesNotMatch(f.get('drink-order-status').textContent,priceText);
+ const accepted=f.counter.getSavedConfirmed(a,'member:NhanCk');assert.ok(accepted.price>0);assert.equal(backend.sheets.get('Đăng ký').rows[1][11],accepted.price);assert.equal(backend.sheets.get('Tổng hợp').rows.find(row=>row[0]==='TỔNG')[7],accepted.price);assert.equal(f.calls.length,1);
+});
