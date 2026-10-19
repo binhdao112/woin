@@ -20,7 +20,7 @@ import {createAvatarControls} from './avatar-controls.js?v=campus-20261016-1';
 import {createMovementInput,movementVector,stepMovement,createWalkableWorld,nearestStation} from './avatar-movement.js?v=campus-20261016-1';
 import {canonicalCampusURL} from './campus-url.js';
 import {createCheckinModel} from './checkin-card.js';
-import {createCheckinStudio} from './checkin-studio.js?v=checkin-photo-20261019-1';
+import {createCheckinStudio} from './checkin-studio.js?v=checkin-templates-20261019-1';
 import './experience.js?v=lucky-ticket-20261019-2';
 const $=s=>document.querySelector(s), modal=$('#final');
 const campusURL=canonicalCampusURL(location.href);if(location.href!==campusURL)history.replaceState(history.state,'',campusURL);
@@ -236,7 +236,7 @@ SOCIAL_TEMPLATES.forEach(style=>{
  $('#wish-templates').append(button);
 });
 const wishPanels=[$('#wish-template-picker'),$('.wish-size-picker'),$('#wish-photo-tools')].map(section=>{const panel=document.createElement('div');panel.className='popup-tab-panel';section.before(panel);panel.append(section);return panel;});
-mountPopupTabs($('.wish-studio-options'),wishPanels,['Mẫu thiệp','Khổ ảnh','Ảnh của bạn']);
+const wishTabs=mountPopupTabs($('.wish-studio-options'),wishPanels,['Mẫu thiệp','Khổ ảnh','Ảnh của bạn']);
 for(const panel of [wishPanels[0],wishPanels[2]]){const note=document.createElement('p');note.className='wish-full-note';note.textContent='Bản kỷ niệm dùng bố cục đầy đủ. Chọn Bài đăng hoặc Story ở mục Khổ ảnh để tùy chỉnh mẫu và ảnh nhé.';panel.append(note);}
 $('#wish-see-preview').textContent='Phóng to thiệp';$('#wish-see-preview').onclick=()=>{const only=$('.wish-studio-body').classList.toggle('preview-only');$('#wish-see-preview').textContent=only?'Hiện tùy chỉnh':'Phóng to thiệp';$('#wish-see-preview').setAttribute('aria-pressed',String(only));};
 
@@ -319,7 +319,7 @@ function openFinalCheckin(){
  const getPhoto=()=>cardPhotoEnabled?(checkinPhoto||getTeamPhoto()):null;
  checkinStudio.open({model,photo:getPhoto(),teamPhoto:getTeamPhoto(),customPhoto:!!checkinPhoto});photosReady.then(()=>checkinStudio.setTeamPhoto(getTeamPhoto(),model,cardPhotoEnabled));
 }
-function openWish(){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}drawWish();$('#wish-card').showModal();updateWishPreview();celebrateAt(player.position,90);}
+function openWish({templates=false}={}){if(index!==7||!getJourneyProgress(keepsakeCollection).complete){openJourneyAlbum();return;}if(templates){if(cardFormat==='full')cardFormat='post';wishTabs.select(0);$('.wish-studio-body').classList.remove('preview-only');$('#wish-see-preview').textContent='Phóng to thiệp';$('#wish-see-preview').setAttribute('aria-pressed','false');}drawWish();$('#wish-card').showModal();updateWishPreview();celebrateAt(player.position,90);}
 function closeKeepsake(){if(!keepsakeActive)return;keepsakeActive=false;$('#keepsake-panel').hidden=true;if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);keepsakeRoot=null;}zoom=keepsakeZoom;}
 function makeGift(k,data,parent){const g=new T.Group();parent.add(g);const blush=mat(0xe6b1be),cream=mat(0xffefd1),green=mat(0x9bc8b6);if(k===0){box(2.5,1.2,.1,cream,[0,0,0],g);box(.12,1.2,.13,blush,[.7,0,0],g);const label=textSprite(recipient||'VÉ ĐỒNG ĐỘI',.35);label.position.set(-.2,0,.1);g.add(label);}if(k===1){const drink=cup(g,data.style||0,[0,0,0]);drink.scale.setScalar(3);const tag=textSprite(recipient||'CÙNG TEAM',.25);tag.position.set(0,-.7,.2);g.add(tag);}if(k===2){box(1.45,2.1,.12,mat(0x92749e),[0,0,0],g);const star=textSprite('✧',.8);star.position.set(0,.3,.1);g.add(star);const label=textSprite('CẢM HỨNG',.25);label.position.set(0,-.55,.1);g.add(label);}if(k===3){const ring=mesh(new T.TorusGeometry(.6,.08,10,40),mats.gold,[0,0,0],g);const num=textSprite(data.number||'✦',.7);num.position.set(0,0,.15);g.add(num);cylinder(.025,.025,.5,mats.wood,[0,.9,0],g);}if(k===4){cylinder(.5,.5,1.15,mat(0xc3dfdc),[0,0,0],g,24);cylinder(.54,.54,.16,mats.gold,[0,.65,0],g,24);for(let n=0;n<5;n++)sphere(.14,n%2?blush:mats.gold,[Math.cos(n)*.25,-.3+n*.13,Math.sin(n)*.25],g);}if(k===5){box(1.7,1.15,.12,cream,[0,0,0],g);const flap=mesh(new T.ConeGeometry(.83,.7,3),blush,[0,.12,.1],g);flap.rotation.z=Math.PI;const seal=sphere(.14,mats.gold,[0,-.12,.2],g);}if(k===6){box(1.9,2.15,.15,blush,[0,0,0],g);const photo=data.photoId||data.photoName?findMemoryPhoto(allMemoryPhotos(),data):memoryPhotos[memoryIndex];const texture=photo?new T.CanvasTexture(photo.canvas):placeholder(0);texture.colorSpace=T.SRGBColorSpace;mesh(new T.PlaneGeometry(1.65,1.4),new T.MeshBasicMaterial({map:texture}),[0,.15,.1],g);const stamp=textSprite('TEAM · 20/10',.2);stamp.position.set(0,-.8,.15);g.add(stamp);}return g;}
 function showGift(k,data={}){if(keepsakeRoot){scene.remove(keepsakeRoot);clearGroup(keepsakeRoot);}keepsakeRoot=new T.Group();scene.add(keepsakeRoot);keepsakeRoot.position.copy(stops[k]).add(new T.Vector3(0,1.8,.5));keepsakeRoot.rotation.y=yaw;makeGift(k,data,keepsakeRoot);}
@@ -395,7 +395,7 @@ try{
 function personalMessage(text){return recipient?recipient+' ơi, '+text.charAt(0).toLocaleLowerCase('vi')+text.slice(1):text;}
 window.addEventListener('welcome-profile',e=>{const old=recipient;recipient=e.detail.name;profileKey=resolveParticipantKey(recipient,profileKey);applyAvatar(e.detail.avatar);arrival=true;$('#recipient-name').value=recipient;$('.side .tag').textContent='20/10 · Hành trình của '+recipient;for(const [k,data] of keepsakeCollection){if(k!==1&&typeof data.result==='string'&&old)data.result=data.result.split(old).join(recipient);if(k===0)data.result='Vé dành cho '+recipient;const g=savedFrames.get(k);if(g){clearGroup(g);makeGift(k,data,g);}}window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));updateUI();saveJourney();$('#welcome-submit').textContent='Bắt đầu hành trình →';reconcileCurrentDrink();if(keepsakeActive)openKeepsake(index);});
 drinkCounter.ready.then(reconcileCurrentDrink);
-checkinStudio=createCheckinStudio({onCards:openWish,onPhotoChange:photo=>{checkinPhoto=photo;cardPhotoEnabled=true;cardPhotoVersion++;}});
+checkinStudio=createCheckinStudio({onCards:()=>openWish({templates:true}),onPhotoChange:photo=>{checkinPhoto=photo;cardPhotoEnabled=true;cardPhotoVersion++;}});
 $('#wish-checkin-open').onclick=openFinalCheckin;
 const avatarStudio=createAvatarStudio({name:recipient,avatar:appearance});
 window.dispatchEvent(new CustomEvent('journey-profile',{detail:{name:recipient,avatar:appearance}}));avatarStudio.open();updateUI();
