@@ -32,7 +32,8 @@ STYLES=[
  {'id':'nhat-ky','name':'Những ngày có nhau','tag':'Gần gũi, giàu kỷ niệm','bg':'#F0EBDF','ink':'#384F48','accent':'#B25D4F','soft':'#DADBC8','green':'#75836C'},
  {'id':'ruc-ro','name':'Rực rỡ theo cách riêng','tag':'Hiện đại, nổi bật','bg':'#F6E8DE','ink':'#552F52','accent':'#C55334','soft':'#E2C7D5','green':'#552F52'},
 ]
-URL='https://binhdao112.github.io/woin/previews/koi/?world=campus'
+URL='https://binhdao112.github.io/woin/'
+REVISION='main-qr-20261019-1'
 
 def fonts():
  base=Path('/System/Library/Fonts/Supplemental')
@@ -124,6 +125,7 @@ def qr(c,x,y,size,ink,bg):
  rect(c,x-1.5,y-1.5,size+3,size+3,bg)
  drawing=Drawing(size*MM,size*MM,transform=[size*MM/w,0,0,size*MM/h,0,0]);drawing.add(widget)
  renderPDF.draw(drawing,c,x*MM,H-(y+size)*MM)
+ c.linkURL(URL,(x*MM,H-(y+size)*MM,(x+size)*MM,H-y*MM),relative=1,thickness=0)
 
 def back(c,style,person):
  name,code=person;ink,bg,accent=style['ink'],style['bg'],style['accent']
@@ -137,6 +139,7 @@ def back(c,style,person):
  text(c,'Từ những người đồng đội luôn quý mến bạn.',10,92,7,'Sans',ink)
  text(c,code,10,99,5.6,'SansBold',accent)
  qr(c,118,71,20,'#304C42','#FFFFFF');text(c,'Mở chuyến đi 20/10',128,96,5.5,'Sans',ink,'center')
+ text(c,URL.removeprefix('https://'),128,100.2,4.5,'Sans',ink,'center',width=29)
  sprig(c,128,57,.73,accent)
 
 def boxes(path,trim=True):
@@ -144,13 +147,13 @@ def boxes(path,trim=True):
  for p in reader.pages:
   from pypdf.generic import RectangleObject
   p.trimbox=RectangleObject([7*MM,7*MM,155*MM,112*MM]);p.bleedbox=RectangleObject([4*MM,4*MM,158*MM,115*MM]);writer.add_page(p)
- writer.add_metadata({'/Title':'Thiệp 20/10 - A6 ngang - 5 tên - bản chọn mẫu','/Author':'Một vòng cùng team','/Subject':'148x105 mm; bleed3mm; front/back pairs; fonts embedded'})
+ writer.add_metadata({'/Title':'Thiệp 20/10 - A6 ngang - 5 tên - QR link chính','/Author':'Một vòng cùng team','/Subject':'148x105 mm; bleed3mm; front/back pairs; fonts embedded','/QRTarget':URL})
  with path.open('wb') as f:writer.write(f)
 
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=ROOT/'output/pdf/print-cards');args=parser.parse_args();out=args.output;out.mkdir(parents=True,exist_ok=True);fonts()
  image=ImageReader(str(ROOT/'dist/assets/memories/photos/photo-2b7c4913979c371d.jpg'))
- manifest={'size':'A6 ngang · 148 × 105 mm','bleedMm':3,'photo':'Khoảnh khắc 19','people':[{'name':n,'code':c} for n,c in ROSTER],'styles':[]}
+ manifest={'size':'A6 ngang · 148 × 105 mm','bleedMm':3,'photo':'Khoảnh khắc 19','qrUrl':URL,'revision':REVISION,'people':[{'name':n,'code':c} for n,c in ROSTER],'styles':[]}
  for index,style in enumerate(STYLES,1):
   slug=f'{index:02}-{style["id"]}';pdf=out/f'{slug}-A6-5-ten.pdf';c=canvas.Canvas(str(pdf),pagesize=(162*MM,119*MM),pageCompression=1,invariant=1)
   for person in ROSTER:
