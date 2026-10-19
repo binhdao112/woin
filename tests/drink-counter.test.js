@@ -71,3 +71,16 @@ test('menu image zoom is bounded, native close restores focus, and an image fail
  // Closing with Escape is a native dialog close event, rather than the explicit close button.
  f.get('drink-menu-full').close();assert.equal(open.ownerDocument.activeElement,open);assert.equal(f.calls.length,0);assert.equal(f.keeps.length,0);
 });
+
+test('enlarged menu supports mouse panning, leaves touch to native scrolling, and fits again on resize',async t=>{
+ const f=await drinkCounterFixture(t);await f.counter.open(a,'member:NhanCk');const viewport=f.get('drink-menu-full-viewport');Object.assign(viewport,{clientWidth:320,clientHeight:400,scrollLeft:0,scrollTop:0});f.get('drink-menu-full-open').onclick();
+ const event={pointerType:'mouse',button:0,pointerId:7,clientX:80,clientY:100,preventDefault(){}};
+ viewport.onpointerdown(event);viewport.onpointermove({...event,clientX:30,clientY:50});assert.equal(viewport.scrollLeft,0);
+ f.get('drink-menu-full-zoom-in').onclick();viewport.scrollLeft=100;viewport.scrollTop=200;
+ viewport.onpointerdown({...event,pointerType:'touch',preventDefault(){throw Error('touch must use native scrolling');}});viewport.onpointermove({...event,clientX:30});assert.equal(viewport.scrollLeft,100);
+ viewport.onpointerdown(event);viewport.onpointermove({...event,pointerId:8,clientX:30});assert.equal(viewport.scrollLeft,100);
+ viewport.onpointermove({...event,clientX:30,clientY:50});assert.equal(viewport.scrollLeft,150);assert.equal(viewport.scrollTop,250);assert.equal(viewport.ownerDocument.activeElement,viewport);
+ viewport.onpointerup();viewport.onpointermove({...event,clientX:0});assert.equal(viewport.scrollLeft,150);viewport.onpointercancel();viewport.onlostpointercapture();
+ f.get('drink-menu-full-reset').onclick();viewport.clientWidth=280;f.events.get('image-resize')();assert.equal(parseFloat(f.get('drink-menu-full-image').style.width),280);
+ f.get('drink-menu-full-close').onclick();f.events.get('image-resize')();assert.equal(f.calls.length,0);
+});

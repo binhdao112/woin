@@ -1,3 +1,4 @@
+import {createDrinkMenuViewer} from './drink-menu-viewer.js?v=full-menu-20261019-1';
 import {mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-2';
 import {findDrink,searchDrinks,validateDrinkOrder,drinkLabel,SUGAR_OPTIONS,ICE_OPTIONS} from './drink-orders.js';
 import {sendDrinkOrder,isAppsScriptEndpoint} from './drink-order-client.js';
@@ -12,6 +13,7 @@ const sameChoice=(a,b)=>a&&b&&['menuVersion','name','variantId','sugar','ice','n
 
 export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
   const dialog=$('#drink-counter'),form=$('#drink-order-form');
+  createDrinkMenuViewer({dialog:$('#drink-menu-full'),opener:$('#drink-menu-full-open'),close:$('#drink-menu-full-close'),viewport:$('#drink-menu-full-viewport'),stage:$('#drink-menu-full-stage'),image:$('#drink-menu-full-image'),zoomIn:$('#drink-menu-full-zoom-in'),zoomOut:$('#drink-menu-full-zoom-out'),reset:$('#drink-menu-full-reset'),label:$('#drink-menu-full-zoom-label'),loading:$('#drink-menu-full-loading'),error:$('#drink-menu-full-error')});
   let menuPager=null;
   let menu,config={eventId:'team-2010-2026',enabled:false,endpoint:''},store,selected=null,category='best',busy=false,storageError=false,profileKey='',generation=0,sendingProfileKey='';
   const localDrafts=new Map();
