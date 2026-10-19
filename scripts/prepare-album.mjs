@@ -11,7 +11,7 @@ export async function prepareAlbum({ sourceDirectory, targetDirectory, title = '
   const entries = (await readdir(sourceDirectory, { withFileTypes: true })).filter(entry => entry.isFile() && /\.(jpe?g|png|webp)$/i.test(entry.name)).sort((a, b) => a.name.localeCompare(b.name, 'vi', { numeric: true }));
   if (!entries.length) throw Error('Thư mục chưa có ảnh JPG, PNG hoặc WebP.');
   if (entries.length > MAX_ALBUM_PHOTOS) throw Error(`Hãy chọn tối đa ${MAX_ALBUM_PHOTOS} ảnh cho album.`);
-  const images = [], bindings={version:1,defaultPhotoId:null,participants:{}},assignedIds=new Set();
+  const images = [], bindings={version:2,defaultPhotoId:null,participants:{},albums:{}},assignedIds=new Set();
   for (const entry of entries) {
     const bytes = await readFile(path.join(sourceDirectory, entry.name)), extension = path.extname(entry.name).toLowerCase().replace('.jpeg', '.jpg');
     const valid = extension === '.png' ? bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) : extension === '.jpg' ? bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255 : bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP';
@@ -19,7 +19,7 @@ export async function prepareAlbum({ sourceDirectory, targetDirectory, title = '
     const hash = createHash('sha256').update(bytes).digest('hex').slice(0, 16), id = 'team-' + hash;
     const prefix=entry.name.match(/^([a-z0-9]+)_/i)?.[1].toLowerCase(),owner=codes.get(prefix);
     if(prefix==='team'&&!bindings.defaultPhotoId)bindings.defaultPhotoId=id;
-    if(owner){assignedIds.add(id);if(!bindings.participants[owner])bindings.participants[owner]=id;}
+    if(owner){assignedIds.add(id);if(!bindings.participants[owner])bindings.participants[owner]=id;const album=bindings.albums[owner]??=[];if(!album.includes(id))album.push(id);}
     if (!images.some(image => image.id === id)) images.push({ id, name: path.basename(entry.name, path.extname(entry.name)).replace(/[_]+/g, ' ').slice(0, 120), src: './photos/photo-' + hash + extension, bytes });
   }
   // Keep the host's existing group fallback until files have explicit team_ names.
