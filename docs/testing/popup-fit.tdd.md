@@ -29,6 +29,13 @@ Yêu cầu trực tiếp: hiển thị trọn popup để chụp/quay check-in. 
 
 ## Validation
 
-- `npm test`:98/98 pass. `check:pages`:61 tài nguyên. `check:drinks`:bundle khớp.
-- `node --experimental-test-coverage --test tests/popup-layout.test.js`:module100% lines/functions và95.24% branches.
+- `npm test`:99/99 pass. `check:pages`:61 tài nguyên. `check:drinks`:bundle khớp.
+- `node --experimental-test-coverage --test tests/popup-layout.test.js`:module100% lines/functions và95.45% branches.
 - Không tuyên bố đã audit WCAG toàn bộ hay test browser ngoài phiên IAB; kiểm tra tập trung vào bố cục và đường bấm thay đổi.
+
+## Các trường hợp hoàn thiện
+
+- `9a95a5e` RED → `d11cd11` GREEN: mở lại ly đã lưu hoặc đang chờ phải đi thẳng vào phần tùy chỉnh, để người dùng xem được lựa chọn khi các nút menu đang khóa. Ca mới chạy method open thật với cả trạng thái mới/pending/confirmed.
+- `d969f5c` RED → `28a2a09` GREEN: panel kỷ vật cũng phải được fit dù là section, không phải dialog. Album đổi sang một cột và gỡ giới hạn100px của đoạn kết quả cũ.
+- Browser375×667 đã mở lại kết quả dài gồm số79,06·15·16·23·28·42 và nguyên câu8386: panel kỷ vật cao213px, không cuộn; trang kỷ vật trong album hiển thị đủ, không có descendant cuộn.
+- Tổng cuối99 kiểm thử,61 tài nguyên. Sáu kiểm thử popup chạy GREEN; module100% lines/functions,95.45% branches.
