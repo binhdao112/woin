@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 function dom(){
- const doc={createElement(tag){return {tag,ownerDocument:doc,children:[],attrs:{},style:{values:{},setProperty(k,v){this.values[k]=v;}},classList:{add(){}},hidden:false,setAttribute(k,v){this.attrs[k]=String(v);},append(...items){for(const x of items){x.parentNode=this;this.children.push(x);}},insertBefore(x,before){x.parentNode=this;this.children.splice(this.children.indexOf(before),0,x);},after(x){this.parentNode.insertBefore(x,this.parentNode.children[this.parentNode.children.indexOf(this)+1]);},remove(){this.parentNode.children=this.parentNode.children.filter(x=>x!==this);},focus(){doc.activeElement=this;}};}};
+ const doc={createElement(tag){return {tag,ownerDocument:doc,children:[],attrs:{},style:{values:{},setProperty(k,v){this.values[k]=v;}},classList:{add(){}},hidden:false,setAttribute(k,v){this.attrs[k]=String(v);},append(...items){for(const x of items){x.parentNode=this;this.children.push(x);}},insertBefore(x,before){x.parentNode=this;if(before)this.children.splice(this.children.indexOf(before),0,x);else this.children.push(x);},after(x){this.parentNode.insertBefore(x,this.parentNode.children[this.parentNode.children.indexOf(this)+1]);},remove(){this.parentNode.children=this.parentNode.children.filter(x=>x!==this);},focus(){doc.activeElement=this;}};}};
  const root=doc.createElement('div');return {doc,root,el:tag=>doc.createElement(tag)};
 }
 
