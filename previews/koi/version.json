@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "e10a2a3e1d5235102987d8f4c2385edd38b9b16e",
-  "publishedAt": "2026-10-19T10:33:03.080995+00:00",
+  "sourceCommit": "dc150ad52c35552b1b64b333527f4dba32839891",
+  "publishedAt": "2026-10-19T10:41:39.527059+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -18,7 +18,7 @@
   "participantNamePicker": true,
   "participantNames": 5,
   "checkinPhotoEditor": true,
-  "printCardConcepts": 5,
+  "printCardConcepts": 8,
   "printRecipients": 5,
   "printCardSize": "A6 landscape two-sided",
   "printQrUrl": "https://binhdao112.github.io/woin/",
@@ -51,5 +51,12 @@
     "member:ThaoNTK": 3
   },
   "pastelPrintVariant": true,
-  "pastelPrintRevision": "pastel-print-20261019-1"
+  "pastelPrintRevision": "pastel-print-20261019-1",
+  "pinkPrintCollection": true,
+  "pinkPrintRevision": "pink-collection-20261019-1",
+  "pinkPrintStyles": [
+    "no-hong-ballet",
+    "hong-tra-hoa",
+    "pink-muse"
+  ]
 }

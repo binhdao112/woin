@@ -3,3 +3,5 @@
 .person-picker{display:flex;flex-direction:column;gap:9px;max-width:100%}@media(max-width:700px){.person-picker{width:100%}}
 
 .print-concept{scroll-margin-top:125px}.recommended.pastel{background:#f1dce4;color:#76485c}@media(max-width:700px){.print-concept{scroll-margin-top:155px}}
+
+.pink-collection{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:24px}.pink-collection span{font-size:9px;letter-spacing:1.5px;color:#956278;margin-right:4px}.pink-collection a{border:1px solid #dcbcca;border-radius:24px;padding:12px 16px;background:#f8e8ee;color:#773c53;font-size:12px;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}@media(max-width:700px){.pink-collection span{width:100%}.pink-collection a{font-size:11px;padding:11px 12px}.concept-heading{align-items:start;gap:8px}.recommended{white-space:normal;max-width:108px;text-align:center;line-height:1.4}}

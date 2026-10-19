@@ -3,7 +3,7 @@
   "bleedMm": 3,
   "photo": "Khoảnh khắc 19",
   "qrUrl": "https://binhdao112.github.io/woin/",
-  "revision": "pastel-print-20261019-1",
+  "revision": "pink-collection-20261019-1",
   "people": [
     {
       "name": "Châu Kim Nhẩn",
@@ -220,6 +220,123 @@
           "code": "HanNHG2",
           "front": "05-anh-hong-pastel-HanNHG2-front.jpg",
           "back": "05-anh-hong-pastel-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "no-hong-ballet",
+      "name": "Nơ hồng ballet",
+      "tag": "Hồng sữa, nơ lụa và một chút điệu đà",
+      "bg": "#FFF5F7",
+      "ink": "#773C53",
+      "accent": "#B76C89",
+      "soft": "#F3D1DE",
+      "green": "#B76C89",
+      "number": 6,
+      "pdf": "06-no-hong-ballet-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "06-no-hong-ballet-NhanCk-front.jpg",
+          "back": "06-no-hong-ballet-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "06-no-hong-ballet-ThaoNTK-front.jpg",
+          "back": "06-no-hong-ballet-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "06-no-hong-ballet-LyHK-front.jpg",
+          "back": "06-no-hong-ballet-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "06-no-hong-ballet-NgocNTB12-front.jpg",
+          "back": "06-no-hong-ballet-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "06-no-hong-ballet-HanNHG2-front.jpg",
+          "back": "06-no-hong-ballet-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "hong-tra-hoa",
+      "name": "Hồng trà hoa",
+      "tag": "Hồng trà ấm, hoa mềm và nét thanh lịch",
+      "bg": "#FFF4EE",
+      "ink": "#68424B",
+      "accent": "#A65F72",
+      "soft": "#EEC9CD",
+      "green": "#8A8B74",
+      "number": 7,
+      "pdf": "07-hong-tra-hoa-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "07-hong-tra-hoa-NhanCk-front.jpg",
+          "back": "07-hong-tra-hoa-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "07-hong-tra-hoa-ThaoNTK-front.jpg",
+          "back": "07-hong-tra-hoa-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "07-hong-tra-hoa-LyHK-front.jpg",
+          "back": "07-hong-tra-hoa-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "07-hong-tra-hoa-NgocNTB12-front.jpg",
+          "back": "07-hong-tra-hoa-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "07-hong-tra-hoa-HanNHG2-front.jpg",
+          "back": "07-hong-tra-hoa-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "pink-muse",
+      "name": "Pink Muse",
+      "tag": "Bìa tạp chí, hồng rose và khí chất riêng",
+      "bg": "#F5C7D8",
+      "ink": "#702D4E",
+      "accent": "#A4446C",
+      "soft": "#FFE9F0",
+      "green": "#A4446C",
+      "number": 8,
+      "pdf": "08-pink-muse-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "08-pink-muse-NhanCk-front.jpg",
+          "back": "08-pink-muse-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "08-pink-muse-ThaoNTK-front.jpg",
+          "back": "08-pink-muse-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "08-pink-muse-LyHK-front.jpg",
+          "back": "08-pink-muse-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "08-pink-muse-NgocNTB12-front.jpg",
+          "back": "08-pink-muse-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "08-pink-muse-HanNHG2-front.jpg",
+          "back": "08-pink-muse-HanNHG2-back.jpg"
         }
       ]
     }
