@@ -6,7 +6,7 @@ import {createCardModel, cardFilename, renderWishCard, canvasToPng} from './wish
 import {renderSocialCard, socialCardFilename, getSocialCopy, loadCardArtwork, SOCIAL_TEMPLATES, getSocialTemplate} from './social-card.js';
 import { CAMPUS_STOPS, createCampus } from './campus.js';
 import {loadSharedAlbum,findMemoryPhoto} from './memory-album.js?v=team-album-20261016-1';
-import {createDrinkCounter} from './drink-counter.js?v=drink-loading-20261019-1';
+import {createDrinkCounter} from './drink-counter.js?v=full-menu-20261019-1';
 import {drinkLabel} from './drink-orders.js';
 import {resolveParticipantKey} from './participant-profile.js';
 import {reconcileDrinkGift} from './drink-journey.js';
