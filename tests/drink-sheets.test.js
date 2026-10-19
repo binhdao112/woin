@@ -41,3 +41,11 @@ test('malformed payloads, stale menu, full events and lock contention never appe
  b.context.LockService.getScriptLock=()=>({tryLock:()=>false});assert.equal(b.post(b.payload).status,'pending');assert.equal(b.sheets.get('Đăng ký').rows.length,1);
  const full=await backend();full.sheets.get('Đăng ký').rows=Array.from({length:501},()=>[]);assert.equal(full.post(full.payload).code,'full');assert.equal(full.sheets.get('Đăng ký').rows.length,501);
 });
+
+test('summary ignores leftover identities with no valid cup instead of counting blank default registrations',async()=>{
+ const b=await backend(),details=b.sheets.get('Đăng ký');
+ for(let i=0;i<5;i++)details.rows.push([b.payload.eventId,'d1000000-0000-4000-8000-00000000000'+i,1,'f1000000-0000-4000-8000-00000000000'+i,'','','','','','','',0,1,'',b.payload.menuVersion,'']);
+ assert.equal(b.post(b.payload).status,'accepted');
+ const total=b.sheets.get('Tổng hợp').rows.find(row=>row[0]==='TỔNG');assert.equal(total[5],1);
+ assert.equal(details.rows.length,7);assert.ok(b.sheets.get('Tổng hợp').rows.every(row=>row[5]!==5));
+});
