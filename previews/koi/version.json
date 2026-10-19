@@ -1,7 +1,7 @@
 {
   "sourceBranch": "codex/avatar-actions",
-  "sourceCommit": "9fd7501ea164716a53bd0a50678ac74319e16019",
-  "publishedAt": "2026-10-19T09:28:18.380301+00:00",
+  "sourceCommit": "e10a2a3e1d5235102987d8f4c2385edd38b9b16e",
+  "publishedAt": "2026-10-19T10:33:03.080995+00:00",
   "previewPath": "/woin/previews/koi/",
   "registrationEnabled": true,
   "avatarCustomization": true,
@@ -18,7 +18,7 @@
   "participantNamePicker": true,
   "participantNames": 5,
   "checkinPhotoEditor": true,
-  "printCardConcepts": 4,
+  "printCardConcepts": 5,
   "printRecipients": 5,
   "printCardSize": "A6 landscape two-sided",
   "printQrUrl": "https://binhdao112.github.io/woin/",
@@ -49,5 +49,7 @@
     "member:NgocNTB12": 6,
     "member:NhanCk": 1,
     "member:ThaoNTK": 3
-  }
+  },
+  "pastelPrintVariant": true,
+  "pastelPrintRevision": "pastel-print-20261019-1"
 }

@@ -3,7 +3,7 @@
   "bleedMm": 3,
   "photo": "Khoảnh khắc 19",
   "qrUrl": "https://binhdao112.github.io/woin/",
-  "revision": "main-qr-20261019-1",
+  "revision": "pastel-print-20261019-1",
   "people": [
     {
       "name": "Châu Kim Nhẩn",
@@ -180,6 +180,46 @@
           "code": "HanNHG2",
           "front": "04-ruc-ro-HanNHG2-front.jpg",
           "back": "04-ruc-ro-HanNHG2-back.jpg"
+        }
+      ]
+    },
+    {
+      "id": "anh-hong-pastel",
+      "layout": "dem-anh-kim",
+      "name": "Ánh hồng pastel",
+      "tag": "Bố cục ánh kim, hồng phấn dịu dàng",
+      "bg": "#FBEAF0",
+      "ink": "#6F3D52",
+      "accent": "#A76A7C",
+      "soft": "#EBCAD5",
+      "green": "#A76A7C",
+      "number": 5,
+      "pdf": "05-anh-hong-pastel-A6-5-ten.pdf",
+      "previews": [
+        {
+          "code": "NhanCk",
+          "front": "05-anh-hong-pastel-NhanCk-front.jpg",
+          "back": "05-anh-hong-pastel-NhanCk-back.jpg"
+        },
+        {
+          "code": "ThaoNTK",
+          "front": "05-anh-hong-pastel-ThaoNTK-front.jpg",
+          "back": "05-anh-hong-pastel-ThaoNTK-back.jpg"
+        },
+        {
+          "code": "LyHK",
+          "front": "05-anh-hong-pastel-LyHK-front.jpg",
+          "back": "05-anh-hong-pastel-LyHK-back.jpg"
+        },
+        {
+          "code": "NgocNTB12",
+          "front": "05-anh-hong-pastel-NgocNTB12-front.jpg",
+          "back": "05-anh-hong-pastel-NgocNTB12-back.jpg"
+        },
+        {
+          "code": "HanNHG2",
+          "front": "05-anh-hong-pastel-HanNHG2-front.jpg",
+          "back": "05-anh-hong-pastel-HanNHG2-back.jpg"
         }
       ]
     }
