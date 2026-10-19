@@ -1,3 +1,4 @@
+import {mountPopupPager} from './popup-layout.js?v=popup-fit-20261019-1';
 import {findDrink,searchDrinks,validateDrinkOrder,drinkLabel,SUGAR_OPTIONS,ICE_OPTIONS} from './drink-orders.js';
 import {sendDrinkOrder,isAppsScriptEndpoint} from './drink-order-client.js';
 import {createDrinkRegistrationStore} from './drink-registration.js';
@@ -10,6 +11,7 @@ const sameChoice=(a,b)=>a&&b&&['menuVersion','name','variantId','sugar','ice','n
 
 export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
   const dialog=$('#drink-counter'),form=$('#drink-order-form');
+  let menuPager=null;
   let menu,config={eventId:'team-2010-2026',enabled:false,endpoint:''},store,selected=null,category='best',busy=false,storageError=false,localDraft=null;
   const ready=Promise.all([
     fetch(MENU_URL).then(response=>{if(!response.ok)throw Error();return response.json();}),
@@ -37,16 +39,17 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
     if(!menu)return;
     const found=selected?findDrink(menu,selected):null,items=searchDrinks(menu,$('#drink-search').value,category),pending=Boolean(state().pending);
     document.querySelectorAll('[data-drink-category]').forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.drinkCategory===category));});
-    $('#drink-menu-list').replaceChildren();$('#drink-menu-status').textContent=items.length?items.length+' món · chọn món để xem cỡ ly':'Chưa có món khớp. Thử tên khác hoặc chọn Tất cả.';
+    menuPager?.dispose();$('#drink-menu-list').replaceChildren();$('#drink-menu-status').textContent=items.length?items.length+' món · chọn món để xem cỡ ly':'Chưa có món khớp. Thử tên khác hoặc chọn Tất cả.';
     for(const item of items){
       const button=document.createElement('button');button.type='button';button.className='drink-menu-item';button.setAttribute('aria-pressed',String(found?.item.id===item.id));button.disabled=busy||pending;
       const cup=document.createElement('span');cup.className='drink-cup drink-cup-'+item.category;cup.setAttribute('aria-hidden','true');cup.textContent='✦';
       const info=document.createElement('span'),title=document.createElement('strong'),price=document.createElement('small');title.textContent=item.name;
       price.textContent='Từ '+money(Math.min(...item.variants.map(variant=>variant.price)));info.append(title,price);
       const marker=document.createElement('span');marker.className='drink-marker';marker.textContent=found?.item.id===item.id?'✓':'＋';marker.setAttribute('aria-hidden','true');button.append(cup,info,marker);
-      button.onclick=()=>{selected=item.variants[0].id;status('');renderMenu();renderSelection();if(innerWidth<760)form.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};
+      button.onclick=()=>{selected=item.variants[0].id;status('');renderMenu();renderSelection();dialog.dataset.drinkStep='options';$('#drink-change').focus();};
       $('#drink-menu-list').append(button);
     }
+    menuPager=mountPopupPager($('#drink-menu-list'),{pageSize:()=>innerWidth<760?2:4});
   }
   function renderSelection(){
     if(!menu)return;
@@ -83,12 +86,13 @@ export function createDrinkCounter({onKeep,transport=sendDrinkOrder}={}) {
   $('#drink-local').onclick=()=>{try{const order=normalized();localDraft=draft();finish(order,false);}catch(error){status(error.message);}};
   $('#drink-continue').onclick=()=>{try{if(sameChoice(draft(),state().confirmed))finish(normalized(),true);}catch(error){status(error.message);}};
   $('#drink-skip').onclick=()=>{const saved=state();if(saved.confirmed&&!saved.pending){try{finish(validateDrinkOrder(menu,saved.confirmed),true);}catch(error){status(error.message);}return;}let order=null;if(saved.pending)try{order=normalized();}catch{}finish(order,false);};
-  $('#drink-change').onclick=()=>$('#drink-menu-heading').scrollIntoView({behavior:'smooth',block:'start'});
+  $('#drink-change').textContent='← Đổi món';$('#drink-change').onclick=()=>{dialog.dataset.drinkStep='menu';$('#drink-search').focus();};
+  addEventListener('resize',()=>menuPager?.refresh());
   addEventListener('storage',event=>{if(event.key==='team-drink-order-v1:'+config.eventId&&dialog.open&&!busy){apply(state().pending||state().confirmed);renderMenu();renderSelection();}});
   return {
     ready,
     async open(name){
-      if(!dialog.open)dialog.showModal();dialog.scrollTop=0;status('Đang mở quầy KOI…');await ready;
+      dialog.dataset.drinkStep='menu';if(!dialog.open)dialog.showModal();dialog.scrollTop=0;status('Đang mở quầy KOI…');await ready;
       if(!menu)return;selected=null;$('#drink-name').value=name||'';$('#drink-sugar').value='Mặc định';$('#drink-ice').value='Mặc định';$('#drink-note').value='';
       const saved=state();apply(saved.pending||saved.confirmed||localDraft);if(!saved.pending&&name)$('#drink-name').value=name;
       status(saved.pending?'Lần gửi trước chưa được xác nhận. Bấm kiểm tra lại; lựa chọn cũ được giữ để tránh gửi trùng.':saved.confirmed?'Bạn đã đăng ký 1 ly. Đổi lựa chọn rồi bấm cập nhật nếu muốn.':'');

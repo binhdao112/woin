@@ -83,6 +83,12 @@ Sau khi giữ đủ bảy kỷ vật, bấm **Check-in cùng nhân vật** tại
 - **Lưu clip 8 giây** xuất chuyển động không âm thanh bằng định dạng trình duyệt hỗ trợ (ưu tiên MP4/H264). Có thể thêm nhạc trong ứng dụng social. Trình duyệt thiếu chức năng ghi vẫn có PNG và quay màn hình.
 - **Xem 4 mẫu thiệp** mở lại bộ thiệp hiện có. Check-in xử lý trên thiết bị, không gửi ảnh cá nhân lên máy chủ.
 
+## Popup vừa màn hình
+
+Popup kết quả tự căn và thu vừa khung nhìn khi cần, hiển thị trọn nội dung để chụp check-in. Các phần nhiều lựa chọn dùng từng mục hoặc trang thay vì cuộn: check-in có Khung hình / Tạo dáng / Lưu & chia sẻ, mẫu thiệp có Mẫu / Khổ / Ảnh, album hành trình xem từng kỷ vật, quầy KOI phân trang món và tách chọn món / tùy chỉnh ly trên điện thoại. Các lựa chọn vẫn được giữ khi đổi mục.
+
+Nút **Phóng to thiệp** trong phòng thiệp và **Quay / chụp toàn màn hình** trong check-in dành cho chụp/quay lại kết quả. `dist/popup-layout.js` và `dist/popup-layout.css` quản lý bố cục này.
+
 ## Deploy trên GitHub Pages
 
 Repo xuất bản từ **`gh-pages` → `/`**, giữ nguyên cấu hình Pages và environment đang có. Nội dung của `dist/` phải nằm ngay ở gốc nhánh `gh-pages` (`index.html`, `app.js`, `assets/`...). Không merge nguyên nhánh mã nguồn vào `gh-pages`, vì như vậy file HTML mới vẫn nằm trong `dist/`, còn HTML ở gốc có thể vẫn là bản cũ.
@@ -96,7 +102,7 @@ Trước khi đưa artifact lên `gh-pages`, chạy `npm test` và `npm run chec
 
 Muốn cập nhật riêng bản xem thử mà giữ trang chính: chỉ chép artifact vào `previews/campus/` trên `gh-pages`. Các tài nguyên dùng đường dẫn tương đối nên cùng một artifact chạy được ở cả `/woin/` và `/woin/previews/campus/`. `version.json` trên nhánh deploy ghi commit nguồn của snapshot hiện tại.
 
-**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 93 kiểm thử, 59 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
+**Checks** tiếp tục chạy cho PR vào `main` và push `main`/`codex/**`: kiểm tra cú pháp, 98 kiểm thử, 61 tài nguyên dưới `/woin/`, rồi lưu artifact `website-dist` cho reviewer. Không cần backend, `npm install` hoặc bước build.
 
 Workflow deploy trực tiếp từ `main` đã được tắt trên GitHub; PR #2 gỡ file workflow cũ: environment `github-pages` chỉ cho nhánh `gh-pages` triển khai. Không cần đổi Pages Source sang GitHub Actions hoặc nới quy tắc environment để dùng cách xuất bản hiện tại.
 
