@@ -16,6 +16,16 @@ npm run check:pages
 
 4. Xem lại `dist/assets/memories/album.json`, commit cùng các ảnh trong `dist/assets/memories/photos/`, rồi xuất bản lại website.
 
+## Gắn ảnh theo người
+
+Thư mục ảnh gốc của host: `/Users/lap15111/Downloads/album`.
+
+Đặt prefix theo mã tên: `NhanCk_01.jpg`, `ThaoNTK_01.jpg`, `LyHK_01.jpg`, `NgocNTB12_01.jpg`, `HanNHG2_01.jpg`. Ảnh tập thể dùng `team_01.jpg`. Có nhiều ảnh thì tăng `_02`, `_03`…; ảnh có số đầu tiên của mỗi prefix là ảnh chính mặc định. Prefix không phân biệt hoa/thường.
+
+Lệnh nhập album đồng thời tạo `dist/assets/memories/portraits.json`: ảnh chính theo mã người và ảnh tập thể mặc định. Đổi tên không đổi mã hash hay byte ảnh. Ảnh chưa có prefix vẫn xem được trong album, nhưng không tự gán cho ai. Nếu chưa gán ảnh riêng, thiệp dùng ảnh tập thể đã chỉ định; không tự lấy chân dung đang hiện tại trạm 7. Nếu ảnh chính bị lỗi, dùng ảnh tập thể; không có ảnh tập thể tải được thì thiệp không chèn ảnh thay thế của người khác.
+
+Ảnh tự chọn và trạng thái ẩn ảnh trong check-in được giữ theo mã người trong phiên app, độc lập với biệt danh. Đổi người không kế thừa ảnh tự chọn; ảnh đang giải mã chỉ cập nhật đúng người bắt đầu chọn. Ảnh này không upload lên server và không lưu qua tải lại trang. Khi xuất bản, chép cả `portraits.json`, `album.json` và ảnh vào artifact.
+
 Script kiểm tra toàn bộ đầu vào trước khi thay danh sách album. Ảnh sai định dạng hoặc vượt giới hạn khiến lệnh báo lỗi và giữ danh sách cũ. File có tên theo hash nội dung; chạy lại cùng ảnh giữ nguyên mã ảnh, kể cả khi đổi tên chú thích. Các file ảnh cũ không tự xóa; nếu muốn gỡ khỏi repo thì xóa riêng những file không còn dùng và deploy lại.
 
 ## Chỉnh danh sách bằng tay
@@ -48,7 +58,7 @@ Commit album trên nhánh nguồn chưa tự thay website đang chạy; cần xu
 
 - “Album của team” luôn là nguồn mặc định nếu có ảnh tải được, kể cả khi trình duyệt đã có ảnh riêng từ trước.
 - “Ảnh riêng của tôi” chứa ảnh IndexedDB của thiết bị đó; thêm hoặc gỡ ảnh riêng không thay album chung.
-- Giữ khung ảnh lưu cả mã ảnh và chú thích. Thiệp tiếp tục dùng đúng ảnh đã chọn khi đổi nguồn ảnh hoặc đổi mẫu thiệp.
+- Giữ khung ảnh lưu cả mã ảnh và chú thích cho kỷ vật ở trạm 7. Thiệp check-in dùng ảnh đã gắn theo mã người hoặc ảnh tự chọn của đúng người đó, độc lập với ảnh đang trình chiếu.
 - Nếu một ảnh bị lỗi, ảnh khác vẫn xem được. Nếu cả album chưa tải được, người xem có thể dùng ảnh riêng hoặc khung minh họa.
 - Album có thể dùng tối đa 24 ảnh. Trình duyệt tải và giải mã theo nhóm 3 ảnh, thu về canvas 1200×900 để trình chiếu và xuất thiệp.
 
