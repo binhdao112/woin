@@ -79,7 +79,14 @@ function doGet(event) {
 
 function refreshKoiSummary_(book, details) {
   var rows = details.getDataRange().getValues().slice(1).filter(function (row) { return row[0] === PropertiesService.getScriptProperties().getProperty('EVENT_ID'); });
-  var orders = rows.map(function (r) { return { eventId:r[0],participantId:r[1],sequence:Number(r[2]),name:r[4],variantId:r[5],itemName:r[6],size:r[7],sugar:r[8],ice:r[9],note:r[10],price:Number(r[11]) }; });
+  var orders = [];
+  rows.forEach(function (r) {
+    // A leftover identity or a manually cleared row is not a registered cup.
+    try {
+      if (Number(r[12]) !== 1) return;
+      orders.push(validateDrinkOrder(KOI_MENU, { eventId:r[0],participantId:r[1],sequence:Number(r[2]),requestId:r[3],name:r[4],variantId:r[5],sugar:r[8],ice:r[9],note:r[10],menuVersion:r[14] }));
+    } catch (error) { /* Keep the source row for the host to review; exclude it from totals. */ }
+  });
   var summary = aggregateDrinkOrders(orders), sheet = book.getSheetByName('Tổng hợp') || book.insertSheet('Tổng hợp');
   var values = [['Món','Cỡ ly / nhiệt','Đường','Đá','Ghi chú','Số ly','Đơn giá tham khảo','Thành tiền tham khảo','Tên nhận nước']];
   summary.groups.forEach(function (g) { values.push([g.itemName,g.size,g.sugar,g.ice,sheetText(g.note),g.quantity,g.price,g.price*g.quantity,sheetText(g.names.join(', '))]); });
