@@ -2,6 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {webcrypto} from 'node:crypto';
 
+test('single number and six-number set can be drawn independently for the two-tap flow',async()=>{
+ const {drawLuckyNumber,drawLuckySet}=await import('../dist/lucky-numbers.js');
+ let calls=0;assert.equal(drawLuckyNumber(()=>{calls++;return 0;}),'01');assert.equal(calls,1);
+ assert.equal(drawLuckyNumber(max=>max-1),'99');assert.deepEqual(drawLuckySet(()=>0),[1,2,3,4,5,6]);assert.deepEqual(drawLuckySet(max=>max-1),[40,41,42,43,44,45]);
+});
+
 test('a lucky bundle keeps the 01–99 number and draws six unique sorted values from 01–45',async()=>{
  const {drawLuckyBundle,randomBelow}=await import('../dist/lucky-numbers.js');
  assert.deepEqual(drawLuckyBundle(()=>0),{number:'01',luckySet:[1,2,3,4,5,6]});
