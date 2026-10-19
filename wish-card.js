@@ -1,8 +1,10 @@
 const titles = ['Vé khởi hành', 'Đồ uống đồng đội', 'Lá bài cảm hứng', 'Bùa số may mắn', 'Lọ niềm vui', 'Thư từ vũ trụ', 'Khung ảnh kỷ niệm'];
 const drinks = ['Cà phê sữa đá', 'Trà đào', 'Nước mát'];
+import {normaliseLuckySet,formatLuckySet} from './lucky-numbers.js';
 
 export function createCardModel({ recipient = '', wish, gifts }) {
   const name = recipient.trim() || 'bạn';
+  const luckySet = normaliseLuckySet(gifts.get(3)?.luckySet);
   const clean = text => {
     const value = String(text || '').replace(new RegExp('^' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' ơi,\\s*'), '');
     return value.charAt(0).toLocaleUpperCase('vi') + value.slice(1);
@@ -14,11 +16,11 @@ export function createCardModel({ recipient = '', wish, gifts }) {
     if (station === 0) detail = 'Một chuyến đi dành riêng cho ' + name;
     if (station === 1) detail = drinks[data.style] || drinks[0];
     if (station === 2 || station === 5) detail = detail.split(' · ').slice(0, 2).join(' · ');
-    if (station === 3) detail = data.number ? 'Số ' + data.number : detail;
+    if (station === 3) { detail = data.number ? 'Số ' + data.number : detail; if (luckySet) detail += ' · Bộ số vui 6/45: ' + formatLuckySet(luckySet); }
     if (station === 6) detail = data.photoName || 'Những khoảnh khắc cùng team';
     return [{ title, detail: detail || 'Một kỷ vật của chuyến đi' }];
   });
-  return { recipient: name, message: wish.text, wishNumber: String(wish.id || 1).padStart(3, '0'), keepsakes };
+  return { recipient: name, message: wish.text, wishNumber: String(wish.id || 1).padStart(3, '0'), keepsakes, luckySet };
 }
 
 export function cardFilename(recipient) {
@@ -134,7 +136,7 @@ export function renderWishCard(canvas, model, photo) {
   font(23, 600);
   ctx.fillText('Từ những người đồng đội luôn trân trọng bạn.', 600, canvas.height - 106);
   font(19);
-  ctx.fillText('VĂN PHÒNG TRÊN MÂY · THIỆP ' + model.wishNumber + ' / 200', 600, canvas.height - 69);
+  ctx.fillText('VNG CAMPUS · THIỆP ' + model.wishNumber + ' / 200', 600, canvas.height - 69);
   return canvas;
 }
 

@@ -1,5 +1,6 @@
 import {cardFilename, wrapText} from './wish-card.js';
 import {getSocialTemplate,drawCardTemplate} from './card-templates.js';
+import {normaliseLuckySet} from './lucky-numbers.js';
 export {SOCIAL_TEMPLATES,getSocialTemplate} from './card-templates.js';
 
 const messages = [
@@ -46,13 +47,27 @@ function fallbackFlowers(ctx,height) {
   }
 }
 
+function luckySetFooter(ctx,model,template,height) {
+  const numbers=normaliseLuckySet(model.luckySet);if(!numbers)return;
+  const dark=template==='midnight',compact=template==='scrapbook';
+  const ink=dark?'#ebd09d':template==='editorial'?'#51483c':'#733e50',background=dark?'#242139':'#fffaf2';
+  const y=height-(compact?70:110),h=compact?44:68,cy=y+h/2;
+  ctx.save();box(ctx,80,y,920,h,compact?13:20,background);ctx.textBaseline='middle';ctx.fillStyle=ink;
+  ctx.font='500 15px "Be Vietnam Pro", sans-serif';ctx.textAlign='left';ctx.fillText('BỐC VUI · 6/45',106,cy);
+  numbers.forEach((number,index)=>{
+    const x=414+index*68;ctx.fillStyle=dark?'#3c314a':'#f0e1dc';ctx.beginPath();ctx.arc(x,cy,compact?17:23,0,Math.PI*2);ctx.fill();
+    ctx.font='600 22px "Be Vietnam Pro", sans-serif';ctx.fillStyle=ink;ctx.textAlign='center';ctx.fillText(String(number).padStart(2,'0'),x,cy+1);
+  });
+  ctx.font='500 13px "Be Vietnam Pro", sans-serif';ctx.textAlign='right';ctx.fillText('CÙNG TEAM ✦',977,cy);ctx.restore();
+}
+
 export function renderSocialCard(canvas,model,{format='post',photo,artwork,template='bloom'}={}) {
   const ctx=canvas.getContext('2d');
   if(!ctx)throw new Error('Trình duyệt chưa hỗ trợ canvas để tạo thiệp.');
   const story=format==='story',height=story?1920:1350;
   canvas.width=1080;canvas.height=height;
   const id=getSocialTemplate(template).id;
-  if(id!=='bloom'){drawCardTemplate(ctx,model,{format,photo,template:id,height,copy:getSocialCopy(model,id)});return canvas;}
+  if(id!=='bloom'){drawCardTemplate(ctx,model,{format,photo,template:id,height,copy:getSocialCopy(model,id)});luckySetFooter(ctx,model,id,height);return canvas;}
   const serif=(size,italic=false)=>{ctx.font=`${italic?'italic ':''}500 ${size}px Lora, Georgia, serif`;};
   const body=(size,weight=400)=>{ctx.font=`${weight} ${size}px "Be Vietnam Pro", sans-serif`;};
   const lines=(text,x,y,width,lineHeight)=>{const values=wrapText(ctx,text,width);values.forEach((value,i)=>ctx.fillText(value,x,y+i*lineHeight));return y+values.length*lineHeight;};
@@ -103,6 +118,7 @@ export function renderSocialCard(canvas,model,{format='post',photo,artwork,templ
   box(ctx,80,height-105,920,51,25,'#fffaf2e8');
   body(15,500);ctx.fillStyle=ink;ctx.textAlign='left';ctx.fillText('WITH LOVE, YOUR TEAM',104,height-72);
   ctx.textAlign='right';ctx.fillText('#Happy2010   #VanPhongTrenMay',976,height-72);
+  luckySetFooter(ctx,model,id,height);
   return canvas;
 }
 

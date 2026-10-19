@@ -1,0 +1,56 @@
+.fortune-stage{display:grid;place-items:center;min-height:215px;padding-top:30px;contain:layout style}
+#cosmic-hub[data-tab=number]{max-width:560px;padding:32px 30px 20px;max-height:calc(100svh - 28px);overflow:auto}
+#cosmic-hub[data-tab=number]>.eyebrow,#cosmic-hub[data-tab=number]>h2{display:none}
+.lucky-flow{text-align:center}.lucky-flow [hidden]{display:none!important}
+.lucky-step{margin:0 0 13px;font-size:9px;font-weight:700;letter-spacing:2px;color:#9e6a71}
+#cosmic-hub[data-tab=number] .lucky-title{margin:0 0 11px;font-family:'Nunito',sans-serif;font-size:29px;line-height:1.25;color:#663d53;font-weight:800}
+#cosmic-hub[data-tab=number] .cosmic-intro{margin:0 auto 23px;font-size:12px!important;line-height:1.8;max-width:360px;color:#74656c}
+.lucky-orb{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:180px;height:180px;margin:22px auto 28px;border:1px solid #e4b8c2;border-radius:50%;background:radial-gradient(circle at 35% 25%,#fffdf8,#f6d7dd 65%,#e7acbd);box-shadow:inset 0 0 0 9px #fff5ec70,0 12px 32px #a16e8223;color:#794360;cursor:pointer;transition:transform .2s}
+.lucky-orb:hover{transform:translateY(-4px)}.lucky-orb-value{font:800 80px/1 'Nunito',sans-serif}.lucky-orb-hint{font-size:8px;font-weight:700;letter-spacing:1.3px}
+#cosmic-hub[data-tab=number] .lucky-single{display:flex;flex-direction:column;align-items:center;gap:7px;margin:0 0 20px;padding:0;color:#78485d}
+.lucky-single-label{font-size:10px;line-height:1.5;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#946376}
+.lucky-single-value{display:block;font:900 96px/.95 'Nunito',sans-serif;letter-spacing:-3px;color:#783e5b;text-shadow:0 5px 0 #f3dbe0;font-variant-numeric:tabular-nums}
+.lucky-ticket-open{position:relative;display:grid;grid-template-columns:1fr 85px;align-items:center;gap:8px 13px;width:100%;max-width:440px;margin:0 auto 16px;padding:23px 25px;border:1px solid #e2b4af;border-top:5px solid #c52433;border-radius:6px;background:#fffdfa;box-shadow:0 9px 25px #8c4a4912;color:#aa2532;text-align:left;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.lucky-ticket-open:hover{transform:translateY(-3px) rotate(-.5deg);box-shadow:0 14px 30px #8c4a4924}
+.lucky-ticket-open:before,.lucky-ticket-open:after{content:'';position:absolute;top:calc(50% - 10px);width:18px;height:18px;background:#fffaf1;border:1px solid #e2b4af;border-radius:50%}.lucky-ticket-open:before{left:-10px}.lucky-ticket-open:after{right:-10px}
+.lucky-ticket-eyebrow{grid-column:1/-1;font-size:8px;letter-spacing:1px;line-height:1.7;color:#976973}
+.lucky-ticket-brand{font:900 30px/1.1 'Nunito',sans-serif;letter-spacing:1px;color:#bb1e2e}
+.lucky-ticket-mega{font-size:12px;font-weight:700;letter-spacing:2px;color:#b72b38}
+.lucky-ticket-open .lucky-ticket-brand,.lucky-ticket-open .lucky-ticket-mega{grid-column:1}
+.lucky-ticket-seal{grid-column:2;grid-row:2/4;display:grid;place-items:center;width:70px;height:70px;border:1px dashed #cf7178;border-radius:50%;font-size:34px;color:#bb1e2e;background:#fff4ed}
+.lucky-ticket-tap{grid-column:1/-1;margin-top:13px;padding-top:15px;border-top:1px dashed #dfb5af;font-size:12px;font-weight:600;text-align:center;color:#7c4e5a}
+.lucky-ticket-footnote{display:block;grid-column:1/-1;font-size:8px;letter-spacing:1.5px;color:#9e6c72;text-align:center;line-height:1.8}
+.lucky-ticket-result{position:relative;background:#fff;border:1px solid #e4c7c6;border-top:5px solid #be2131;border-radius:6px;padding:20px 20px 14px;margin:0 auto 15px;max-width:450px;box-shadow:0 8px 24px #8f4b4c12}
+.lucky-ticket-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px dashed #e8c9c8;padding-bottom:16px}
+.lucky-ticket-head .lucky-ticket-brand{font-size:25px}.lucky-ticket-head .lucky-ticket-mega{font-size:10px;letter-spacing:1px}
+.lucky-ticket-caption{margin:17px 0 14px;font-size:8px;font-weight:600;letter-spacing:1.4px;color:#95606a}
+.lucky-set-balls{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;max-width:370px;margin:0 auto 18px}
+.lucky-set-balls span{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;border:2px solid #c82031;background:#fff;color:#362a30;font:800 25px/1 'Nunito',sans-serif;font-variant-numeric:tabular-nums}
+.lucky-set-balls.is-revealed span{animation:lucky-set-arrive .35s both;animation-delay:calc(var(--ball-index)*60ms)}
+#cosmic-hub[data-tab=number] .lucky-ticket-quote{font-size:12px;line-height:1.9;color:#7b4c5c;background:#f8e9e7;border-radius:13px;margin:18px 0 4px;padding:13px 17px}
+.lucky-set-copy{display:inline-block;min-height:42px;padding:8px 13px;border:0;border-radius:9px;background:transparent;color:#855264;font:inherit;font-size:11px;text-decoration:underline;cursor:pointer}
+.lucky-flow button:focus-visible{outline:3px solid #9f536f;outline-offset:4px}.lucky-status{font-size:10px!important;line-height:1.7!important;color:#8a6570;margin:3px 0 0!important;min-height:17px}.lucky-status:empty{display:none}
+#cosmic-hub[data-tab=number] .cosmic-keep-slot{min-height:0}#cosmic-hub[data-tab=number] #cosmic-keep{margin-top:11px;min-height:44px}
+#cosmic-hub[data-tab=number] .cosmic-note{font-size:9px!important;line-height:1.7;margin:14px 0 0;color:#8b7c78}
+@keyframes lucky-set-arrive{from{opacity:0;transform:translateY(7px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:700px){#cosmic-hub[data-tab=number]{padding:30px 19px 18px;width:calc(100% - 24px);max-height:calc(100svh - 24px)}#cosmic-hub[data-tab=number] .lucky-title{font-size:25px}#cosmic-hub[data-tab=number] .cosmic-intro{font-size:11px!important;margin-bottom:18px}.lucky-orb{width:155px;height:155px;margin:19px auto 22px}.lucky-orb-value{font-size:65px}.lucky-ticket-open{padding:19px 22px;gap:8px 10px}.lucky-ticket-brand{font-size:27px}.lucky-ticket-eyebrow{font-size:7px;letter-spacing:.7px}.lucky-ticket-result{padding:17px 12px 12px}.lucky-ticket-head .lucky-ticket-brand{font-size:23px}.lucky-ticket-head .lucky-ticket-mega{font-size:9px}.lucky-set-balls{gap:6px}.lucky-set-balls span{font-size:22px}#cosmic-hub[data-tab=number] .lucky-ticket-quote{font-size:11px;padding:12px}.lucky-step{font-size:8px}.lucky-single-value{font-size:88px}}
+@media(prefers-reduced-motion:reduce){.lucky-set-balls.is-revealed span{animation:none!important}.lucky-flow button{transition:none!important;transform:none!important}}
+.fortune-stage .fortune-tube{position:relative;margin:10px auto 12px;transform-origin:50% 90%;backface-visibility:hidden}
+.fortune-tube.is-drawing{will-change:transform}.fortune-sticks{position:absolute;left:16px;right:16px;top:-27px;height:55px;z-index:-1}.fortune-sticks i{position:absolute;width:10px;height:62px;border:1px solid #bb8b59;border-radius:3px;background:linear-gradient(90deg,#f7d7a2,#d4a66c);transform-origin:50% 100%}.fortune-sticks i:nth-child(1){left:0;transform:rotate(-14deg)}.fortune-sticks i:nth-child(2){left:14px;top:-7px;transform:rotate(-6deg)}.fortune-sticks i:nth-child(3){left:30px;top:-12px}.fortune-sticks i:nth-child(4){left:45px;top:-4px;transform:rotate(9deg)}.fortune-sticks i:nth-child(5){left:58px;transform:rotate(16deg)}
+#cosmic-content .fortune-result{min-height:158px;margin:12px 0 0;padding:18px 22px;border:1px solid #e4d7c5;background:#f8f0e0;border-radius:15px;color:#7f705d;display:flex;flex-direction:column;justify-content:center;font-size:12px;line-height:1.9}
+.fortune-result[aria-busy=true]{color:#8a7966}.fortune-result.fortune-revealed h4,.fortune-result.fortune-revealed p{animation:fortune-message-in .35s ease-out both}.fortune-result h4{margin:0 0 6px}.fortune-result p{margin:0}
+@keyframes fortune-message-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.memory-sources{display:flex;gap:7px;justify-content:center;margin:10px 0}.memory-sources button{border:1px solid #bfcfc3;background:#f6f5ec;color:#446858;min-height:38px;border-radius:22px;padding:8px 14px;font:inherit;font-size:10px}.memory-sources button[aria-pressed=true]{background:#456c58;color:#fffaf0;border-color:#456c58}.memory-sources button:disabled{opacity:.5;cursor:default}#memory-album-title{display:block;font-size:9px;color:#65816d;margin-bottom:7px}
+@media(max-width:700px){.fortune-stage{min-height:185px;padding-top:20px}.fortune-stage .fortune-tube{width:105px;height:140px}#cosmic-content .fortune-result{min-height:172px;padding:15px;font-size:11px}.memory-sources{margin:7px 0}.memory-sources button{padding:7px 12px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.fortune-result.fortune-revealed h4,.fortune-result.fortune-revealed p{animation:none}}
+#cosmic-hub[data-tab=fortune]{padding:22px 28px 16px;max-width:720px}
+#cosmic-hub[data-tab=fortune] h2{font-size:25px;line-height:1.2;margin:9px 0 12px}
+#cosmic-hub[data-tab=fortune] #cosmic-content{display:grid;grid-template-columns:190px minmax(0,1fr);column-gap:22px;align-items:center}
+#cosmic-hub[data-tab=fortune] #cosmic-content>h3{grid-column:1/-1;font-size:18px;margin:8px 0 4px}
+#cosmic-hub[data-tab=fortune] .cosmic-intro{grid-column:1/-1;font-size:11px!important;line-height:1.7;margin:3px 0 12px}
+#cosmic-hub[data-tab=fortune] .fortune-stage{grid-column:1;grid-row:3;min-height:205px}
+#cosmic-hub[data-tab=fortune] .fortune-result{grid-column:2;grid-row:3;min-height:180px;margin:0;padding:16px 18px}
+#cosmic-hub[data-tab=fortune] #cosmic-content>.cosmic-action{grid-column:1/-1;grid-row:4;justify-self:center;min-height:43px;margin:10px 0 0}
+#cosmic-hub[data-tab=fortune] .cosmic-keep-slot{min-height:51px}#cosmic-hub[data-tab=fortune] #cosmic-keep{margin:8px 0 0}
+#cosmic-hub[data-tab=fortune] .cosmic-note{margin:7px 0 0;font-size:9px!important;line-height:1.6}
+@media(max-width:700px){#cosmic-hub[data-tab=fortune]{padding:19px 17px 14px}#cosmic-hub[data-tab=fortune] h2{font-size:23px;margin:8px 0}#cosmic-hub[data-tab=fortune] #cosmic-content{grid-template-columns:1fr}#cosmic-hub[data-tab=fortune] #cosmic-content>h3{font-size:16px}#cosmic-hub[data-tab=fortune] .fortune-stage{grid-column:1;grid-row:auto;min-height:177px}#cosmic-hub[data-tab=fortune] .fortune-result{grid-column:1;grid-row:auto;min-height:165px;padding:13px 15px}#cosmic-hub[data-tab=fortune] #cosmic-content>.cosmic-action{grid-row:auto;font-size:11px;padding:10px 16px}#cosmic-hub[data-tab=fortune] .cosmic-intro{font-size:10px!important;margin-bottom:5px}}
