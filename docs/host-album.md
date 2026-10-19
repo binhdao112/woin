@@ -22,7 +22,9 @@ Thư mục ảnh gốc của host: `/Users/lap15111/Downloads/album`.
 
 Đặt prefix theo mã tên: `NhanCk_01.jpg`, `ThaoNTK_01.jpg`, `LyHK_01.jpg`, `NgocNTB12_01.jpg`, `HanNHG2_01.jpg`. Ảnh tập thể dùng `team_01.jpg`. Có nhiều ảnh thì tăng `_02`, `_03`…; ảnh có số đầu tiên của mỗi prefix là ảnh chính mặc định. Prefix không phân biệt hoa/thường.
 
-Lệnh nhập album đồng thời tạo `dist/assets/memories/portraits.json`: ảnh chính theo mã người và ảnh tập thể mặc định. Đổi tên không đổi mã hash hay byte ảnh. Ảnh chưa có prefix vẫn xem được trong album, nhưng không tự gán cho ai. Nếu chưa gán ảnh riêng, thiệp dùng ảnh tập thể đã chỉ định; không tự lấy chân dung đang hiện tại trạm 7. Nếu ảnh chính bị lỗi, dùng ảnh tập thể; không có ảnh tập thể tải được thì thiệp không chèn ảnh thay thế của người khác.
+Lệnh nhập album đồng thời tạo `dist/assets/memories/portraits.json`: ảnh chính theo mã người, danh sách `albums` gồm mọi ảnh của từng prefix và ảnh tập thể mặc định. Đổi tên không đổi mã hash hay byte ảnh. Ảnh chưa có prefix vẫn xem được trong album, nhưng không tự gán cho ai. Nếu chưa gán ảnh riêng, thiệp dùng ảnh tập thể đã chỉ định; không tự lấy chân dung đang hiện tại trạm 7. Nếu ảnh chính bị lỗi, dùng ảnh tập thể; không có ảnh tập thể tải được thì thiệp không chèn ảnh thay thế của người khác.
+
+Trong màn check-in cuối, mục **Đổi ảnh** hiển thị các ảnh có prefix của đúng người đang chọn:4ảnh/trang trên desktop,2ảnh/trang trên điện thoại. Bấm ảnh cập nhật khung check-in và các mẫu thiệp/PNG, bao gồm bản kỷ niệm đầy đủ. Nút **Chọn / chụp ảnh riêng** mở tùy chọn ảnh từ máy hoặc camera; nút quay lại hiện danh sách ảnh có sẵn. Danh sách loại ảnh trùng và bỏ ảnh chưa tải được; không đưa ảnh của prefix khác vào lựa chọn. Hiện có LyHK8ảnh, NgocNTB126ảnh, HanNHG23ảnh, ThaoNTK3ảnh và NhanCk1ảnh.
 
 Ảnh tự chọn và trạng thái ẩn ảnh trong check-in được giữ theo mã người trong phiên app, độc lập với biệt danh. Đổi người không kế thừa ảnh tự chọn; ảnh đang giải mã chỉ cập nhật đúng người bắt đầu chọn. Ảnh này không upload lên server và không lưu qua tải lại trang. Khi xuất bản, chép cả `portraits.json`, `album.json` và ảnh vào artifact.
 
